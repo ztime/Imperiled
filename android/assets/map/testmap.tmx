@@ -34,6 +34,8 @@
  </objectgroup>
  <objectgroup name="events">
   <object id="32" name="death" x="65.7293" y="32.4486" width="59.9052" height="32.4486"/>
+ </objectgroup>
+ <objectgroup name="markers">
   <object id="33" name="playerStart" x="534.154" y="141.443"/>
   <object id="35" name="enemyStart" x="277.061" y="373.575"/>
  </objectgroup>
