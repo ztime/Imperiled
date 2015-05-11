@@ -17,12 +17,6 @@ import com.badlogic.gdx.math.Rectangle;
  * @author jonas wedin
  */
 public class Player extends Actor {
-	float speed;
-	
-	//more time variables
-	float elapsedTimeDeath;			//time since death
-	float elapsedTimeDamage = 2f;	// - || -    damage was taken, start with 2 so player aint red
-	float elapsedTimeAttack;		// - || -    attack begun
 	
 	//places for saving animations
 	private Animation[] walking; 			// 0 = up, 1 = left, 2 = down, 3 = right;
@@ -32,10 +26,6 @@ public class Player extends Actor {
 	private TextureRegion[][] slashFrames;
 	private TextureRegion[][] deathFrames;
 	private Texture characterSheet;			//the big sheet with animations
-	
-	//keep track of current states
-	private State currentState = State.IDLE;
-	private Direction currentDirection = Direction.UP;
 	
 	//keep track of other stuff
 	private ArrayList<Weapon> weapons;
@@ -205,38 +195,6 @@ public class Player extends Actor {
 		return returnRec;
 	}
 
-	/**
-	 * Should be called when the player takes damage 
-	 */
-	@Override
-	public void takeDmg(int dmg) {
-		if(elapsedTimeDamage > 1.2f && currentState != State.DEAD){
-			health -= dmg;
-			elapsedTimeDamage = 0;
-		}
-		
-		if(health <= 0 && currentState != State.DEAD){
-			currentState = State.DEAD;
-		}
-
-	}
-	/**
-	 * Translates between enum and int 
-	 * @param dir
-	 * @return
-	 */
-	private int translateCurrentDirection(){
-		switch(this.currentDirection){
-		case UP:
-			return 0;
-		case DOWN:
-			return 2;
-		case LEFT:
-			return 1;
-		default: //RIGHT
-			return 3;
-		}
-	}
 	
 	/**
 	 * Returns the current keyframe in
@@ -244,7 +202,7 @@ public class Player extends Actor {
 	 * 
 	 * @return
 	 */
-	private TextureRegion getKeyFrame(){
+	public TextureRegion getKeyFrame(){
 		if(this.currentState != State.ATTACKING && this.currentState != State.DEAD){
 			return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isPlayerMoving());
 		} else if(this.currentState == State.ATTACKING){

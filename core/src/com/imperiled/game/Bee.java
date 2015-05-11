@@ -20,6 +20,7 @@ public class Bee extends Actor {
 	public Bee (int x, int y){
 		this.setPosition(x, y);
 		this.loadAnimation();
+		this.health = 100;
 	}
 	
 	@Override

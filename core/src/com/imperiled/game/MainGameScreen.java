@@ -29,7 +29,7 @@ public class MainGameScreen implements Screen{
 	
 	private Player player;
 	
-	private ArrayList<Actor> actors; //actors , not player
+	private static ArrayList<Actor> actors; //actors , not player
 	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;
