@@ -156,7 +156,14 @@ public class MainGameScreen implements Screen{
 			DamageRectangle playerDmg = player.getDamageRectangle();
 			shRend.rect(playerDmg.rectangle.x, playerDmg.rectangle.y, playerDmg.rectangle.width,  playerDmg.rectangle.height);
 			//actors dmg boxes
-			
+			iterActor = actors.iterator();
+			while(iterActor.hasNext()){
+				Actor next = iterActor.next();
+				Rectangle actorDmgRectangle = next.getDamageRectangle().rectangle;
+				if(actorDmgRectangle != null){
+					shRend.rect(actorDmgRectangle.x, actorDmgRectangle.y, actorDmgRectangle.width, actorDmgRectangle.height);
+				}
+			}
 			shRend.setColor(1,1,1,1);
 			//Debug drawing done
 			
