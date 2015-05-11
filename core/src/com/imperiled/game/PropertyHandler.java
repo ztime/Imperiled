@@ -11,7 +11,7 @@ public class PropertyHandler {
 	public static void newActors(ArrayList<Actor> actors) {
 		currentActors = new HashMap<String, Actor>();
 		for(Actor actor : actors) {
-			currentActors.put("hghghj", actor);
+			currentActors.put(actor.getName(), actor);
 		}
 	}
 }

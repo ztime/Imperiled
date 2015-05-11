@@ -35,17 +35,8 @@ public class MapEvent extends Event {
 				eventError("Amount is not a number.", act, "dodamage");
 			}
 			int amount = Integer.parseInt(sAmount);
-			doDamage(target, amount);
+			PropertyHandler.currentActors.get(target).takeDamage(amount);
 		}
-	}
-	
-	/**
-	 * 
-	 * @param target
-	 * @param amount
-	 */
-	private void doDamage(String target, int amount) {
-		//
 	}
 	
 	private void eventError(String type, String atFrom, String atTo) {

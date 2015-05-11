@@ -21,6 +21,7 @@ abstract public class Actor {
 	
 	//other
 	int health = 100;
+	boolean invulnerable = false;
 	String name;
 	
 	//keep track of current states
@@ -223,6 +224,15 @@ abstract public class Actor {
 	 */
 	public String getName(){
 		return this.name;
+	}
+	
+	public void takeDamage(int amount) {
+		if(!invulnerable) {
+			health -= amount;
+			if(health < 0) {
+				health = 0;
+			}
+		}
 	}
 	
 }
