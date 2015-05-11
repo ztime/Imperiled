@@ -86,8 +86,12 @@ public class MainGameScreen implements Screen{
 		
 		player = new Player(startX, startY);
 		
-		
-		//Todo : spawn enemies
+		if(markers.get("enemyStart") != null){
+			Integer startEnemyX = Math.round((Float) markers.get("enemyStart").getProperties().get("x"));
+			Integer startEnemyY = Math.round((Float) markers.get("enemyStart").getProperties().get("y"));
+			Bee bee = new Bee(startEnemyX, startEnemyY);
+			actors.add(bee);
+		}
 	}
 
 	@Override
@@ -103,6 +107,10 @@ public class MainGameScreen implements Screen{
 		mapRenderer.render();
 		//-------------------------------------- //
 		batch.begin();
+		//draw all actors
+		for(Actor actor : actors){
+			actor.draw(batch);
+		}
 		player.draw(batch);
 		batch.end();
 		

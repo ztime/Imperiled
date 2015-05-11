@@ -32,7 +32,7 @@ public class Bee extends Actor {
 	 * @return
 	 */
 	private TextureRegion getKeyFrame(){
-		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving());
+		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, true);
 	}
 
 	/**
@@ -82,9 +82,9 @@ public class Bee extends Actor {
 	}
 	
 	public void loadAnimation() {
-		int sheetRows = 3;
+		int sheetRows = 4;
 		int sheetCols = 3;
-		float wAnimationSpeed = 0.025f;
+		float wAnimationSpeed = 0.1f;
 		characterSheet = new Texture(Gdx.files.internal("sprites/bee.png"));
 		movement = new Animation[4];
 		movementFrames = TextureRegion.split(characterSheet, characterSheet.getWidth() / sheetCols, characterSheet.getHeight() / sheetRows);
