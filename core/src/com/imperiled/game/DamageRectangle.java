@@ -11,6 +11,12 @@ import com.badlogic.gdx.math.Rectangle;
 public class DamageRectangle {
 	public Rectangle rectangle;
 	public int dmg;
+	
+	public DamageRectangle() {
+		this.rectangle = new Rectangle();
+		this.dmg = 0;
+	}
+	
 	public DamageRectangle(Rectangle rectangle, int dmg){
 		this.rectangle = rectangle;
 		this.dmg = dmg;

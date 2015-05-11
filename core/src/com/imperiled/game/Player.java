@@ -1,11 +1,13 @@
 package com.imperiled.game;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-
 
 
 /**
@@ -47,6 +49,9 @@ public class Player extends Actor {
 	private State currentState = State.IDLE;
 	private Direction currentDirection = Direction.UP;
 	
+	//keep track of other stuff
+	private ArrayList<Weapon> weapons;
+	private Weapon currentWeapon;
 	
 	/**
 	 * Constructs a new player at x and y.
@@ -56,7 +61,10 @@ public class Player extends Actor {
 	public Player(int x, int y){
 		this.setPosition(x, y);
 		
-		
+		//temporarly
+		Weapon sword = new Sword();
+		weapons.add(sword);
+		currentWeapon = sword;
 	}
 	
 	/**
@@ -132,7 +140,11 @@ public class Player extends Actor {
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
-		// TODO Auto-generated method stub
+		if(elapsedTimeDamage < 1.2f){
+			batch.setColor(1, 0, 0, 0.7f);
+		}
+		batch.draw(this.getKeyFrame(), x, y);
+		batch.setColor(Color.WHITE);
 
 	}
 
@@ -173,8 +185,28 @@ public class Player extends Actor {
 	
 	@Override
 	public DamageRectangle getDamageRectangle() {
-		// TODO Auto-generated method stub
-		return null;
+		if(currentWeapon != null){
+			return new DamageRectangle();
+		}
+		//position the rectangle
+		DamageRectangle returnRec = currentWeapon.getRectangle();
+		//we need to position it relative to the player
+		Rectangle playerRect = this.getRectangle();
+		if(currentDirection == Direction.UP){
+			returnRec.rectangle.x = playerRect.x;
+			returnRec.rectangle.y = playerRect.y + playerRect.height;
+		} else if (currentDirection == Direction.DOWN){
+			returnRec.rectangle.x = playerRect.x;
+			returnRec.rectangle.y = playerRect.y - returnRec.rectangle.height;
+		} else if (currentDirection == Direction.LEFT){
+			returnRec.rectangle.x = playerRect.x - playerRect.width;
+			returnRec.rectangle.y = playerRect.y + playerRect.height / 4;
+		} else { //Direction.RIGHT
+			returnRec.rectangle.x = playerRect.x + playerRect.width;
+			returnRec.rectangle.y = playerRect.y + playerRect.height / 4;
+		}
+		
+		return returnRec;
 	}
 
 	/**
@@ -208,6 +240,26 @@ public class Player extends Actor {
 		default: //RIGHT
 			return 3;
 		}
+	}
+	
+	/**
+	 * Returns the current keyframe in
+	 * the relevant animation
+	 * 
+	 * @return
+	 */
+	private TextureRegion getKeyFrame(){
+		if(currentState != State.ATTACKING && currentState != State.DEAD){
+			return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isPlayerMoving());
+		} else if(currentState == State.ATTACKING){
+			if(slashing[translateCurrentDirection()].isAnimationFinished(elapsedTimeAttack)){
+				elapsedTimeAttack = 0;
+				currentState = State.IDLE;
+			}
+			return slashing[translateCurrentDirection()].getKeyFrame(elapsedTimeAttack, false);
+		} else {
+			return death.getKeyFrame(elapsedTimeDeath);
+		}	
 	}
 	
 	/**
