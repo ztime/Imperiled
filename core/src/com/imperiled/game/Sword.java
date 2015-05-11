@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 public class Sword implements Weapon {
 
 	int damage = 20;
-	int boxHeight = 20;
-	int boxWidth = 20;
+	int boxHeight = 30;
+	int boxWidth = 30;
 	
 	@Override
 	public int getDamage() {

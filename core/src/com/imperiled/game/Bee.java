@@ -52,6 +52,7 @@ public class Bee extends Actor {
 
 	/**
 	 * Get a damage rectangle for when the bee attacks
+	 * bee attacks all the time
 	 * @return
 	 */
 	@Override
@@ -59,6 +60,9 @@ public class Bee extends Actor {
 		DamageRectangle newRect = new DamageRectangle();
 		newRect.rectangle.x = this.x;
 		newRect.rectangle.y = this.y;
+		newRect.rectangle.height = this.getHeight();
+		newRect.rectangle.width = this.getWidth();
+		newRect.dmg = 20;
 		return newRect;
 	}
 

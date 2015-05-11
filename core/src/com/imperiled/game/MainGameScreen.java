@@ -151,7 +151,15 @@ public class MainGameScreen implements Screen{
 				}
 				
 			}
+			//Render damage boxes
+			shRend.setColor(1,0,0,1);
+			DamageRectangle playerDmg = player.getDamageRectangle();
+			shRend.rect(playerDmg.rectangle.x, playerDmg.rectangle.y, playerDmg.rectangle.width,  playerDmg.rectangle.height);
+			//actors dmg boxes
+			
+			shRend.setColor(1,1,1,1);
 			//Debug drawing done
+			
 			shRend.end();
 		}
 	}

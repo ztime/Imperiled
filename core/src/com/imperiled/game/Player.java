@@ -171,7 +171,7 @@ public class Player extends Actor {
 	
 	@Override
 	public DamageRectangle getDamageRectangle() {
-		if(currentWeapon != null){
+		if(currentWeapon == null || currentState != State.ATTACKING){
 			return new DamageRectangle();
 		}
 		//position the rectangle
