@@ -7,6 +7,8 @@ public class Imperiled extends Game {
 	//Here we can add variables available between game screens
 	//and game states. Should not be used unless we must.
 	
+	//the map that should be loaded with mainGameClass
+	public String map; 
 	
 	@Override
 	public void create () {

@@ -56,6 +56,8 @@ public class MainMenuScreen implements Screen {
 		
 		//check if we should switch screens 
 		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+			//start default map
+			this.game.map = "testmap";
 			game.setScreen(new MainGameScreen(game));
 			dispose();
 			return; //just to make sure we don't render anything more
