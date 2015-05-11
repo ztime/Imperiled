@@ -15,6 +15,7 @@ abstract public class Actor {
 	//other
 	int health;
 	
+	//functions that must be implemented
 	public abstract void draw(SpriteBatch batch);
 	public abstract Rectangle getRectangle();
 	public abstract DamageRectangle getDamageRectangle();
