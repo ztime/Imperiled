@@ -53,7 +53,7 @@ public class FileParser {
 		}
 	}
 	
-	private String fileParser(BufferedReader in, String filename) throws IOException {
+	private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
 		HashMap<String, String> properties = new HashMap<String, String>();
 		String line;
 		int lnCnt = 0;
@@ -81,7 +81,7 @@ public class FileParser {
 		if(properties.size() == 0) {
 			formatError(lnCnt, "No information in file.", filename);
 		}
-		return properties.get("name");
+		return properties;
 	}
 		
 	/**

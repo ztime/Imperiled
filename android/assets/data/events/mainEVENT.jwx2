@@ -1,1 +1,5 @@
-type=event
+SuperEvent
+
+action=changeMap
+target=level2.tmx
+coordinates=4
