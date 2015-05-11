@@ -1,5 +1,6 @@
 SuperEvent
 
-action=changeMap
+action=changemap
 target=level2.tmx
-coordinates=4
+xcor=3
+ycor=4
