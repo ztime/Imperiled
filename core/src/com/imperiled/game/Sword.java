@@ -1,7 +1,6 @@
 package com.imperiled.game;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.imperiled.game.Player.Direction;
 
 public class Sword implements Weapon {
 

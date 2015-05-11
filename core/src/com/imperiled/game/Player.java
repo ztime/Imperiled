@@ -17,20 +17,6 @@ import com.badlogic.gdx.math.Rectangle;
  * @author jonas wedin
  */
 public class Player extends Actor {
-	/**
-	 * Represents the current state the player is in
-	 * this controls what player can do 
-	 * For ex. cant move if the player is attacking or dead
-	 */
-	public enum State{
-		IDLE, MOVE, ATTACKING, DEAD;
-	}
-	/**
-	 * Represents the current direction the player is facing
-	 */
-	public enum Direction{
-		UP,DOWN,RIGHT,LEFT;
-	}
 	
 	//more time variables
 	float elapsedTimeDeath;			//time since death
