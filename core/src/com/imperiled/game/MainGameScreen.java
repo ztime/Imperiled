@@ -30,6 +30,9 @@ public class MainGameScreen implements Screen{
 	private Player player;
 	
 	private static ArrayList<Actor> actors; //actors , not player
+	// du får typ ha något liknande här:
+	// private ArrayList<MapEvent> events;
+	
 	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;

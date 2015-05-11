@@ -229,9 +229,6 @@ abstract public class Actor {
 	public void takeDamage(int amount) {
 		if(!invulnerable) {
 			health -= amount;
-			if(health < 0) {
-				health = 0;
-			}
 		}
 	}
 	
