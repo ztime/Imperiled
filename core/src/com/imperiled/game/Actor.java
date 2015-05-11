@@ -222,7 +222,7 @@ abstract public class Actor {
 	 * Returns the name of the actor
 	 * @return
 	 */
-	public String getName(){
+	public String getName() {
 		return this.name;
 	}
 	

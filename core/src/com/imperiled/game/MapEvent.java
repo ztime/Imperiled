@@ -21,7 +21,8 @@ public class MapEvent extends Event {
 	/*
 	 * In dev
 	 */
-	public void action(String act) {
+	public void action() {
+		String act = props.get("action");
 		if(act.equalsIgnoreCase("dodamage")) {
 			String target = props.get("target");
 			String sAmount = props.get("amount");
@@ -39,6 +40,12 @@ public class MapEvent extends Event {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param type
+	 * @param atFrom
+	 * @param atTo
+	 */
 	private void eventError(String type, String atFrom, String atTo) {
 		System.err.printf("Event error: %s%nFrom %s to %s.%n", type, atFrom, atTo);
 		System.exit(1);
