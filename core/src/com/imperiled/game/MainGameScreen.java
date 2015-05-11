@@ -31,6 +31,7 @@ public class MainGameScreen implements Screen{
 	private Float cameraLowerBound, cameraLeftBound;
 	
 	private MapObjects collisionObjects;
+	private MapObjects eventObjects;
 	private MapObjects markers;
 	
 	private Player player;
@@ -73,8 +74,10 @@ public class MainGameScreen implements Screen{
 		markers = map.getLayers().get("markers").getObjects();
 		
 		//events
-		//MapObjects eventObjects = map.getLayers().get("event").getObjects();
 		// Adds the events associated with this map to the PropertyHandler.
+
+		eventObjects = map.getLayers().get("event").getObjects();
+		
 		new FileParser(this.game.map);
 		// TEMPORARY TESTING OF FILEPARSER AND EVENTS
 		// System.out.println(PropertyHandler.currentEvents.get("death").listOfProperties());
@@ -173,8 +176,12 @@ public class MainGameScreen implements Screen{
 					shRend.rect(actorDmgRectangle.x, actorDmgRectangle.y, actorDmgRectangle.width, actorDmgRectangle.height);
 				}
 			}
-			shRend.setColor(1,1,1,1);
 			//Render eventboxes
+			shRend.setColor(0,1,1,1);
+			Iterator<MapObject> iterEventObj = eventObjects.iterator();
+			while(iterEventObj.hasNext()){
+				
+			}
 			//Debug drawing done
 			
 			shRend.end();
