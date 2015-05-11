@@ -59,6 +59,7 @@ public class Bee extends Actor {
 		DamageRectangle newRect = new DamageRectangle();
 		newRect.rectangle.x = this.x;
 		newRect.rectangle.y = this.y;
+		return newRect;
 	}
 
 
