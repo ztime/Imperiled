@@ -1,0 +1,4 @@
+death
+action=dodamage
+amount=50
+target=Player
