@@ -2,6 +2,7 @@ package com.imperiled.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -33,7 +34,7 @@ public class Player extends Actor {
 	
 	//more time variables
 	float elapsedTimeDeath;			//time since death
-	float elapsedTimeDamage;		// - || -    damage was taken
+	float elapsedTimeDamage = 2f;	// - || -    damage was taken, start with 2 so player aint red
 	float elapsedTimeAttack;		// - || -    attack begun
 	
 	//places for saving animations
@@ -60,6 +61,8 @@ public class Player extends Actor {
 	 */
 	public Player(int x, int y){
 		this.setPosition(x, y);
+		weapons = new ArrayList<Weapon>();
+		this.loadAnimation();
 		
 		//temporarly
 		Weapon sword = new Sword();
@@ -260,6 +263,65 @@ public class Player extends Actor {
 		} else {
 			return death.getKeyFrame(elapsedTimeDeath);
 		}	
+	}
+	
+	/**
+	 * Load all the animations!
+	 */
+	private void loadAnimation(){
+		int bigSheetRows = 21;
+		int bigSheetCols = 13;
+		characterSheet = new Texture(Gdx.files.internal("sprites/player.png"));
+		TextureRegion[][] allFrames = TextureRegion.split(characterSheet, characterSheet.getWidth() / bigSheetCols, characterSheet.getHeight() / bigSheetRows);
+		
+		//walking
+		int walkCols = 9;
+		int walkRows = 4;
+		int walkStart = 8;
+		int walkStop = 11;
+		walking = new Animation[4];
+		walkFrames = new TextureRegion[walkRows][walkCols];
+		
+		float wAnimationSpeed = 0.05f;
+		int index = 0;
+		for(int i = walkStart; i < walkStop + 1; i++){
+			for(int j = 0; j < walkCols; j++){
+				walkFrames[index][j] = allFrames[i][j];
+			}
+			walking[index] = new Animation(wAnimationSpeed, walkFrames[index]);
+			index++;
+		}
+		
+		//Attacking
+		
+		int slashCols = 6;
+		int slashRows = 4;
+		int slashStart = 12;
+		int slashStop = 15;
+		float aAnimationSpeed = 0.07f;
+		slashing = new Animation[4];
+		slashFrames = new TextureRegion[slashRows][slashCols];
+		index = 0;
+		for(int i = slashStart; i < slashStop + 1; i++){
+			for(int j = 0; j < slashCols; j++){
+				slashFrames[index][j] = allFrames[i][j];
+			}
+			slashing[index] = new Animation(aAnimationSpeed, slashFrames[index]);
+			index++;
+		}
+		
+		//death
+		int deathCols = 6;
+		int deathRows = 1;
+		int deathStart = 20;
+		float dAnimationSpeed = 0.1f;
+
+		deathFrames = new TextureRegion[deathRows][deathCols];
+		for(int i = 0; i < deathCols ; i++){
+			deathFrames[0][i] = allFrames[deathStart][i];
+		}
+		death = new Animation(dAnimationSpeed, deathFrames[0]);
+		death.setPlayMode(Animation.PlayMode.NORMAL);
 	}
 	
 	/**

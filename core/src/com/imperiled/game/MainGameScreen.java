@@ -23,6 +23,8 @@ public class MainGameScreen implements Screen{
 	
 	private MapObjects collisionObjects;
 	
+	private Player player;
+	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;
 	
@@ -53,6 +55,12 @@ public class MainGameScreen implements Screen{
 		
 		//load map objects
 		collisionObjects = map.getLayers().get("collision").getObjects();
+		
+		//events
+		//MapObjects eventObjects = map.getLayers().get("event").getObjects();
+		
+		//temporarly
+		player = new Player(50, 50);
 	}
 
 	@Override
@@ -65,6 +73,10 @@ public class MainGameScreen implements Screen{
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 		//-------------------------------------- //
+		batch.begin();
+		player.draw(batch);
+		batch.end();
+		
 	}
 
 	/**
