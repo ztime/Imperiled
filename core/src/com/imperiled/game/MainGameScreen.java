@@ -1,16 +1,22 @@
 package com.imperiled.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public class MainGameScreen implements Screen{
 	final Imperiled game;
@@ -117,6 +123,37 @@ public class MainGameScreen implements Screen{
 		player.draw(batch);
 		batch.end();
 		
+		/**
+		 * This is debug rendering and will only happen is debug flag
+		 * is set to true in Imperield class
+		 */
+		if(game.debug){
+			ShapeRenderer shRend = new ShapeRenderer();
+			shRend.setProjectionMatrix(camera.combined);
+			shRend.begin(ShapeType.Line);
+			//Render player box
+			Rectangle playerBox = player.getRectangle();
+			shRend.rect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
+			//Render collision objects loaded from map
+			Iterator<MapObject> iter = collisionObjects.iterator();
+			while(iter.hasNext()){
+				RectangleMapObject obj = (RectangleMapObject) iter.next();
+				Rectangle rectangle = obj.getRectangle();
+				shRend.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+			}
+			//Render all actors boxes
+			Iterator<Actor> iterActor = actors.iterator();
+			while(iterActor.hasNext()){
+				Actor next = iterActor.next();
+				Rectangle actorRectangle = next.getRectangle();
+				if(actorRectangle != null){
+					shRend.rect(actorRectangle.x, actorRectangle.y, actorRectangle.width, actorRectangle.height);
+				}
+				
+			}
+			//Debug drawing done
+			shRend.end();
+		}
 	}
 
 	/**

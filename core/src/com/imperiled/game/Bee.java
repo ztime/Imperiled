@@ -19,30 +19,46 @@ public class Bee extends Actor {
 		this.health = 100;
 	}
 	
+	/**
+	 * Draws the beeeeeeeee!
+	 * @param batch
+	 */
 	@Override
 	public void draw(SpriteBatch batch) {
 		batch.draw(this.getKeyFrame(), x, y);
 	}
 	
 	/**
-	 * 
+	 * Gets the current key frame
 	 * @return
 	 */
 	public TextureRegion getKeyFrame(){
 		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, true);
 	}
 
-	
+	/**
+	 * Returns a rectangle of where the bee is
+	 * @return
+	 */
 	@Override
 	public Rectangle getRectangle() {
-		// TODO Auto-generated method stub
-		return null;
+		Rectangle newRect = new Rectangle();
+		newRect.x = this.x + this.getWidth() / 4;
+		newRect.y = this.y;
+		newRect.height = (3 * this.getHeight()) / 4;
+		newRect.width = this.getWidth() / 2;
+		return newRect;
 	}
 
+	/**
+	 * Get a damage rectangle for when the bee attacks
+	 * @return
+	 */
 	@Override
 	public DamageRectangle getDamageRectangle() {
-		// TODO Auto-generated method stub
-		return null;
+		DamageRectangle newRect = new DamageRectangle();
+		newRect.rectangle.x = this.x;
+		newRect.rectangle.y = this.y;
 	}
 
 
@@ -62,6 +78,24 @@ public class Bee extends Actor {
 		for(int i = 0; i < sheetRows; i++){
 			movement[i] = new Animation(wAnimationSpeed, movementFrames[i]);
 		}
+	}
+	
+	/**
+	 * Returns the height of the key frame, only for internal use
+	 * not to be used from the outside
+	 * @return
+	 */
+	private int getHeight(){
+		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving()).getRegionHeight();
+	}
+	
+	/**
+	 * Returns the width of the key-frame , only the internal use
+	 * not to be used from the outside
+	 * @return
+	 */
+	private int getWidth(){
+		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving()).getRegionWidth();
 	}
 
 }
