@@ -29,7 +29,7 @@ public class MainGameScreen implements Screen{
 	
 	private Player player;
 	
-	private ArrayList<Actor> actors; //player + fiender eller bara fiender??
+	private ArrayList<Actor> actors; //actors , not player
 	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;
@@ -96,8 +96,7 @@ public class MainGameScreen implements Screen{
 		//needs to to that in update(float delta) , not here.
 		this.update(delta);
 		//This should run before anything else i rendered on screen
-		//First adjust camera position
-		//setCameraPosition(newX,newY);
+		
 		camera.update();
 		//And render
 		mapRenderer.setView(camera);
@@ -155,7 +154,6 @@ public class MainGameScreen implements Screen{
 			}
 		}
 		//set the new values
-		
 		player.setPosition(x, y);
 		player.setDirection(newDir);
 		player.setState(newState);
