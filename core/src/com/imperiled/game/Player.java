@@ -41,6 +41,7 @@ public class Player extends Actor {
 		weapons = new ArrayList<Weapon>();
 		this.loadAnimation();
 		this.speed = 200f;
+		this.name = "player";
 		//temporarly
 		Weapon sword = new Sword();
 		weapons.add(sword);
