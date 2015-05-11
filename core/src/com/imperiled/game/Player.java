@@ -108,7 +108,7 @@ public class Player extends Actor {
 	}
 	
 	/**
-	 * Returns true if player is MOVEing
+	 * Returns true if player is moving
 	 * @return
 	 */
 	private boolean isPlayerMoving(){

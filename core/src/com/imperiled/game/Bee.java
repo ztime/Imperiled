@@ -13,10 +13,6 @@ public class Bee extends Actor {
 	private TextureRegion[][] movementFrames;
 	private Texture characterSheet;
 	
-	//keep current state and direction
-	private State currentState = State.IDLE;
-	private Direction currentDirection = Direction.UP;
-	
 	public Bee (int x, int y){
 		this.setPosition(x, y);
 		this.loadAnimation();
@@ -32,31 +28,10 @@ public class Bee extends Actor {
 	 * 
 	 * @return
 	 */
-	private TextureRegion getKeyFrame(){
+	public TextureRegion getKeyFrame(){
 		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, true);
 	}
 
-	/**
-	 * Translates between enum and int 
-	 * @param dir
-	 * @return
-	 */
-	private int translateCurrentDirection(){
-		switch(this.currentDirection){
-		case UP:
-			return 0;
-		case DOWN:
-			return 2;
-		case LEFT:
-			return 1;
-		default: //RIGHT
-			return 3;
-		}
-	}
-	
-	private boolean isMoving(){
-		return (currentState == State.MOVE);
-	}
 	
 	@Override
 	public Rectangle getRectangle() {
@@ -70,11 +45,6 @@ public class Bee extends Actor {
 		return null;
 	}
 
-	@Override
-	public void takeDmg(int dmg) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void dispose() {

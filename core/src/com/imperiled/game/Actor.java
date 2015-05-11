@@ -20,7 +20,8 @@ abstract public class Actor {
 	float elapsedTimeAttack;		// - || -    attack begun
 	
 	//other
-	int health;
+	int health = 100;
+	String name;
 	
 	//keep track of current states
 	State currentState = State.IDLE;
@@ -208,13 +209,20 @@ abstract public class Actor {
 	 * Returns true if player is MOVEing
 	 * @return
 	 */
-	private boolean isMoving(){
+	public boolean isMoving(){
 		if(this.currentState == State.MOVE){
 			return true;
 		} else {
 			return false;
 		}
-		
+	}
+	
+	/**
+	 * Returns the name of the actor
+	 * @return
+	 */
+	public String getName(){
+		return this.name;
 	}
 	
 }
