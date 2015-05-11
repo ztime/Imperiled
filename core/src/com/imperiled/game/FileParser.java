@@ -11,22 +11,14 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class FileParser {
 	private FileHandle folder;
-	private String suffix;
+	private String suffix = "jwx2";
 	private ArrayList<FileHandle> files;
-	private static HashMap<String, String[]> reqs = new HashMap<String, String[]>();
 	
-	public FileParser(String suffix) {
-		addReqs();
-		if(!reqs.containsKey(suffix)) {
-			// Exits if there is no data for this suffix.
-			System.err.printf("Get yo shiet right. %s ain't no suffix.%n", suffix);
-	        System.exit(1);
-		}
-		this.suffix = suffix;
+	public FileParser(String path) {
 		if (Gdx.app.getType() == ApplicationType.Android) {
-			folder = Gdx.files.internal("data/events");
+			folder = Gdx.files.internal("data/" + path);
 		} else {
-			folder = Gdx.files.internal("./bin/data/events");
+			folder = Gdx.files.internal("./bin/data/" + path);
 		}
 		files = new ArrayList<FileHandle>();
 		for(FileHandle file : folder.list()) {
@@ -43,14 +35,16 @@ public class FileParser {
 	}
 	
 	private void parseFiles() {
+		ArrayList<MapEvent> events = new ArrayList<MapEvent>();
 		for(FileHandle file : files) {
 			try(BufferedReader in = file.reader(0)) {
-				fileParser(in, file.name());
+				events.add(new MapEvent(fileParser(in, file.name())));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		PropertyHandler.newEvents(events);
 	}
 	
 	private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
@@ -81,6 +75,11 @@ public class FileParser {
 		if(properties.size() == 0) {
 			formatError(lnCnt, "No information in file.", filename);
 		}
+		for(String req : PropertyHandler.eventReqs) {
+			if(!properties.containsKey(req)) {
+				formatError(lnCnt, "File does not contain the required property: " + req, filename);
+			}
+		}
 		return properties;
 	}
 		
@@ -93,10 +92,5 @@ public class FileParser {
     private void formatError(int line, String errMsg, String filename) {
         System.err.printf("Format error in '%s' at line %d:%n%s%n", filename, line, errMsg);
         System.exit(1);
-    }
-    
-    private void addReqs() {
-    	reqs.put("event", PropertyHandler.eventReqs);
-    	reqs.put("music", PropertyHandler.musicReqs);
     }
 }
