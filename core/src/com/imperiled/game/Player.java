@@ -141,6 +141,11 @@ public class Player extends Actor {
 		}
 		
 	}
+	/**
+	 * Draws the player using the SpriteBatch 
+	 * DOES NOT CALL batch.begin() or batch.end()
+	 * draws the player red if it has taken damage
+	 */
 	@Override
 	public void draw(SpriteBatch batch) {
 		if(elapsedTimeDamage < 1.2f){
