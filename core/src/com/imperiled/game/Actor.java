@@ -20,6 +20,7 @@ abstract public class Actor {
 	public abstract Rectangle getRectangle();
 	public abstract DamageRectangle getDamageRectangle();
 	public abstract void takeDmg(int dmg);
+	public abstract void dispose();
 	
 	/**
 	 * Moves deltaTime forward
