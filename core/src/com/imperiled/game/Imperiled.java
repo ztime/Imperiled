@@ -1,6 +1,7 @@
 package com.imperiled.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.math.Vector2;
 
 public class Imperiled extends Game {
 	
@@ -9,6 +10,7 @@ public class Imperiled extends Game {
 	
 	//the map that should be loaded with mainGameClass
 	public String map; 
+	public Vector2 startPos;
 	
 	@Override
 	public void create () {

@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Rectangle;
  * @author jonas wedin
  */
 public class Player extends Actor {
+	float speed;
 	
 	//more time variables
 	float elapsedTimeDeath;			//time since death
@@ -49,11 +50,12 @@ public class Player extends Actor {
 		this.setPosition(x, y);
 		weapons = new ArrayList<Weapon>();
 		this.loadAnimation();
-		
+		this.speed = 200f;
 		//temporarly
 		Weapon sword = new Sword();
 		weapons.add(sword);
 		currentWeapon = sword;
+		
 	}
 	
 	/**
@@ -61,13 +63,13 @@ public class Player extends Actor {
 	 * @param deltaTime the time between the last frame and this
 	 */
 	@Override
-	public void update(float deltaTime){
+	public void update(float elapsedTime){
 		this.elapsedTime += elapsedTime;
 		this.elapsedTimeDamage += elapsedTime;
-		if(currentState == State.ATTACKING){
+		if(this.currentState == State.ATTACKING){
 			this.elapsedTimeAttack += elapsedTime;
 		}
-		if(currentState == State.DEAD){
+		if(this.currentState == State.DEAD){
 			this.elapsedTimeDeath += elapsedTime;
 		}
 	}
@@ -243,12 +245,12 @@ public class Player extends Actor {
 	 * @return
 	 */
 	private TextureRegion getKeyFrame(){
-		if(currentState != State.ATTACKING && currentState != State.DEAD){
+		if(this.currentState != State.ATTACKING && this.currentState != State.DEAD){
 			return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isPlayerMoving());
-		} else if(currentState == State.ATTACKING){
+		} else if(this.currentState == State.ATTACKING){
 			if(slashing[translateCurrentDirection()].isAnimationFinished(elapsedTimeAttack)){
-				elapsedTimeAttack = 0;
-				currentState = State.IDLE;
+				this.elapsedTimeAttack = 0;
+				this.currentState = State.IDLE;
 			}
 			return slashing[translateCurrentDirection()].getKeyFrame(elapsedTimeAttack, false);
 		} else {

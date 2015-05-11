@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 abstract public class Actor {
 	//position
 	int x, y;
+	//old position , saved for collision checking
+	int oldX, oldY;
 	float speed;
 	
 	//time variables
@@ -36,6 +38,8 @@ abstract public class Actor {
 	 * @param y
 	 */
 	public void setPosition(int x,int y){
+		oldX = this.x;
+		oldY = this.y;
 		this.x = x;
 		this.y = y;
 	}
@@ -45,10 +49,22 @@ abstract public class Actor {
 	 * @param newPos
 	 */
 	public void setPosition(Vector2 newPos){
+		oldX = this.x;
+		oldY = this.y;
 		this.x = (int) newPos.x;
 		this.y = (int) newPos.y;
 	}
 	
+	/**
+	 * returns the old position 
+	 * @return
+	 */
+	public Vector2 getOldPosition(){
+		Vector2 retVec = new Vector2();
+		retVec.x = (float) oldX;
+		retVec.y = (float) oldY;
+		return retVec;
+	}
 	/**
 	 * Returns current position as a vector2
 	 * @return

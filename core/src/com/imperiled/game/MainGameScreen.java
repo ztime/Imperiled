@@ -1,7 +1,10 @@
 package com.imperiled.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
@@ -22,8 +25,11 @@ public class MainGameScreen implements Screen{
 	private Float cameraLowerBound, cameraLeftBound;
 	
 	private MapObjects collisionObjects;
+	private MapObjects markers;
 	
 	private Player player;
+	
+	private ArrayList<Actor> actors; //player + fiender eller bara fiender??
 	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;
@@ -55,16 +61,40 @@ public class MainGameScreen implements Screen{
 		
 		//load map objects
 		collisionObjects = map.getLayers().get("collision").getObjects();
-		
+		markers = map.getLayers().get("markers").getObjects();
 		//events
 		//MapObjects eventObjects = map.getLayers().get("event").getObjects();
 		
-		//temporarly
-		player = new Player(50, 50);
+		//setup actors in the map
+		actors = new ArrayList<Actor>();
+		
+		//Move player to it's starting position
+		//if the "global" variable startPos is set we use that one, otherwise
+		//we get the default starting position from map
+		Integer startX;
+		Integer startY;
+		if(game.startPos == null){
+			startX = Math.round((Float) markers.get("playerStart").getProperties().get("x"));
+			startY = Math.round((Float) markers.get("playerStart").getProperties().get("y"));
+		} else {
+			startX = (int) game.startPos.x;
+			startY = (int) game.startPos.y;
+			game.startPos = null; //reset the position
+		}
+		//remove the player starting position from markers
+		markers.remove(markers.get("playerStart"));
+		
+		player = new Player(startX, startY);
+		
+		
+		//Todo : spawn enemies
 	}
 
 	@Override
 	public void render(float delta) {
+		//Everything that needs to change position or do something 
+		//needs to to that in update(float delta) , not here.
+		this.update(delta);
 		//This should run before anything else i rendered on screen
 		//First adjust camera position
 		//setCameraPosition(newX,newY);
@@ -79,6 +109,59 @@ public class MainGameScreen implements Screen{
 		
 	}
 
+	/**
+	 * Updates things that needs to happen , will circle all actors 
+	 * and call update on them 
+	 * @param delta
+	 */
+	public void update(float delta){
+		//circle all actors and call update
+		for(Actor actor : actors){
+			actor.update(delta);
+		}
+		player.update(delta);
+		/**
+		 * Player control is here now, if we have time
+		 * move it to another class with more functionality
+		 */
+		State newState = State.IDLE; //we start in idle
+		Direction newDir = player.getDirection(); 
+		//new position 
+		int x = player.getX();
+		int y = player.getY();
+		if(player.getState() != State.ATTACKING && player.getState() != State.DEAD){
+			if(Gdx.input.isKeyPressed(Keys.A)){
+				x -= Gdx.graphics.getDeltaTime() * player.getSpeed();
+				newState = State.MOVE;
+				newDir = Direction.LEFT;
+			}
+			if(Gdx.input.isKeyPressed(Keys.D)){
+				x += Gdx.graphics.getDeltaTime() * player.getSpeed();
+				newState = State.MOVE;
+				newDir = Direction.RIGHT;
+			}
+			if(Gdx.input.isKeyPressed(Keys.W)){
+				y += Gdx.graphics.getDeltaTime() * player.getSpeed();
+				newState = State.MOVE;
+				newDir = Direction.UP;
+			}	
+			if(Gdx.input.isKeyPressed(Keys.S)){
+				y -= Gdx.graphics.getDeltaTime() * player.getSpeed();
+				newState = State.MOVE;
+				newDir = Direction.DOWN;
+			}
+			if(Gdx.input.isKeyPressed(Keys.SPACE)){
+				newState = State.ATTACKING;
+			}
+		}
+		//set the new values
+		
+		player.setPosition(x, y);
+		player.setDirection(newDir);
+		player.setState(newState);
+		//we also need to adapt the camera to the players position
+		setCameraPosition(x, y);
+	}
 	/**
 	 * Sets cameras new position in the map, checks so it's not out
 	 * of bounds. And if it is, it moves it
@@ -133,6 +216,7 @@ public class MainGameScreen implements Screen{
 	public void dispose() {
 		map.dispose();
 		batch.dispose();
+		player.dispose();
 	}
 
 }
