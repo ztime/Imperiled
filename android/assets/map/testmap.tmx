@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="32" tileheight="32" nextobjectid="36">
+ <tileset firstgid="1" source="grass.tsx"/>
+ <tileset firstgid="19" source="water.tsx"/>
+ <tileset firstgid="37" source="bridges.tsx"/>
+ <tileset firstgid="79" source="watergrass.tsx"/>
+ <tileset firstgid="97" source="cement.tsx"/>
+ <layer name="grass and water" width="20" height="14">
+  <data encoding="base64" compression="zlib">
+   eJydksEKwCAIhrt3qZ5tjBFbdd9p739ZQYE4Tdvhgyj9/dWsMcYKHJVcKZWoiG8EdPZIr3TNSMR7ZY2RN/wlpT/sjes3Iz0v5HFvnN5MA9eT5vdndrP9cr3uCjZhv1B/xCXiDO+0/+9c5KrcneHrAbjF2Xqgpd2nVAPrcTqzPxgIPSpX8uLM1wvXb+MFc+Ilfg==
+  </data>
+ </layer>
+ <layer name="bridge" width="20" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYKANSALiZBxyqkCsBsXqVLBLG4mtSwXzhhswhGJqAXMoHqzm2ULxKBh4AAARygNu
+  </data>
+ </layer>
+ <objectgroup name="collision">
+  <object id="12" x="96.3288" y="297.421" width="319.616" height="12.8734"/>
+  <object id="14" x="397.301" y="77.2406" width="17.7565" height="220.18"/>
+  <object id="16" x="289.43" y="78.1285" width="22.1956" height="174.013"/>
+  <object id="19" x="289.43" y="67.3672" width="125.627" height="25.7469"/>
+  <object id="20" x="96.3288" y="225.951" width="213.522" height="23.0834"/>
+  <object id="21" x="96.7728" y="228.615" width="23.9712" height="78.1285"/>
+  <object id="22" x="-37.2886" y="225.063" width="68.8063" height="84.3432"/>
+  <object id="23" x="287.655" y="-11.883" width="126.959" height="17.3126"/>
+  <object id="24" x="416.833" y="289.43" width="62.5916" height="30.186"/>
+  <object id="25" x="417.277" y="315.948" width="29.7421" height="136.725"/>
+  <object id="26" x="543.718" y="287.43" width="131.398" height="31.5177"/>
+  <object id="28" x="640.643" y="-42.9585" width="23.347" height="553.792"/>
+  <object id="29" x="-36.6087" y="-23.2964" width="775.439" height="20.8004"/>
+  <object id="30" x="-19.585" y="-58.2411" width="18.3044" height="573.259"/>
+  <object id="31" x="-111.49" y="447.897" width="853.648" height="16.6403"/>
+ </objectgroup>
+ <objectgroup name="events">
+  <object id="32" name="death" x="65.7293" y="32.4486" width="59.9052" height="32.4486"/>
+  <object id="33" name="playerStart" x="534.154" y="141.443"/>
+  <object id="35" name="enemyStart" x="277.061" y="373.575"/>
+ </objectgroup>
+</map>
