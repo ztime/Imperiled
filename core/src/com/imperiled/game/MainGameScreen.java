@@ -73,6 +73,7 @@ public class MainGameScreen implements Screen{
 		markers = map.getLayers().get("markers").getObjects();
 		//events
 		//MapObjects eventObjects = map.getLayers().get("event").getObjects();
+		new FileParser(this.game.map);
 		
 		//setup actors in the map
 		actors = new ArrayList<Actor>();
@@ -95,6 +96,7 @@ public class MainGameScreen implements Screen{
 		
 		player = new Player(startX, startY);
 		
+		//TODO fix this
 		if(markers.get("enemyStart") != null){
 			Integer startEnemyX = Math.round((Float) markers.get("enemyStart").getProperties().get("x"));
 			Integer startEnemyY = Math.round((Float) markers.get("enemyStart").getProperties().get("y"));
@@ -165,6 +167,7 @@ public class MainGameScreen implements Screen{
 				}
 			}
 			shRend.setColor(1,1,1,1);
+			//Render eventboxes
 			//Debug drawing done
 			
 			shRend.end();
