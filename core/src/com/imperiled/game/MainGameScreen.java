@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -19,6 +20,8 @@ public class MainGameScreen implements Screen{
 	private Integer mapWidth, mapHeight; 
 	private float cameraWidth, cameraHeight;
 	private Float cameraLowerBound, cameraLeftBound;
+	
+	private MapObjects collisionObjects;
 	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;
@@ -48,6 +51,8 @@ public class MainGameScreen implements Screen{
 		//set batch to render the same as camera
 		batch.setProjectionMatrix(camera.combined);
 		
+		//load map objects
+		collisionObjects = map.getLayers().get("collision").getObjects();
 	}
 
 	@Override
