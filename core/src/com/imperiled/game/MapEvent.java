@@ -143,9 +143,9 @@ public class MapEvent extends Event {
 	 */
 	private boolean mapExists(String mapName) {
 		if (Gdx.app.getType() == ApplicationType.Android) {
-			return Gdx.files.internal("map/" + mapName).exists();
+			return Gdx.files.internal("map/" + mapName + ".tmx").exists();
 		}
-		return Gdx.files.internal("./bin/map/" + mapName).exists();
+		return Gdx.files.internal("./bin/map/" + mapName + ".tmx").exists();
 	}
 	
 	/**
