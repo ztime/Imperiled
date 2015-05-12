@@ -137,7 +137,9 @@ public class MainGameScreen implements Screen{
 		batch.begin();
 		//draw all actors
 		for(Actor actor : actors){
-			actor.draw(batch);
+			if(actor.getState() != State.INACTIVE){
+				actor.draw(batch);
+			}
 		}
 		player.draw(batch);
 		batch.end();

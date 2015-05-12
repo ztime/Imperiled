@@ -59,6 +59,9 @@ abstract public class Actor {
 		}
 		if(this.currentState == State.DEAD){
 			this.elapsedTimeDeath += elapsedTime;
+			if(this.elapsedTimeDeath > 2f){
+				this.setState(State.INACTIVE);
+			}
 		}
 	}
 	
