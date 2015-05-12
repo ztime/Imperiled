@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Event;
 
 /**
@@ -95,6 +96,7 @@ public class MapEvent extends Event {
 				if(!xcor.matches("^\\d+$") || !ycor.matches("^\\d+$")) {
 					eventError("Coordinates not integers.", act, mapTarget);
 				}
+				game.startPos = new Vector2();
 				game.startPos.x = Integer.parseInt(xcor);
 				game.startPos.y = Integer.parseInt(ycor);
 			}
