@@ -111,6 +111,7 @@ public class MainGameScreen implements Screen{
 			game.startDirection = null;
 		}
 		
+		
 		//TODO fix this
 		if(markers.get("enemyStart") != null){
 			Integer startEnemyX = Math.round((Float) markers.get("enemyStart").getProperties().get("x"));
@@ -120,6 +121,7 @@ public class MainGameScreen implements Screen{
 		}
 		// Adds the actors to the PropertyHandler.
 		PropertyHandler.newActors(actors);
+		PropertyHandler.currentActors.put("player", player);
 	}
 
 	@Override

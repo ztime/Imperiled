@@ -65,16 +65,17 @@ abstract public class Actor {
 	/**
 	 * Should be called when the player takes damage 
 	 */
-	public void takeDmg(int dmg) {
-		if(elapsedTimeDamage > 1.2f && currentState != State.DEAD){
-			health -= dmg;
-			elapsedTimeDamage = 0;
+	public void takeDamage(int dmg) {
+		if(!this.invulnerable){
+			if(elapsedTimeDamage > 1.2f && currentState != State.DEAD){
+				health -= dmg;
+				elapsedTimeDamage = 0;
+			}
+			
+			if(health <= 0 && currentState != State.DEAD){
+				currentState = State.DEAD;
+			}
 		}
-		
-		if(health <= 0 && currentState != State.DEAD){
-			currentState = State.DEAD;
-		}
-
 	}
 	/**
 	 * Sets the current position to x & y
@@ -232,12 +233,6 @@ abstract public class Actor {
 	 */
 	public String getName() {
 		return this.name;
-	}
-	
-	public void takeDamage(int amount) {
-		if(!invulnerable) {
-			health -= amount;
-		}
 	}
 	
 }
