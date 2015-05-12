@@ -52,6 +52,9 @@ public class Bee extends Actor {
 	@Override
 	public DamageRectangle getDamageRectangle() {
 		DamageRectangle newRect = new DamageRectangle();
+		if(!isActive()){
+			return newRect;
+		}
 		newRect.rectangle.x = this.x;
 		newRect.rectangle.y = this.y;
 		newRect.rectangle.height = this.getHeight();

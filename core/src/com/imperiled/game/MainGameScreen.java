@@ -46,11 +46,13 @@ public class MainGameScreen implements Screen{
 	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;
+
+	
 	
 	public MainGameScreen(Imperiled game){
 		this.game = game;
 		PropertyHandler.currentGame = game;
-		ui = new UiWrapper(this.game.debug);
+		ui = new UiWrapper(this.game);
 		
 		batch = new SpriteBatch();
 		//setup map
@@ -127,6 +129,11 @@ public class MainGameScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
+		//if game is paused we dont want to continue
+		if(this.game.paused){
+			ui.draw();
+			return;
+		}
 		//Everything that needs to change position or do something 
 		//needs to to that in update(float delta) , not here.
 		this.update(delta);
@@ -180,7 +187,9 @@ public class MainGameScreen implements Screen{
 		int x = player.getX();
 		int y = player.getY();
 		
-		if(player.getState() != State.ATTACKING && player.getState() != State.DEAD){
+		if(player.getState() != State.ATTACKING && 
+				player.getState() != State.DEAD &&
+				player.getState() != State.INACTIVE){
 			if(Gdx.input.isKeyPressed(Keys.A)){
 				x -= Gdx.graphics.getDeltaTime() * player.getSpeed();
 				newState = State.MOVE;

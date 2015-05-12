@@ -12,6 +12,7 @@ public class Imperiled extends Game {
 	public String map; 
 	public Vector2 startPos;
 	public Direction startDirection;
+	public boolean paused;
 	
 	//set this to true if we want do draw rectangels for collision and things
 	public boolean debug = true;

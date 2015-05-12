@@ -203,7 +203,9 @@ abstract public class Actor {
 	 * @param newState
 	 */
 	public void setState(State newState){
-		if(this.currentState != State.ATTACKING && this.currentState != State.DEAD){
+		if(this.currentState != State.ATTACKING && 
+				this.currentState != State.DEAD &&
+				this.currentState != State.INACTIVE){
 			this.currentState = newState;
 		}
 	}

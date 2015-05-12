@@ -1,5 +1,6 @@
 package com.imperiled.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -10,6 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
@@ -26,10 +31,13 @@ public class UiWrapper {
 	/**
 	 * Creates a new ui based on preferences set in class
 	 */
-	public UiWrapper(boolean drawDebug){
+	public UiWrapper(final Imperiled game){
 		//creates a new stage that covers all of the current view
 		this.stage = new Stage(new ScreenViewport());
 		this.skin = new Skin();
+		
+		//we need to recive input for buttons
+		Gdx.input.setInputProcessor(stage);
 		
 		//create a few textures to work with
 		Pixmap pixmap = new Pixmap(1,1,Format.RGBA8888);
@@ -59,11 +67,20 @@ public class UiWrapper {
 	    progStyle.knob = skin.newDrawable("white", Color.GREEN);
 	    skin.add("default-horizontal", progStyle);
 	    
+	    //default button style
+	    TextButtonStyle textButtonStyle = new TextButtonStyle();
+		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
+		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
+		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+		textButtonStyle.font = skin.getFont("default");
+		skin.add("default", textButtonStyle);
+		
 	    //create a new table that fills the screen
 	    Table table = new Table();
 	    //this fills the viewport with the table
 	    table.setFillParent(true);
-	    table.setDebug(drawDebug);
+	    table.setDebug(game.debug);
 	    
 	    stage.addActor(table);
 	    
@@ -74,8 +91,24 @@ public class UiWrapper {
 	    healthBar.setValue(100);
 	    skin.add("healthBar", healthBar);
 	    table.add(healthBar);
+	    final TextButton pauseButton = new TextButton("Pause", skin);
+	    table.add(pauseButton).align(Align.right).expandX();
 	    //position the table on screen
 	    table.left().top().pad(10);
+	    
+	    //we create a listener to the button
+	    pauseButton.addListener(new ChangeListener(){
+			public void changed(ChangeEvent event,
+					com.badlogic.gdx.scenes.scene2d.Actor actor) {
+				if(game.paused){
+					pauseButton.setText("Pause");
+					game.paused = false;
+				} else {
+					pauseButton.setText("Paused");
+					game.paused = true;
+				}
+			}
+	    });
 	}
 	
 	/**
