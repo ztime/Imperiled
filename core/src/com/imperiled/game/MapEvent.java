@@ -40,6 +40,9 @@ public class MapEvent extends Event {
 	 */
 	public void action() {
 		// Loads the action-type and sets the event as handled.
+		if(isHandled()) {
+			return;
+		}
 		handle();
 		String act = props.get("action");
 		
