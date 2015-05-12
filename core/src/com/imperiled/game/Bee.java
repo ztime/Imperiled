@@ -24,7 +24,11 @@ public class Bee extends Actor {
 	 * @return
 	 */
 	public TextureRegion getKeyFrame(){
-		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, true);
+		boolean moving = true;
+		if(currentState == State.DEAD || currentState == State.INACTIVE){
+			moving = false;
+		}
+		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, moving);
 	}
 
 	/**
