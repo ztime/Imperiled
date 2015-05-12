@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 
 public class AI {
 	
-	private static final int IDLE_OPTIONS = 2;
+	private static final int IDLE_OPTIONS = 3;
 	private long idleTime;
 	private long lastTime;
 	private int currentIdleOption;
@@ -51,14 +51,14 @@ public class AI {
 		case 0:
 			//do nothing
 			break;
-		case 1:
+		default:
 			moveActor();
 			break;
 		}
 	}
 	
 	private void generateIdleInterval() {
-		idleTime = Math.round(Math.random()*2000000000);
+		idleTime = Math.round(Math.random()*1000000000);
 		actor.currentDirection = actor.currentDirection.translateInt(rand.nextInt(4));
 	}
 	
