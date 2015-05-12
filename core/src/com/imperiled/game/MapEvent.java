@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Event;
 
@@ -13,6 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.Event;
  * of this class should never be created directly.
  * It should be created by the class FileParser which
  * reads in all the relevant events for the map.
+ * 
+ * Requires properties for every MapEvent:
+ * name
+ * action
+ * target
+ * 
+ * Optional properties for every MapEvent:
+ * repeatable
  * 
  * @author John Wikman
  * @version 2015.05.12
@@ -40,12 +47,25 @@ public class MapEvent extends Event {
 	 * things depending on what the action property is.
 	 */
 	public void action() {
-		// Loads the action-type and sets the event as handled.
+		// Loads the action-type and sets the event as handled
+		// unless repeatable is specified to be true.
+		String act = props.get("action");
+		String target = props.get("target");
+		String repeatable = props.get("repeatable");
 		if(isHandled()) {
 			return;
 		}
-		handle();
-		String act = props.get("action");
+		if(repeatable == null || !repeatable.equalsIgnoreCase("true")) {
+			handle();
+		}
+		
+		/*
+		 * Causes eventError if specified target is not
+		 * loaded on to the active map.
+		 */
+		if(PropertyHandler.currentActors.get(target) == null) {
+			eventError("Target is not loaded on to this map.", act, target);
+		}
 		
 		/*
 		 * This action-type does damage to a specific
@@ -56,13 +76,12 @@ public class MapEvent extends Event {
 		 * specified or is not loaded on map. Causes
 		 * eventError if "amount" is not specified or
 		 * if "amount" is not a number.
+		 * 
+		 * Required properties:
+		 * amount
 		 */
 		if(act.equalsIgnoreCase("dodamage")) {
-			String target = props.get("target");
 			String sAmount = props.get("amount");
-			if(PropertyHandler.currentActors.get(target) == null) {
-				eventError("Target is not loaded on to this map.", act, target);
-			}
 			if(sAmount == null) {
 				eventError("No damage amount specified.", act, target);
 			}
@@ -79,10 +98,19 @@ public class MapEvent extends Event {
 		 * will spawn on the new map and the direction
 		 * the player will be facing.
 		 * 
+		 * Causes eventError if specified mapTarget
+		 * does not exist, if specified coordinates
+		 * are not integers or if the specified direction
+		 * is not UP, DOWN, LEFT or RIGHT.
 		 * 
+		 * Required properties:
+		 * mapTarget
+		 * 
+		 * Optional properties:
+		 * xcor & ycor
+		 * direction
 		 */
 		else if(act.equalsIgnoreCase("changeMap")) {
-			String target = props.get("target");
 			String mapTarget = props.get("mapTarget");
 			String xcor = props.get("xcor");
 			String ycor = props.get("ycor");
@@ -144,6 +172,9 @@ public class MapEvent extends Event {
 	 * @return True if the map exists. Else false;
 	 */
 	private boolean mapExists(String mapName) {
+		if(mapName == null) {
+			return false;
+		}
 		if (Gdx.app.getType() == ApplicationType.Android) {
 			return Gdx.files.internal("map/" + mapName + ".tmx").exists();
 		}
@@ -151,13 +182,15 @@ public class MapEvent extends Event {
 	}
 	
 	/**
+	 * Help method that causes an eventError which
+	 * prints an error message and exits the program.
 	 * 
-	 * @param type
-	 * @param atFrom
-	 * @param atTo
+	 * @param description A description of the error.
+	 * @param act What action was performed.
+	 * @param causeVal The value that caused the error.
 	 */
-	private void eventError(String type, String atFrom, String atTo) {
-		System.err.printf("Event error: %s%nFrom %s to %s.%n", type, atFrom, atTo);
+	private void eventError(String description, String act, String causeVal) {
+		System.err.printf("Event error: %s%nAction: %s%nError cause value: %s.%n", description, act, causeVal);
 		System.exit(1);
 	}
 }

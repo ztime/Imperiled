@@ -2,3 +2,4 @@ death
 action=dodamage
 amount=50
 target=player
+repeatable=true
