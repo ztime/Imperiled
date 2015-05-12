@@ -1,0 +1,92 @@
+package com.imperiled.game;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+/**
+ * A wrapper around a Ui interface
+ * 
+ * @author jonas wedin
+ * @verision 2015-05-12
+ */
+public class UiWrapper {
+
+	private Stage stage;
+	private Skin skin;
+	
+	/**
+	 * Creates a new ui based on preferences set in class
+	 */
+	public UiWrapper(boolean drawDebug){
+		//creates a new stage that covers all of the current view
+		this.stage = new Stage(new ScreenViewport());
+		this.skin = new Skin();
+		
+		//create a few textures to work with
+		Pixmap pixmap = new Pixmap(1,1,Format.RGBA8888);
+		pixmap.setColor(Color.WHITE);
+		pixmap.fill();
+		skin.add("white", new Texture(pixmap));
+		pixmap = new Pixmap(10,10,Format.RGBA8888);
+		pixmap.setColor(Color.WHITE);
+		pixmap.fill();
+		skin.add("whiteBig", new Texture(pixmap));
+		
+		//Store a default font
+		skin.add("default", new BitmapFont());
+		
+		//Store a default label style
+		Label.LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = skin.getFont("default");
+		labelStyle.fontColor = Color.WHITE;
+		skin.add("default", labelStyle);
+		
+		//Store a default progressbar style
+		ProgressBar.ProgressBarStyle progStyle = new ProgressBar.ProgressBarStyle();
+		progStyle.background = skin.newDrawable("whiteBig", Color.BLACK);
+	    progStyle.knobBefore = skin.newDrawable("whiteBig", Color.GREEN);
+	    skin.add("default-horizontal", progStyle);
+	    
+	    //create a new table that fills the screen
+	    Table table = new Table();
+	    //this fills the viewport with the table
+	    table.setFillParent(true);
+	    table.setDebug(drawDebug);
+	    
+	    stage.addActor(table);
+	    
+	    //creates the enteties 
+	    table.add(new Label("Health:", skin));
+	    ProgressBar healthBar = new ProgressBar(0,100,1,false,progStyle);
+	    healthBar.setSize(100, 10);
+	    healthBar.setValue(100);
+	    skin.add("healthBar", healthBar);
+	    table.add(healthBar);
+	    //position the table on screen
+	    table.left().top().pad(10);
+	}
+	
+	/**
+	 * Sets the healthbar with the new player health
+	 * @param playerHealth
+	 */
+	public void update(int playerHealth){
+		skin.get("healthBar", ProgressBar.class).setValue((float) playerHealth);
+	}
+	
+	/**
+	 * Draws the ui on screen
+	 */
+	public void draw(){
+		stage.draw();
+	}
+}

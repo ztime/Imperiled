@@ -41,6 +41,8 @@ public class MainGameScreen implements Screen{
 	// du får typ ha något liknande här:
 	// private ArrayList<MapEvent> events;
 	
+	private UiWrapper ui;
+	
 	
 	//Settings
 	private float SCALE_WIDTH = 1.2f;
@@ -48,6 +50,7 @@ public class MainGameScreen implements Screen{
 	public MainGameScreen(Imperiled game){
 		this.game = game;
 		PropertyHandler.currentGame = game;
+		ui = new UiWrapper(this.game.debug);
 		
 		batch = new SpriteBatch();
 		//setup map
@@ -151,6 +154,9 @@ public class MainGameScreen implements Screen{
 		if(game.debug){
 			debugDrawing();
 		}
+		//ui rendering should always happen last
+		ui.update(player.health);
+		ui.draw();
 	}
 
 	/**
