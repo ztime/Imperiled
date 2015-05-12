@@ -82,17 +82,18 @@ public class MapEvent extends Event {
 		 */
 		else if(act.equalsIgnoreCase("changeMap")) {
 			String target = props.get("target");
+			String mapTarget = props.get("mapTarget");
 			String xcor = props.get("xcor");
 			String ycor = props.get("ycor");
 			String direction = props.get("direction");
-			if(!mapExists(target)) {
-				eventError("Target map does not exist.", act, target);
+			if(!mapExists(mapTarget)) {
+				eventError("Target map does not exist.", act, mapTarget);
 			}
 			Imperiled game = PropertyHandler.currentGame; 
-			game.map = target;
+			game.map = mapTarget;
 			if(xcor != null && ycor != null) {
 				if(!xcor.matches("^\\d+$") || !ycor.matches("^\\d+$")) {
-					eventError("Coordinates not integers.", act, target);
+					eventError("Coordinates not integers.", act, mapTarget);
 				}
 				game.startPos.x = Integer.parseInt(xcor);
 				game.startPos.y = Integer.parseInt(ycor);
