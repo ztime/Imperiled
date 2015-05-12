@@ -238,6 +238,7 @@ public class MainGameScreen implements Screen{
 			Actor currentActor = iterActors.next();
 			if(Intersector.overlaps(playerDmgRect.rectangle, currentActor.getRectangle())){
 				currentActor.takeDamage(playerDmgRect.dmg);
+				currentActor.currentDirection = player.currentDirection.getOpposite();
 			}
 		}
 		//next we check actors vs player
