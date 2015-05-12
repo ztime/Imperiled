@@ -19,6 +19,7 @@ public class Bee extends Actor {
 		this.health = 100;
 		this.speed = 150f;
 		this.ai = new AI(this);
+		currentState = State.ATTACKING;
 	}
 	
 	

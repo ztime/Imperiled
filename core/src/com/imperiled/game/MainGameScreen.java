@@ -209,7 +209,7 @@ public class MainGameScreen implements Screen{
 		this.checkPlayerCollision(); 
 		
 		for(Actor acts : actors) {
-			acts.getAI().act();
+			acts.getAI().act(collisionObjects, player);
 		}
 		//here we need to move the actors with some fancy ai
 		// actors.moveBitch() or something
@@ -314,6 +314,7 @@ public class MainGameScreen implements Screen{
 				currentActor.revertToOldPosition();
 				continue;
 			}
+			//then other actors
 			for(Actor actr : actors) {
 				if(actr == currentActor) {
 					continue;
@@ -324,7 +325,7 @@ public class MainGameScreen implements Screen{
 					continue nextactor;
 				}
 			}
-			//then map objects
+			//lastly map objects
 			Iterator<MapObject> iterCollision = collisionObjects.iterator();
 			while(iterCollision.hasNext()){
 				RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
