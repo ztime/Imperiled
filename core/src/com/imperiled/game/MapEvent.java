@@ -3,6 +3,7 @@ package com.imperiled.game;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Event;
 
@@ -56,13 +57,13 @@ public class MapEvent extends Event {
 			String target = props.get("target");
 			String sAmount = props.get("amount");
 			if(PropertyHandler.currentActors.get(target) == null) {
-				eventError("Target is not loaded on to this map.", act, "dodamage");
+				eventError("Target is not loaded on to this map.", act, target);
 			}
 			if(sAmount == null) {
-				eventError("No damage amount specified.", act, "dodamage");
+				eventError("No damage amount specified.", act, target);
 			}
 			if(!sAmount.matches("^\\d+$")) {
-				eventError("Amount is not a number.", act, "dodamage");
+				eventError("Amount is not a number.", act, target);
 			}
 			int amount = Integer.parseInt(sAmount);
 			PropertyHandler.currentActors.get(target).takeDamage(amount);
@@ -81,8 +82,32 @@ public class MapEvent extends Event {
 			String xcor = props.get("xcor");
 			String ycor = props.get("ycor");
 			String direction = props.get("direction");
-			 Gdx.files.internal("map/" + target + ".tmx");
-			
+			if(!mapExists(target)) {
+				eventError("Target map does not exist.", act, target);
+			}
+			Imperiled game = PropertyHandler.currentGame; 
+			game.map = target;
+			if(xcor != null && ycor != null) {
+				if(!xcor.matches("^\\d+$") || !ycor.matches("^\\d+$")) {
+					eventError("Coordinates not integers.", act, target);
+				}
+				game.startPos.x = Integer.parseInt(xcor);
+				game.startPos.y = Integer.parseInt(ycor);
+			}
+			if(direction == null) {
+				//Do nothing
+			} else if(direction.equalsIgnoreCase("UP")) {
+				game.startDirection = Direction.UP;
+			} else if(direction.equalsIgnoreCase("DOWN")) {
+				game.startDirection = Direction.DOWN;
+			} else if(direction.equalsIgnoreCase("LEFT")) {
+				game.startDirection = Direction.LEFT;
+			} else if(direction.equalsIgnoreCase("RIGHT")) {
+				game.startDirection = Direction.RIGHT;
+			} else {
+				eventError("Specified direction not valid.", act, target);
+			}
+			game.setScreen(new MainGameScreen(game));
 		}
 	}
 	
@@ -106,6 +131,17 @@ public class MapEvent extends Event {
 			s.append("\n" + key + ": " + props.get(key));
 		}
 		return s.toString();
+	}
+	
+	/**
+	 * Help method to check if a map exists.
+	 * @return True if the map exists. Else false;
+	 */
+	private boolean mapExists(String mapName) {
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			return Gdx.files.internal("map/" + mapName).exists();
+		}
+		return Gdx.files.internal("./bin/map/" + mapName).exists();
 	}
 	
 	/**
