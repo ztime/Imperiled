@@ -105,21 +105,7 @@ public class Player extends Actor {
 		}
 		
 	}
-	/**
-	 * Draws the player using the SpriteBatch 
-	 * DOES NOT CALL batch.begin() or batch.end()
-	 * draws the player red if it has taken damage
-	 */
-	@Override
-	public void draw(SpriteBatch batch) {
-		if(elapsedTimeDamage < 1.2f){
-			batch.setColor(1, 0, 0, 0.7f);
-		}
-		batch.draw(this.getKeyFrame(), x, y);
-		batch.setColor(Color.WHITE);
-
-	}
-
+	
 	/**
 	 * Returns a rectangle surrounding the player, should be used for
 	 * collision checking and position checking etc. 

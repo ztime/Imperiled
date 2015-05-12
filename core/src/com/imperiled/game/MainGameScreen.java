@@ -219,6 +219,18 @@ public class MainGameScreen implements Screen{
 			this.checkEventCollision(actor);
 		}
 		
+		//check damage
+		this.checkDamage();
+		
+		//we also need to adapt the camera to the players position
+		setCameraPosition(player.x, player.y);
+	}
+	
+	/**
+	 * Checks player and all actors for damage rectangels that
+	 * intersects and deals out damage accordingly
+	 */
+	private void checkDamage(){
 		//-- check damage that player does to actors 
 		DamageRectangle playerDmgRect = player.getDamageRectangle();
 		Iterator<Actor> iterActors = actors.iterator();
@@ -226,13 +238,19 @@ public class MainGameScreen implements Screen{
 			Actor currentActor = iterActors.next();
 			if(Intersector.overlaps(playerDmgRect.rectangle, currentActor.getRectangle())){
 				currentActor.takeDamage(playerDmgRect.dmg);
-				System.out.println("Hejsan!" + currentActor.elapsedTimeDeath);
 			}
 		}
-		//we also need to adapt the camera to the players position
-		setCameraPosition(player.x, player.y);
+		//next we check actors vs player
+		Rectangle playerHitBox = player.getRectangle();
+		iterActors = actors.iterator();
+		while(iterActors.hasNext()){
+			Actor currentActor = iterActors.next();
+			DamageRectangle actorDmgRect = currentActor.getDamageRectangle();
+			if(Intersector.overlaps(actorDmgRect.rectangle, playerHitBox)){
+				player.takeDamage(actorDmgRect.dmg);
+			}
+		}
 	}
-	
 	/**
 	 * Adds a new monster to the map! 
 	 * 
