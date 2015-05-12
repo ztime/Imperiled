@@ -33,14 +33,14 @@ public class MainMenuScreen implements Screen {
 		batch = new SpriteBatch();
 		batch.setProjectionMatrix(camera.combined);
 		
-		background = new Texture(Gdx.files.internal("logo.jpg"));
+		background = new Texture(Gdx.files.internal("logo.png"));
 	}
 
 
 	@Override
 	public void render(float delta) {
 		//Clear screen
-		Gdx.gl.glClearColor(0,0,0,1); //black
+		Gdx.gl.glClearColor(48/51f,48/51f,48/51f,1); //black
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// calculate scaling for image 

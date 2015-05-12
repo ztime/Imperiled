@@ -23,6 +23,7 @@ abstract public class Actor {
 	int health = 100;
 	boolean invulnerable = false;
 	String name;
+	AI ai;
 	
 	//keep track of current states
 	State currentState = State.IDLE;
@@ -241,6 +242,10 @@ abstract public class Actor {
 		} else {
 			return false;
 		}
+	}
+	
+	public AI getAI() {
+		return ai;
 	}
 	
 	/**

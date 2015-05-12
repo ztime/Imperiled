@@ -15,4 +15,22 @@ public enum Direction {
 	public Direction getOpposite() {
 		return opposite;
 	}
+	
+	public Direction translateInt(int i) {
+		Direction dir;
+		switch(i) {
+		case 0:
+			dir = UP;
+			break;
+		case 2:
+			dir = DOWN;
+			break;
+		case 1:
+			dir = LEFT;
+			break;
+		default:
+			dir = RIGHT;
+		}
+		return dir;
+	}
 }

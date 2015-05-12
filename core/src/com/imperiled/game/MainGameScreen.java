@@ -146,7 +146,7 @@ public class MainGameScreen implements Screen{
 		
 		/**
 		 * This is debug rendering and will only happen is debug flag
-		 * is set to true in Imperield class
+		 * is set to true in Imperiled class
 		 */
 		if(game.debug){
 			debugDrawing();
@@ -208,6 +208,9 @@ public class MainGameScreen implements Screen{
 		//move the player back if it needs to 
 		this.checkPlayerCollision(); 
 		
+		for(Actor acts : actors) {
+			acts.getAI().act();
+		}
 		//here we need to move the actors with some fancy ai
 		// actors.moveBitch() or something
 		// or maybe that should be handled by update()
