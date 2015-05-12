@@ -321,11 +321,23 @@ public class MainGameScreen implements Screen{
 		//actors collision checking
 		Rectangle playerHitBox = player.getRectangle();
 		Iterator<Actor> iterActor = actors.iterator();
+		nextactor:
 		while(iterActor.hasNext()){
 			Actor currentActor = iterActor.next();
 			//first check player
 			if(Intersector.overlaps(playerHitBox, currentActor.getRectangle())){
 				currentActor.revertToOldPosition();
+				continue;
+			}
+			for(Actor actr : actors) {
+				if(actr == currentActor) {
+					continue;
+				}
+				Rectangle actorHitBox = actr.getRectangle();
+				if(Intersector.overlaps(actorHitBox, currentActor.getRectangle())){
+					currentActor.revertToOldPosition();
+					continue nextactor;
+				}
 			}
 			//then map objects
 			Iterator<MapObject> iterCollision = collisionObjects.iterator();
