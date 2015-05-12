@@ -155,7 +155,7 @@ public class MainGameScreen implements Screen{
 			debugDrawing();
 		}
 		//ui rendering should always happen last
-		ui.update(player.health);
+		ui.update(player);
 		ui.draw();
 	}
 

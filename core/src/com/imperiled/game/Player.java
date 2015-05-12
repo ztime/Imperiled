@@ -3,10 +3,8 @@ package com.imperiled.game;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -42,67 +40,10 @@ public class Player extends Actor {
 		this.loadAnimation();
 		this.speed = 200f;
 		this.name = "player";
-		//temporarly
+		//Temporarly add a sword as the only weapon
 		Weapon sword = new Sword();
 		weapons.add(sword);
 		currentWeapon = sword;
-		
-	}
-	
-	
-	/**
-	 * Change the direction the player is facing
-	 * @param newDir
-	 */
-	public void setDirection(Direction newDir){
-		this.currentDirection = newDir;
-	}
-	
-	/**
-	 * Change the state of the player
-	 * @param newState
-	 */
-	public void setState(State newState){
-		if(this.currentState != State.ATTACKING && this.currentState != State.DEAD){
-			this.currentState = newState;
-		}
-	}
-	
-	/**
-	 * Returns the current speed
-	 * 
-	 * @return speed
-	 */
-	public float getSpeed(){
-		return this.speed;
-	}
-	
-	/**
-	 * Returs the current direction
-	 * @return
-	 */
-	public Direction getDirection(){
-		return this.currentDirection;
-	}
-	
-	/**
-	 * Returns the current state
-	 * @return
-	 */
-	public State getState(){
-		return this.currentState;
-	}
-	
-	/**
-	 * Returns true if player is moving
-	 * @return
-	 */
-	private boolean isPlayerMoving(){
-		if(this.currentState == State.MOVE){
-			return true;
-		} else {
-			return false;
-		}
 		
 	}
 	
@@ -129,7 +70,7 @@ public class Player extends Actor {
 	 * @return
 	 */
 	private int getHeight(){
-		return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isPlayerMoving()).getRegionHeight();
+		return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving()).getRegionHeight();
 	}
 	
 	/**
@@ -138,7 +79,7 @@ public class Player extends Actor {
 	 * @return
 	 */
 	private int getWidth(){
-		return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isPlayerMoving()).getRegionWidth();
+		return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving()).getRegionWidth();
 	}
 	
 	@Override
@@ -175,8 +116,10 @@ public class Player extends Actor {
 	 * @return
 	 */
 	public TextureRegion getKeyFrame(){
-		if(this.currentState != State.ATTACKING && this.currentState != State.DEAD){
-			return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isPlayerMoving());
+		if(this.currentState != State.ATTACKING && 
+				this.currentState != State.DEAD &&
+				this.currentState != State.INACTIVE){
+			return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving());
 		} else if(this.currentState == State.ATTACKING){
 			if(slashing[translateCurrentDirection()].isAnimationFinished(elapsedTimeAttack)){
 				this.elapsedTimeAttack = 0;

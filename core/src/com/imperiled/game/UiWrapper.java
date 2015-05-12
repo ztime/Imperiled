@@ -51,9 +51,12 @@ public class UiWrapper {
 		skin.add("default", labelStyle);
 		
 		//Store a default progressbar style
+		//we make the knob the same color as the background, that way it looks
+		//like the progressbar goes all the way down 
 		ProgressBar.ProgressBarStyle progStyle = new ProgressBar.ProgressBarStyle();
 		progStyle.background = skin.newDrawable("whiteBig", Color.BLACK);
 	    progStyle.knobBefore = skin.newDrawable("whiteBig", Color.GREEN);
+	    progStyle.knob = skin.newDrawable("white", Color.BLACK);
 	    skin.add("default-horizontal", progStyle);
 	    
 	    //create a new table that fills the screen
@@ -79,8 +82,8 @@ public class UiWrapper {
 	 * Sets the healthbar with the new player health
 	 * @param playerHealth
 	 */
-	public void update(int playerHealth){
-		skin.get("healthBar", ProgressBar.class).setValue((float) playerHealth);
+	public void update(Actor player){
+		skin.get("healthBar", ProgressBar.class).setValue((float) player.getHealth());
 	}
 	
 	/**

@@ -41,9 +41,11 @@ abstract public class Actor {
 	 * @param batch
 	 */
 	public void draw(SpriteBatch batch) {
-		if(this.elapsedTimeDamage < 1.2f){
-			batch.setColor(1, 0, 0, 0.7f);
-		} else if(this.currentState == State.DEAD){
+		if(this.elapsedTimeDamage < 1.2f && 
+				this.currentState != State.INACTIVE &&
+				this.currentState != State.DEAD){
+			batch.setColor(1, 0, 0, 1);
+		} else if(this.currentState == State.DEAD || this.currentState == State.INACTIVE){
 			batch.setColor(0,0,1,1);
 		}
 		batch.draw(this.getKeyFrame(), x, y);
