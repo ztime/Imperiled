@@ -75,8 +75,7 @@ public class MainGameScreen implements Screen{
 		
 		//events
 		// Adds the events associated with this map to the PropertyHandler.
-
-		eventObjects = map.getLayers().get("event").getObjects();
+		eventObjects = map.getLayers().get("events").getObjects();
 		
 		new FileParser(this.game.map);
 		// TEMPORARY TESTING OF FILEPARSER AND EVENTS
@@ -177,10 +176,12 @@ public class MainGameScreen implements Screen{
 				}
 			}
 			//Render eventboxes
-			shRend.setColor(0,1,1,1);
+			shRend.setColor(0,1,0,1);
 			Iterator<MapObject> iterEventObj = eventObjects.iterator();
 			while(iterEventObj.hasNext()){
-				
+				RectangleMapObject eventObj = (RectangleMapObject) iterEventObj.next();
+				Rectangle eventRectangle = eventObj.getRectangle();
+				shRend.rect(eventRectangle.x, eventRectangle.y, eventRectangle.width, eventRectangle.height);
 			}
 			//Debug drawing done
 			
