@@ -139,53 +139,7 @@ public class MainGameScreen implements Screen{
 		 * is set to true in Imperield class
 		 */
 		if(game.debug){
-			ShapeRenderer shRend = new ShapeRenderer();
-			shRend.setProjectionMatrix(camera.combined);
-			shRend.begin(ShapeType.Line);
-			//Render player box
-			Rectangle playerBox = player.getRectangle();
-			shRend.rect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
-			//Render collision objects loaded from map
-			Iterator<MapObject> iter = collisionObjects.iterator();
-			while(iter.hasNext()){
-				RectangleMapObject obj = (RectangleMapObject) iter.next();
-				Rectangle rectangle = obj.getRectangle();
-				shRend.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-			}
-			//Render all actors boxes
-			Iterator<Actor> iterActor = actors.iterator();
-			while(iterActor.hasNext()){
-				Actor next = iterActor.next();
-				Rectangle actorRectangle = next.getRectangle();
-				if(actorRectangle != null){
-					shRend.rect(actorRectangle.x, actorRectangle.y, actorRectangle.width, actorRectangle.height);
-				}
-				
-			}
-			//Render damage boxes
-			shRend.setColor(1,0,0,1);
-			DamageRectangle playerDmg = player.getDamageRectangle();
-			shRend.rect(playerDmg.rectangle.x, playerDmg.rectangle.y, playerDmg.rectangle.width,  playerDmg.rectangle.height);
-			//actors dmg boxes
-			iterActor = actors.iterator();
-			while(iterActor.hasNext()){
-				Actor next = iterActor.next();
-				Rectangle actorDmgRectangle = next.getDamageRectangle().rectangle;
-				if(actorDmgRectangle != null){
-					shRend.rect(actorDmgRectangle.x, actorDmgRectangle.y, actorDmgRectangle.width, actorDmgRectangle.height);
-				}
-			}
-			//Render eventboxes
-			shRend.setColor(0,1,0,1);
-			Iterator<MapObject> iterEventObj = eventObjects.iterator();
-			while(iterEventObj.hasNext()){
-				RectangleMapObject eventObj = (RectangleMapObject) iterEventObj.next();
-				Rectangle eventRectangle = eventObj.getRectangle();
-				shRend.rect(eventRectangle.x, eventRectangle.y, eventRectangle.width, eventRectangle.height);
-			}
-			//Debug drawing done
-			
-			shRend.end();
+			debugDrawing();
 		}
 	}
 
@@ -296,6 +250,62 @@ public class MainGameScreen implements Screen{
 		map.dispose();
 		batch.dispose();
 		player.dispose();
+	}
+	
+	/**
+	 * Draws debug boxed around objects loaded in the map 
+	 * White is playerboxes / collision boxes
+	 * Red is damageboxed
+	 * Blue is event boxes
+	 */
+	private void debugDrawing(){
+		ShapeRenderer shRend = new ShapeRenderer();
+		shRend.setProjectionMatrix(camera.combined);
+		shRend.begin(ShapeType.Line);
+		//Render player box
+		Rectangle playerBox = player.getRectangle();
+		shRend.rect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
+		//Render collision objects loaded from map
+		Iterator<MapObject> iter = collisionObjects.iterator();
+		while(iter.hasNext()){
+			RectangleMapObject obj = (RectangleMapObject) iter.next();
+			Rectangle rectangle = obj.getRectangle();
+			shRend.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+		}
+		//Render all actors boxes
+		Iterator<Actor> iterActor = actors.iterator();
+		while(iterActor.hasNext()){
+			Actor next = iterActor.next();
+			Rectangle actorRectangle = next.getRectangle();
+			if(actorRectangle != null){
+				shRend.rect(actorRectangle.x, actorRectangle.y, actorRectangle.width, actorRectangle.height);
+			}
+			
+		}
+		//Render damage boxes
+		shRend.setColor(1,0,0,1);
+		DamageRectangle playerDmg = player.getDamageRectangle();
+		shRend.rect(playerDmg.rectangle.x, playerDmg.rectangle.y, playerDmg.rectangle.width,  playerDmg.rectangle.height);
+		//actors dmg boxes
+		iterActor = actors.iterator();
+		while(iterActor.hasNext()){
+			Actor next = iterActor.next();
+			Rectangle actorDmgRectangle = next.getDamageRectangle().rectangle;
+			if(actorDmgRectangle != null){
+				shRend.rect(actorDmgRectangle.x, actorDmgRectangle.y, actorDmgRectangle.width, actorDmgRectangle.height);
+			}
+		}
+		//Render eventboxes
+		shRend.setColor(0,1,0,1);
+		Iterator<MapObject> iterEventObj = eventObjects.iterator();
+		while(iterEventObj.hasNext()){
+			RectangleMapObject eventObj = (RectangleMapObject) iterEventObj.next();
+			Rectangle eventRectangle = eventObj.getRectangle();
+			shRend.rect(eventRectangle.x, eventRectangle.y, eventRectangle.width, eventRectangle.height);
+		}
+		//Debug drawing done
+		
+		shRend.end();
 	}
 
 }
