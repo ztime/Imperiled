@@ -56,7 +56,7 @@ public class UiWrapper {
 		ProgressBar.ProgressBarStyle progStyle = new ProgressBar.ProgressBarStyle();
 		progStyle.background = skin.newDrawable("whiteBig", Color.BLACK);
 	    progStyle.knobBefore = skin.newDrawable("whiteBig", Color.GREEN);
-	    progStyle.knob = skin.newDrawable("white", Color.BLACK);
+	    progStyle.knob = skin.newDrawable("white", Color.GREEN);
 	    skin.add("default-horizontal", progStyle);
 	    
 	    //create a new table that fills the screen
