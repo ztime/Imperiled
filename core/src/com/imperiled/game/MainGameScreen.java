@@ -165,6 +165,7 @@ public class MainGameScreen implements Screen{
 		//new position 
 		int x = player.getX();
 		int y = player.getY();
+		
 		if(player.getState() != State.ATTACKING && player.getState() != State.DEAD){
 			if(Gdx.input.isKeyPressed(Keys.A)){
 				x -= Gdx.graphics.getDeltaTime() * player.getSpeed();
@@ -193,6 +194,7 @@ public class MainGameScreen implements Screen{
 		
 		//set the new values
 		player.setPosition(x, y);
+		
 		//move the player back if it needs to 
 		this.checkPlayerCollision(); 
 		
