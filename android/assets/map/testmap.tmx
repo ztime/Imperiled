@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="32" tileheight="32" nextobjectid="37">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="32" tileheight="32" nextobjectid="42">
  <tileset firstgid="1" source="grass.tsx"/>
  <tileset firstgid="19" source="water.tsx"/>
  <tileset firstgid="37" source="bridges.tsx"/>
@@ -23,7 +23,6 @@
   <object id="20" x="96.3288" y="225.951" width="213.522" height="23.0834"/>
   <object id="21" x="96.7728" y="228.615" width="23.9712" height="78.1285"/>
   <object id="22" x="-37.2886" y="225.063" width="68.8063" height="84.3432"/>
-  <object id="23" x="287.655" y="-11.883" width="126.959" height="17.3126"/>
   <object id="24" x="416.833" y="289.43" width="62.5916" height="30.186"/>
   <object id="25" x="417.277" y="315.948" width="29.7421" height="136.725"/>
   <object id="26" x="543.718" y="287.43" width="131.398" height="31.5177"/>
@@ -38,6 +37,7 @@
  </objectgroup>
  <objectgroup name="markers">
   <object id="33" name="playerStart" x="534.154" y="141.443"/>
-  <object id="35" name="enemyStart" x="277.061" y="373.575"/>
+  <object id="35" name="BietAlfred" type="bee" x="277.061" y="373.575"/>
+  <object id="39" name="BietKalle" type="bee" x="196" y="162"/>
  </objectgroup>
 </map>
