@@ -17,7 +17,7 @@ public class PropertyHandler {
 	}
 	
 	public static void newEvents(ArrayList<MapEvent> events) {
-		currentActors = new HashMap<String, Actor>();
+		currentEvents = new HashMap<String, MapEvent>();
 		for(MapEvent event : events) {
 			currentEvents.put(event.getName(), event);
 		}

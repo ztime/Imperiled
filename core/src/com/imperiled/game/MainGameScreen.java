@@ -71,9 +71,14 @@ public class MainGameScreen implements Screen{
 		//load map objects
 		collisionObjects = map.getLayers().get("collision").getObjects();
 		markers = map.getLayers().get("markers").getObjects();
+		
 		//events
 		//MapObjects eventObjects = map.getLayers().get("event").getObjects();
+		// Adds the events associated with this map to the PropertyHandler.
 		new FileParser(this.game.map);
+		// TEMPORARY TESTING OF FILEPARSER AND EVENTS
+		// System.out.println(PropertyHandler.currentEvents.get("death").listOfProperties());
+		// END OF TESTING
 		
 		//setup actors in the map
 		actors = new ArrayList<Actor>();
@@ -103,6 +108,8 @@ public class MainGameScreen implements Screen{
 			Bee bee = new Bee(startEnemyX, startEnemyY);
 			actors.add(bee);
 		}
+		// Adds the actors to the PropertyHandler.
+		PropertyHandler.newActors(actors);
 	}
 
 	@Override

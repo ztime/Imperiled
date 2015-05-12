@@ -22,8 +22,8 @@ public class FileParser {
 		}
 		files = new ArrayList<FileHandle>();
 		for(FileHandle file : folder.list()) {
-			if(!file.extension().equalsIgnoreCase(suffix) &&
-					file.isDirectory()) {
+			if(file.extension().equalsIgnoreCase(suffix) &&
+					!file.isDirectory()) {
 				files.add(file);
 			}
 		}
@@ -37,7 +37,7 @@ public class FileParser {
 	private void parseFiles() {
 		ArrayList<MapEvent> events = new ArrayList<MapEvent>();
 		for(FileHandle file : files) {
-			try(BufferedReader in = file.reader(0)) {
+			try(BufferedReader in = new BufferedReader(file.reader())) {
 				events.add(new MapEvent(fileParser(in, file.name())));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -53,7 +53,9 @@ public class FileParser {
 		int lnCnt = 0;
 		while ((line = in.readLine()) != null) { // reads each line
             lnCnt++;
+            //System.out.println(line);
             String[] parts = line.trim().split("\\=");
+            //System.out.println(parts[0]);
             if(parts[0].equals("")) {
                 continue;
             }
@@ -67,6 +69,10 @@ public class FileParser {
             	properties.put("name", parts[0]);
             	continue;
             }
+            if(parts.length != 2) {
+        		formatError(lnCnt, "Undefined property. Check for multiple instances of =.", filename);
+        	}
+            //System.out.println(parts[1]);
             if(properties.containsKey(parts[0])) {
             	formatError(lnCnt, "Property duplicate.", filename);
             }

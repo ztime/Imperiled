@@ -41,6 +41,20 @@ public class MapEvent extends Event {
 	}
 	
 	/**
+	 * Prints out a list of properties for an event.
+	 * Used for debugging.
+	 * 
+	 * @return A String containing all the properties of the event.
+	 */
+	public String listOfProperties() {
+		StringBuilder s = new StringBuilder();
+		for(String key : props.keySet()) {
+			s.append("\n" + key + ": " + props.get(key));
+		}
+		return s.toString();
+	}
+	
+	/**
 	 * 
 	 * @param type
 	 * @param atFrom
