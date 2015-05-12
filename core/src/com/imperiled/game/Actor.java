@@ -109,6 +109,14 @@ abstract public class Actor {
 		retVec.y = (float) oldY;
 		return retVec;
 	}
+	
+	/**
+	 * Moves actor back to it's old position
+	 */
+	public void revertToOldPosition(){
+		this.x = this.oldX;
+		this.y = this.oldY;
+	}
 	/**
 	 * Returns current position as a vector2
 	 * @return
