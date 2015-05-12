@@ -47,7 +47,7 @@ public class MainGameScreen implements Screen{
 	
 	public MainGameScreen(Imperiled game){
 		this.game = game;
-		PropertyHandler.setGame(game);
+		PropertyHandler.currentGame = game;
 		
 		batch = new SpriteBatch();
 		//setup map

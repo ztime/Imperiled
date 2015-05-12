@@ -10,20 +10,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 /**
+ * FileParser is a class that reads events
+ * from a folder "data/(mapname)" and loads
+ * them into the PropertyHandler.
  * 
- * @author john
- *
+ * Instances of FileParser should not be
+ * referenced to any variable.
+ * 
+ * @author John Wikman
+ * @version 2015.05.12
  */
 public class FileParser {
 	private FileHandle folder;
 	private String suffix = "jwx2";
 	private ArrayList<FileHandle> files;
 	
-	public FileParser(String path) {
+	/**
+	 * Creates a FileParser that fetches a folder
+	 * with the same name as the map which the events
+	 * belong to. Then takes all the event files in
+	 * that folder and parses them into a MapEvent
+	 * stored in PropertyHandler.
+	 * 
+	 * Event files have the suffix ".jwx2".
+	 * 
+	 * @param path Name of the map without ".tmx"
+	 */
+	public FileParser(String mapName) {
 		if (Gdx.app.getType() == ApplicationType.Android) {
-			folder = Gdx.files.internal("data/" + path);
+			folder = Gdx.files.internal("data/" + mapName);
 		} else {
-			folder = Gdx.files.internal("./bin/data/" + path);
+			folder = Gdx.files.internal("./bin/data/" + mapName);
 		}
 		files = new ArrayList<FileHandle>();
 		for(FileHandle file : folder.list()) {
@@ -35,10 +52,12 @@ public class FileParser {
 		parseFiles();
 	}
 	
-	public FileHandle getFolder() {
-		return folder;
-	}
-	
+	/**
+	 * A method that parses each file that the
+	 * constructor gathered into a MapEvent.
+	 * Adds the files to the PropertyHandler
+	 * when done.
+	 */
 	private void parseFiles() {
 		ArrayList<MapEvent> events = new ArrayList<MapEvent>();
 		for(FileHandle file : files) {
@@ -52,15 +71,29 @@ public class FileParser {
 		PropertyHandler.newEvents(events);
 	}
 	
+	/**
+	 * The method called upon by parseFiles to
+	 * parse each file into a MapEvent.
+	 * 
+	 * Syntax structure:
+	 * (name)
+	 * (property1)=(value1)
+	 * (property2)=(value2)
+	 * ...
+	 * etc.
+	 * 
+	 * @param in A BufferedReader with the file loaded.
+	 * @param filename Name of the file being parsed.
+	 * @return A HashMap with each value bound
+	 *         to its property.
+	 */
 	private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
 		HashMap<String, String> properties = new HashMap<String, String>();
 		String line;
 		int lnCnt = 0;
 		while ((line = in.readLine()) != null) { // reads each line
             lnCnt++;
-            //System.out.println(line);
             String[] parts = line.trim().split("\\=");
-            //System.out.println(parts[0]);
             if(parts[0].equals("")) {
                 continue;
             }
@@ -77,7 +110,6 @@ public class FileParser {
             if(parts.length != 2) {
         		formatError(lnCnt, "Undefined property. Check for multiple instances of =.", filename);
         	}
-            //System.out.println(parts[1]);
             if(properties.containsKey(parts[0])) {
             	formatError(lnCnt, "Property duplicate.", filename);
             }
