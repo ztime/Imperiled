@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 public class MainGameScreen implements Screen{
@@ -46,6 +47,7 @@ public class MainGameScreen implements Screen{
 	
 	public MainGameScreen(Imperiled game){
 		this.game = game;
+		PropertyHandler.setGame(game);
 		
 		batch = new SpriteBatch();
 		//setup map
@@ -102,6 +104,12 @@ public class MainGameScreen implements Screen{
 		markers.remove(markers.get("playerStart"));
 		
 		player = new Player(startX, startY);
+		
+		//change direction if needed
+		if(game.startDirection != null){
+			player.setDirection(game.startDirection);
+			game.startDirection = null;
+		}
 		
 		//TODO fix this
 		if(markers.get("enemyStart") != null){
@@ -163,6 +171,7 @@ public class MainGameScreen implements Screen{
 		//new position 
 		int x = player.getX();
 		int y = player.getY();
+		
 		if(player.getState() != State.ATTACKING && player.getState() != State.DEAD){
 			if(Gdx.input.isKeyPressed(Keys.A)){
 				x -= Gdx.graphics.getDeltaTime() * player.getSpeed();
@@ -190,11 +199,100 @@ public class MainGameScreen implements Screen{
 		}
 		
 		//set the new values
-		player.setPosition(x, y);
 		player.setDirection(newDir);
 		player.setState(newState);
+		player.setPosition(x, y);
+		
+		//move the player back if it needs to 
+		this.checkPlayerCollision(); 
+		
+		//here we need to move the actors with some fancy ai
+		// actors.moveBitch() or something
+		// or maybe that should be handled by update()
+		this.checkActorsCollision();
+		
+		//--- check events ---
+		this.checkEventCollision(player);
+		for(Actor actor : actors){
+			this.checkEventCollision(actor);
+		}
+		
 		//we also need to adapt the camera to the players position
-		setCameraPosition(x, y);
+		setCameraPosition(player.x, player.y);
+	}
+	
+	/**
+	 * Checks if an actor collides with an event where they are the target
+	 * if they are we run the action 
+	 * @param actor
+	 */
+	private void checkEventCollision(Actor actor){
+		Rectangle actorHitBox = actor.getRectangle();
+		Iterator<MapObject> iterEventObj = eventObjects.iterator();
+		while(iterEventObj.hasNext()){
+			MapObject currentEvent = iterEventObj.next();
+			RectangleMapObject currentEventBox = (RectangleMapObject) currentEvent;
+			if(Intersector.overlaps(actorHitBox, currentEventBox.getRectangle())){
+				String actorsName = actor.getName();
+				String eventName = currentEvent.getName();
+				//call event
+				String eventTarget = PropertyHandler.currentEvents.get(eventName).eventTarget();
+				if(actorsName.equals(eventTarget)){
+					PropertyHandler.currentEvents.get(eventName).action();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Circles through all actors and first check if they collide with
+	 * players hit box , then checks if they collide with walls and objects
+	 */
+	private void checkActorsCollision(){
+		//actors collision checking
+		Rectangle playerHitBox = player.getRectangle();
+		Iterator<Actor> iterActor = actors.iterator();
+		while(iterActor.hasNext()){
+			Actor currentActor = iterActor.next();
+			//first check player
+			if(Intersector.overlaps(playerHitBox, currentActor.getRectangle())){
+				currentActor.revertToOldPosition();
+			}
+			//then map objects
+			Iterator<MapObject> iterCollision = collisionObjects.iterator();
+			while(iterCollision.hasNext()){
+				RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
+				if(Intersector.overlaps(currentActor.getRectangle(), collRect.getRectangle())){
+					currentActor.revertToOldPosition();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Check collisions for player, circles through all map
+	 * objects and reverts player to old position if they collide 
+	 */
+	private void checkPlayerCollision(){
+		//Collision check for player
+		//Start with collision objects
+		Rectangle playerHitBox = player.getRectangle();
+		
+		Iterator<MapObject> iterCollision = collisionObjects.iterator();
+		while(iterCollision.hasNext()){
+			RectangleMapObject collisionObject = (RectangleMapObject) iterCollision.next();
+			if(Intersector.overlaps(playerHitBox, collisionObject.getRectangle())){
+				player.revertToOldPosition(); //moves to old position
+			}
+		}
+		//next is all the actors
+		Iterator<Actor> iterActors = actors.iterator();
+		while(iterActors.hasNext()){
+			Rectangle rectangleActor = iterActors.next().getRectangle();
+			if(Intersector.overlaps(playerHitBox, rectangleActor)){
+				player.revertToOldPosition();
+			}
+		}
 	}
 	/**
 	 * Sets cameras new position in the map, checks so it's not out
