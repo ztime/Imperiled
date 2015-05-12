@@ -19,14 +19,6 @@ public class Bee extends Actor {
 		this.health = 100;
 	}
 	
-	/**
-	 * Draws the beeeeeeeee!
-	 * @param batch
-	 */
-	@Override
-	public void draw(SpriteBatch batch) {
-		batch.draw(this.getKeyFrame(), x, y);
-	}
 	
 	/**
 	 * Gets the current key frame
@@ -42,6 +34,9 @@ public class Bee extends Actor {
 	 */
 	@Override
 	public Rectangle getRectangle() {
+		if(!this.isActive()){
+			return new Rectangle();
+		}
 		Rectangle newRect = new Rectangle();
 		newRect.x = this.x + this.getWidth() / 4;
 		newRect.y = this.y;

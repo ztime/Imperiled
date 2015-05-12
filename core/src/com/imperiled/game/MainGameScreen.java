@@ -219,6 +219,16 @@ public class MainGameScreen implements Screen{
 			this.checkEventCollision(actor);
 		}
 		
+		//-- check damage that player does to actors 
+		DamageRectangle playerDmgRect = player.getDamageRectangle();
+		Iterator<Actor> iterActors = actors.iterator();
+		while(iterActors.hasNext()){
+			Actor currentActor = iterActors.next();
+			if(Intersector.overlaps(playerDmgRect.rectangle, currentActor.getRectangle())){
+				currentActor.takeDamage(playerDmgRect.dmg);
+				System.out.println("Hejsan!" + currentActor.elapsedTimeDeath);
+			}
+		}
 		//we also need to adapt the camera to the players position
 		setCameraPosition(player.x, player.y);
 	}

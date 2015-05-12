@@ -41,8 +41,10 @@ abstract public class Actor {
 	 * @param batch
 	 */
 	public void draw(SpriteBatch batch) {
-		if(elapsedTimeDamage < 1.2f){
+		if(this.elapsedTimeDamage < 1.2f){
 			batch.setColor(1, 0, 0, 0.7f);
+		} else if(this.currentState == State.DEAD){
+			batch.setColor(0,0,1,1);
 		}
 		batch.draw(this.getKeyFrame(), x, y);
 		batch.setColor(Color.WHITE);
@@ -59,8 +61,8 @@ abstract public class Actor {
 		}
 		if(this.currentState == State.DEAD){
 			this.elapsedTimeDeath += elapsedTime;
-			if(this.elapsedTimeDeath > 2f){
-				this.setState(State.INACTIVE);
+			if(this.elapsedTimeDeath > 2.0f){
+				this.currentState = State.INACTIVE;
 			}
 		}
 	}
@@ -70,12 +72,16 @@ abstract public class Actor {
 	 */
 	public void takeDamage(int dmg) {
 		if(!this.invulnerable){
-			if(elapsedTimeDamage > 1.2f && currentState != State.DEAD){
-				health -= dmg;
+			if(this.elapsedTimeDamage > 1.2f && 
+					this.currentState != State.DEAD &&
+					this.currentState != State.INACTIVE){
+				this.health -= dmg;
 				elapsedTimeDamage = 0;
 			}
 			
-			if(health <= 0 && currentState != State.DEAD){
+			if(health <= 0 && 
+					currentState != State.DEAD &&
+					currentState != State.INACTIVE){
 				currentState = State.DEAD;
 			}
 		}
@@ -183,6 +189,13 @@ abstract public class Actor {
 		this.currentDirection = newDir;
 	}
 	
+	/**
+	 * Returns true if the current actor is active
+	 * @return
+	 */
+	public boolean isActive(){
+		return (this.currentState != State.INACTIVE);
+	}
 	/**
 	 * Change the state of the player
 	 * @param newState

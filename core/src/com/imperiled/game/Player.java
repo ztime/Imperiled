@@ -49,21 +49,6 @@ public class Player extends Actor {
 		
 	}
 	
-	/**
-	 * Updates the current time according to state
-	 * @param deltaTime the time between the last frame and this
-	 */
-	@Override
-	public void update(float elapsedTime){
-		this.elapsedTime += elapsedTime;
-		this.elapsedTimeDamage += elapsedTime;
-		if(this.currentState == State.ATTACKING){
-			this.elapsedTimeAttack += elapsedTime;
-		}
-		if(this.currentState == State.DEAD){
-			this.elapsedTimeDeath += elapsedTime;
-		}
-	}
 	
 	/**
 	 * Change the direction the player is facing
