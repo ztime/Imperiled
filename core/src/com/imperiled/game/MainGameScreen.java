@@ -105,6 +105,12 @@ public class MainGameScreen implements Screen{
 		
 		player = new Player(startX, startY);
 		
+		//change direction if needed
+		if(game.startDirection != null){
+			player.setDirection(game.startDirection);
+			game.startDirection = null;
+		}
+		
 		//TODO fix this
 		if(markers.get("enemyStart") != null){
 			Integer startEnemyX = Math.round((Float) markers.get("enemyStart").getProperties().get("x"));
@@ -193,6 +199,8 @@ public class MainGameScreen implements Screen{
 		}
 		
 		//set the new values
+		player.setDirection(newDir);
+		player.setState(newState);
 		player.setPosition(x, y);
 		
 		//move the player back if it needs to 
@@ -203,10 +211,37 @@ public class MainGameScreen implements Screen{
 		// or maybe that should be handled by update()
 		this.checkActorsCollision();
 		
-		player.setDirection(newDir);
-		player.setState(newState);
+		//--- check events ---
+		this.checkEventCollision(player);
+		for(Actor actor : actors){
+			this.checkEventCollision(actor);
+		}
+		
 		//we also need to adapt the camera to the players position
 		setCameraPosition(player.x, player.y);
+	}
+	
+	/**
+	 * Checks if an actor collides with an event where they are the target
+	 * if they are we run the action 
+	 * @param actor
+	 */
+	private void checkEventCollision(Actor actor){
+		Rectangle actorHitBox = actor.getRectangle();
+		Iterator<MapObject> iterEventObj = eventObjects.iterator();
+		while(iterEventObj.hasNext()){
+			MapObject currentEvent = iterEventObj.next();
+			RectangleMapObject currentEventBox = (RectangleMapObject) currentEvent;
+			if(Intersector.overlaps(actorHitBox, currentEventBox.getRectangle())){
+				String actorsName = actor.getName();
+				String eventName = currentEvent.getName();
+				//call event
+				String eventTarget = PropertyHandler.currentEvents.get(eventName).eventTarget();
+				if(actorsName.equals(eventTarget)){
+					PropertyHandler.currentEvents.get(eventName).action();
+				}
+			}
+		}
 	}
 	
 	/**
