@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PropertyHandler {
-	public static final String[] eventReqs = {"name", "action"};
+	public static final String[] eventReqs = {"name", "action", "target"};
 	public static final String[] musicReqs = {"name", "filename"};
 	public static HashMap<String, Actor> currentActors;
 	public static HashMap<String, MapEvent> currentEvents;
+	public static Imperiled currentGame;
 	
 	public static void newActors(ArrayList<Actor> actors) {
 		currentActors = new HashMap<String, Actor>();
@@ -21,5 +22,9 @@ public class PropertyHandler {
 		for(MapEvent event : events) {
 			currentEvents.put(event.getName(), event);
 		}
+	}
+	
+	public static void setGame(Imperiled game) {
+		currentGame = game;
 	}
 }

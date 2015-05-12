@@ -188,6 +188,7 @@ public class MainGameScreen implements Screen{
 				newState = State.ATTACKING;
 			}
 		}
+		
 		//set the new values
 		player.setPosition(x, y);
 		player.setDirection(newDir);

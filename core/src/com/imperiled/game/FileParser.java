@@ -9,6 +9,11 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+/**
+ * 
+ * @author john
+ *
+ */
 public class FileParser {
 	private FileHandle folder;
 	private String suffix = "jwx2";
