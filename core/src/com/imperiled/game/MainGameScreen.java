@@ -80,9 +80,6 @@ public class MainGameScreen implements Screen{
 		eventObjects = map.getLayers().get("events").getObjects();
 		
 		new FileParser(this.game.map);
-		// TEMPORARY TESTING OF FILEPARSER AND EVENTS
-		// System.out.println(PropertyHandler.currentEvents.get("death").listOfProperties());
-		// END OF TESTING
 		
 		//setup actors in the map
 		actors = new ArrayList<Actor>();
@@ -104,22 +101,23 @@ public class MainGameScreen implements Screen{
 		markers.remove(markers.get("playerStart"));
 		
 		player = new Player(startX, startY);
-		
 		//change direction if needed
 		if(game.startDirection != null){
 			player.setDirection(game.startDirection);
 			game.startDirection = null;
 		}
 		
-		
-		//TODO fix this
-		if(markers.get("enemyStart") != null){
-			Integer startEnemyX = Math.round((Float) markers.get("enemyStart").getProperties().get("x"));
-			Integer startEnemyY = Math.round((Float) markers.get("enemyStart").getProperties().get("y"));
-			Bee bee = new Bee(startEnemyX, startEnemyY);
-			actors.add(bee);
+		//spawn enemies from what is left in markers
+		Iterator<MapObject> iterMarkers = markers.iterator();
+		while(iterMarkers.hasNext()){
+			MapObject currentMarker = iterMarkers.next();
+			String actorType = currentMarker.getProperties().get("type", String.class);
+			String actorName = currentMarker.getName();
+			Integer startPosX = Math.round((Float) currentMarker.getProperties().get("x"));
+			Integer startPosY = Math.round((Float) currentMarker.getProperties().get("y"));
+			this.spawnActor(actorType, actorName, startPosX, startPosY);
 		}
-		// Adds the actors to the PropertyHandler.
+		//add to propertyhandler
 		PropertyHandler.newActors(actors);
 		PropertyHandler.currentActors.put("player", player);
 	}
@@ -221,6 +219,26 @@ public class MainGameScreen implements Screen{
 		
 		//we also need to adapt the camera to the players position
 		setCameraPosition(player.x, player.y);
+	}
+	
+	/**
+	 * Adds a new monster to the map! 
+	 * 
+	 * @param type	String 	with the type of actor
+	 * @param name	String	name of the actor
+	 * @param x		Int		Starting position x
+	 * @param y		Int		Starting position y
+	 */
+	private void spawnActor(String type, String name, int x, int y){
+		//check that the type is valid
+		//currently bee is the only accepted one 
+		if(type.equals("bee")){
+			Bee newBee = new Bee(x,y);
+			newBee.name = name;
+			actors.add(newBee);
+		} else {
+			System.out.println("Invalid actortype: " + type);
+		}
 	}
 	
 	/**
