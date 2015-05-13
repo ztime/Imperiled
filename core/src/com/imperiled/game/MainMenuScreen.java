@@ -45,7 +45,7 @@ public class MainMenuScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 		
 		//Clear screen
-		Gdx.gl.glClearColor(48/51f,48/51f,48/51f,1); //black
+		Gdx.gl.glClearColor(48/51f,48/51f,48/51f,1); //#f0f0f0
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		// calculate scaling for image 
