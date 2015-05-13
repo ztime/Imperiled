@@ -111,6 +111,11 @@ public class UiWrapper {
 	    });
 	}
 	
+	/**
+	 * Adjusts the ui viewport to the new screen size
+	 * @param width
+	 * @param height
+	 */
 	public void updateScreen(int width, int height){
 		stage.getViewport().update(width, height, true);
 	}
