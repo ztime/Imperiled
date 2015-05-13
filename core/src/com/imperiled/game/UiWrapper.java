@@ -111,6 +111,10 @@ public class UiWrapper {
 	    });
 	}
 	
+	public void updateScreen(int width, int height){
+		stage.getViewport().update(width, height, true);
+	}
+	
 	/**
 	 * Sets the healthbar with the new player health
 	 * @param playerHealth

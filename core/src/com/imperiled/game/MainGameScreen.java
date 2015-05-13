@@ -6,7 +6,6 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -44,12 +43,6 @@ public class MainGameScreen implements Screen{
 	
 	private UiWrapper ui;
 	
-	
-	//Settings
-	private float SCALE_WIDTH = 1.2f;
-
-	
-	
 	public MainGameScreen(Imperiled game){
 		this.game = game;
 		PropertyHandler.currentGame = game;
@@ -66,16 +59,17 @@ public class MainGameScreen implements Screen{
 				* map.getProperties().get("width", Integer.class);
 		
 		//set camera viewport to smaller than resolution of window
-		//sort of like a zoom 
-		cameraWidth = Gdx.graphics.getWidth() / SCALE_WIDTH;
-		cameraHeight = Gdx.graphics.getHeight() * (cameraWidth / Gdx.graphics.getWidth());
+		//set it to a fixed resoultion to fix resizing
 		camera = new OrthographicCamera();
+		cameraWidth = 533.333f;
+		cameraHeight = 400.0f;
 		camera.setToOrtho(false, cameraWidth, cameraHeight);
-		//camera.setToOrtho(false, 533.3333f, 400.0f); //NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 		camera.update();
 		//Starting position of camera is 0,0 (lower left corner) of map
 		cameraLowerBound = camera.position.y;
 		cameraLeftBound = camera.position.x;
+		System.out.println(cameraLowerBound);
+		System.out.println(cameraLeftBound);
 		//set batch to render the same as camera
 		batch.setProjectionMatrix(camera.combined);
 		
@@ -167,9 +161,6 @@ public class MainGameScreen implements Screen{
 		//ui rendering should always happen last
 		ui.update(player);
 		ui.draw();
-		
-		// This fixes resizing, but breaks ui click.
-		//camera.setToOrtho(false, 533.3333f, 400.0f); //NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 	}
 
 	/**
@@ -409,10 +400,16 @@ public class MainGameScreen implements Screen{
 		
 	}
 
+	/*
+	 * This gets called if the screen gets resized
+	 * only here should we adapt the ui and camera to the new resolution
+	 * 
+	 * @see com.badlogic.gdx.Screen#resize(int, int)
+	 */
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		ui.updateScreen(width, height);
+		camera.setToOrtho(false, cameraWidth, cameraHeight);
 	}
 
 	@Override
