@@ -71,7 +71,7 @@ public class MainGameScreen implements Screen{
 		cameraHeight = Gdx.graphics.getHeight() * (cameraWidth / Gdx.graphics.getWidth());
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, cameraWidth, cameraHeight);
-		//camera.setToOrtho(false, 533.3333f, 400.0f); NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
+		//camera.setToOrtho(false, 533.3333f, 400.0f); //NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 		camera.update();
 		//Starting position of camera is 0,0 (lower left corner) of map
 		cameraLowerBound = camera.position.y;
@@ -169,7 +169,7 @@ public class MainGameScreen implements Screen{
 		ui.draw();
 		
 		// This fixes resizing, but breaks ui click.
-		// camera.setToOrtho(false, 533.3333f, 400.0f); NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
+		//camera.setToOrtho(false, 533.3333f, 400.0f); //NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 	}
 
 	/**
@@ -192,27 +192,28 @@ public class MainGameScreen implements Screen{
 		//new position 
 		int x = player.getX();
 		int y = player.getY();
+		int moveDist = Math.round(Gdx.graphics.getDeltaTime() * player.getSpeed());
 		
 		if(player.getState() != State.ATTACKING && 
 				player.getState() != State.DEAD &&
 				player.getState() != State.INACTIVE){
 			if(Gdx.input.isKeyPressed(Keys.A)){
-				x -= Gdx.graphics.getDeltaTime() * player.getSpeed();
+				x -= moveDist;
 				newState = State.MOVE;
 				newDir = Direction.LEFT;
 			}
 			if(Gdx.input.isKeyPressed(Keys.D)){
-				x += Gdx.graphics.getDeltaTime() * player.getSpeed();
+				x += moveDist;
 				newState = State.MOVE;
 				newDir = Direction.RIGHT;
 			}
 			if(Gdx.input.isKeyPressed(Keys.W)){
-				y += Gdx.graphics.getDeltaTime() * player.getSpeed();
+				y += moveDist;
 				newState = State.MOVE;
 				newDir = Direction.UP;
 			}	
 			if(Gdx.input.isKeyPressed(Keys.S)){
-				y -= Gdx.graphics.getDeltaTime() * player.getSpeed();
+				y -= moveDist;
 				newState = State.MOVE;
 				newDir = Direction.DOWN;
 			}

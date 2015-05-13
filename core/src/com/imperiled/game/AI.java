@@ -113,19 +113,20 @@ public class AI {
 	private void move() {
 		int x = actor.getX();
 		int y = actor.getY();
+		int dist = Math.round(Gdx.graphics.getDeltaTime() * actor.getSpeed());
 		
 		switch(actor.currentDirection) {
 		case UP:
-			y += Gdx.graphics.getDeltaTime() * actor.getSpeed();
+			y += dist;
 			break;
 		case DOWN:
-			y -= Gdx.graphics.getDeltaTime() * actor.getSpeed();
+			y -= dist;
 			break;
 		case LEFT:
-			x -= Gdx.graphics.getDeltaTime() * actor.getSpeed();
+			x -= dist;
 			break;
 		default:
-			x += Gdx.graphics.getDeltaTime() * actor.getSpeed();
+			x += dist;
 		}
 		actor.setPosition(x, y);
 	}
