@@ -68,8 +68,6 @@ public class MainGameScreen implements Screen{
 		//Starting position of camera is 0,0 (lower left corner) of map
 		cameraLowerBound = camera.position.y;
 		cameraLeftBound = camera.position.x;
-		System.out.println(cameraLowerBound);
-		System.out.println(cameraLeftBound);
 		//set batch to render the same as camera
 		batch.setProjectionMatrix(camera.combined);
 		
