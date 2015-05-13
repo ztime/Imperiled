@@ -64,12 +64,14 @@ public class MainGameScreen implements Screen{
 				* map.getProperties().get("height", Integer.class);
 		mapWidth = map.getProperties().get("tilewidth", Integer.class) 
 				* map.getProperties().get("width", Integer.class);
+		
 		//set camera viewport to smaller than resolution of window
 		//sort of like a zoom 
 		cameraWidth = Gdx.graphics.getWidth() / SCALE_WIDTH;
 		cameraHeight = Gdx.graphics.getHeight() * (cameraWidth / Gdx.graphics.getWidth());
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, cameraWidth, cameraHeight);
+		//camera.setToOrtho(false, 533.3333f, 400.0f); NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 		camera.update();
 		//Starting position of camera is 0,0 (lower left corner) of map
 		cameraLowerBound = camera.position.y;
@@ -165,6 +167,9 @@ public class MainGameScreen implements Screen{
 		//ui rendering should always happen last
 		ui.update(player);
 		ui.draw();
+		
+		// This fixes resizing, but breaks ui click.
+		// camera.setToOrtho(false, 533.3333f, 400.0f); NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 	}
 
 	/**
