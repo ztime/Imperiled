@@ -38,6 +38,8 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		// This apparently fixes scaling
+		// Don't ask me why.
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
