@@ -1,18 +1,9 @@
 package com.imperiled.game;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * A class that manages the AI of an actor.
@@ -27,8 +18,8 @@ public class AI {
 	private long lastTime;
 	private int currentIdleOption;
 	private Random rand = new Random();
-	//private Actor player = PropertyHandler.currentActors.get("player");
 	private Actor actor;
+	private PathFinder pathfinder;
 	
 	/**
 	 * Constructor for an AI. Usually created
@@ -40,11 +31,20 @@ public class AI {
 	 */
 	public AI(Actor actor) {
 		this.actor = actor;
+		pathfinder = new PathFinder(actor);
 		generateIdleInterval();
 		lastTime = System.nanoTime();
 		currentIdleOption = rand.nextInt(IDLE_OPTIONS);
 	}
 	
+	/**
+	 * Gets the current state of the actor and acts
+	 * differently depending on what state it is in.
+	 * 
+	 * @param collisionObjects The collision objects on the
+	 *                         loaded map.
+	 * @param player Reference to the player.
+	 */
 	public void act(MapObjects collisionObjects, Player player) {
 		switch(actor.currentState) {
 		case IDLE:
@@ -65,6 +65,9 @@ public class AI {
 		}
 	}
 	
+	/**
+	 * If the actor is idling.
+	 */
 	private void idling() {
 		if(System.nanoTime() - lastTime > idleTime) {
 			currentIdleOption = rand.nextInt(IDLE_OPTIONS);
@@ -76,7 +79,7 @@ public class AI {
 			//do nothing
 			break;
 		default:
-			idleMove();
+			move();
 			break;
 		}
 	}
@@ -85,110 +88,29 @@ public class AI {
 	 * If the actor is attacking.
 	 */
 	private void attacking(MapObjects collisionObjects, Player player) {
-		Vector2 originalPos = new Vector2(actor.x, actor.y);
-		//rect.height;
-		//rect.width;
-		ArrayList<Vector2> ends = new ArrayList<Vector2>();
-		ArrayList<Vector2> visited = new ArrayList<Vector2>();
-		HashMap<Vector2, Vector2> previous = new HashMap<Vector2, Vector2>();
-		HashMap<Vector2, Integer> distance = new HashMap<Vector2, Integer>();
-		LinkedList<Vector2> queue = new LinkedList<Vector2>();
-		queue.add(actor.getPosition());
-		distance.put(actor.getPosition(), 0);
-		visited.add(actor.getPosition());
-		while(queue.size() > 0) { // Start of while-loop
-			
-			// Gets the first candidate in the queue.
-			Vector2 pos = queue.removeFirst();
-			actor.setPosition(pos);
-			Rectangle rect = actor.getRectangle();
-			
-			// Checks if pos is colliding with the player
-			if(Intersector.overlaps(rect, player.getRectangle())) {
-				if(!ends.contains(pos)) {
-					ends.add(pos);
-				}
-			}
-			
-			// Checks for valid neighbors.
-			ArrayList<Vector2> neighbors = new ArrayList<Vector2>();
-			Vector2[] nbs = new Vector2[4];
-			nbs[0] = new Vector2(pos.x + rect.width, pos.y);
-			nbs[1] = new Vector2(pos.x - rect.width, pos.y);
-			nbs[2] = new Vector2(pos.x, pos.y + rect.height);
-			nbs[3] = new Vector2(pos.x, pos.y - rect.height);
-			for(int i = 0; i < 4; i++) {
-				for(Vector2 neighbor : visited) {
-					if(nbs[i].equals(neighbor)) {
-						nbs[i] = neighbor;
-						break;
-					}
-				}
-			}
-			
-			nextneighbor:
-			for(Vector2 nb : nbs) {
-				actor.setPosition(nb);
-				rect = actor.getRectangle();
-				Iterator<MapObject> iterCollision = collisionObjects.iterator();
-				while(iterCollision.hasNext()){
-					RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
-					if(Intersector.overlaps(rect, collRect.getRectangle())){
-						continue nextneighbor;
-					}
-				}
-				neighbors.add(nb);
-			}
-			// Iterates over the valid neighbors.
-			for(Vector2 neighbor : neighbors) {
-				int alt = distance.get(pos) + 1;
-				if(distance.get(neighbor) == null || alt < distance.get(neighbor)) {
-					distance.put(neighbor, alt);
-					previous.put(neighbor, pos);
-				}
-				// Adds the neighbor to the queue
-				// if it has not been visited before.
-				if(!visited.contains(neighbor)) {
-					visited.add(neighbor);
-					queue.add(neighbor);
-				}
-			}
-		} // End of while-loop
-		actor.setPosition(originalPos);
-		
-		// Checks the found position to move to.
-		Vector2 shortestRoute = null;
-		for(Vector2 pLoc : ends) {
-			if(shortestRoute == null || distance.get(pLoc) < distance.get(shortestRoute)) {
-				shortestRoute = pLoc;
-			}
-		}
-		if(shortestRoute == null) {
+		Direction dir = pathfinder.findPath(collisionObjects, player);
+		if(dir == null) {
 			return;
 		}
-		while(!previous.get(shortestRoute).equals(actor.getPosition())) {
-			shortestRoute = previous.get(shortestRoute);
-		}
-		float xval = shortestRoute.x - actor.getPosition().x;
-		float yval = shortestRoute.y - actor.getPosition().y;
-		if(yval > 0) {
-			actor.currentDirection = Direction.UP;
-		} else if(yval < 0) {
-			actor.currentDirection = Direction.DOWN;
-		} else if(xval < 0) {
-			actor.currentDirection = Direction.LEFT;
-		} else if(xval > 0) {
-			actor.currentDirection = Direction.RIGHT;
-		}
-		idleMove();
+		actor.currentDirection = dir;
+		move();
 	}
 	
+	/**
+	 * Generates a random time interval for the idling
+	 * method. The interval is used to determine the
+	 * time between this idle state and the next. Also
+	 * sets a random idle state.
+	 */
 	private void generateIdleInterval() {
 		idleTime = Math.round(Math.random()*1000000000);
 		actor.currentDirection = actor.currentDirection.translateInt(rand.nextInt(4));
 	}
 	
-	private void idleMove() {
+	/**
+	 * Moves the actor in the current direction it is facing.
+	 */
+	private void move() {
 		int x = actor.getX();
 		int y = actor.getY();
 		
@@ -205,7 +127,6 @@ public class AI {
 		default:
 			x += Gdx.graphics.getDeltaTime() * actor.getSpeed();
 		}
-		
 		actor.setPosition(x, y);
 	}
 }
