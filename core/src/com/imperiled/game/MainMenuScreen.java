@@ -38,6 +38,10 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
+		
 		//Clear screen
 		Gdx.gl.glClearColor(48/51f,48/51f,48/51f,1); //black
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
