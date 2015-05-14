@@ -137,6 +137,13 @@ public class MainGameScreen implements Screen{
 			ui.draw();
 			return;
 		}
+		//check if we need to return to main menu screen
+		if(player.getState() == State.INACTIVE && Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+			this.game.setScreen(new MainMenuScreen(this.game));
+			this.dispose();
+			return; // make sure we dont draw anyting more
+		}
+		
 		//Everything that needs to change position or do something 
 		//needs to to that in update(float delta) , not here.
 		this.update(delta);
