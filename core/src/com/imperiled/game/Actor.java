@@ -12,6 +12,8 @@ abstract public class Actor {
 	//old position , saved for collision checking
 	int oldX, oldY;
 	float speed;
+	float attackSpeed;
+	float aggroRange;
 	
 	//time variables
 	float elapsedTime;
@@ -28,6 +30,7 @@ abstract public class Actor {
 	//keep track of current states
 	State currentState = State.IDLE;
 	Direction currentDirection = Direction.UP;
+	Behaviour behaviour;
 	
 	//functions that must be implemented
 	
@@ -218,6 +221,14 @@ abstract public class Actor {
 	 */
 	public float getSpeed(){
 		return this.speed;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public float getAttackSpeed(){
+		return this.attackSpeed;
 	}
 	
 	/**

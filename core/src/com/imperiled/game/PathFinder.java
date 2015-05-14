@@ -90,6 +90,9 @@ public class PathFinder {
 			// on the map. If it does it is not counted as valid.
 			nextneighbor:
 			for(Vector2 nb : nbs) {
+				if(visited.contains(nb)) {
+					continue;
+				}
 				actor.setPosition(nb);
 				rect = actor.getRectangle();
 				Iterator<MapObject> iterCollision = collisionObjects.iterator();

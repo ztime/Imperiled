@@ -230,13 +230,16 @@ public class MainGameScreen implements Screen{
 		//move the player back if it needs to 
 		this.checkPlayerCollision(); 
 		
+		//here we need to move the actors with some fancy ai
+		// actors.moveBitch() or something
+		// or maybe that should be handled by update()
 		for(Actor acts : actors) {
 			acts.getAI().act(collisionObjects, player);
+			this.checkActorsCollision(acts);
 		}
 		//here we need to move the actors with some fancy ai
 		// actors.moveBitch() or something
 		// or maybe that should be handled by update()
-		this.checkActorsCollision();
 		
 		//--- check events ---
 		this.checkEventCollision(player);
@@ -324,36 +327,32 @@ public class MainGameScreen implements Screen{
 	 * Circles through all actors and first check if they collide with
 	 * players hit box , then checks if they collide with walls and objects
 	 */
-	private void checkActorsCollision(){
+	private void checkActorsCollision(Actor currentActor){
 		//actors collision checking
 		Rectangle playerHitBox = player.getRectangle();
-		Iterator<Actor> iterActor = actors.iterator();
-		nextactor:
-		while(iterActor.hasNext()){
-			Actor currentActor = iterActor.next();
-			//first check player
-			if(Intersector.overlaps(playerHitBox, currentActor.getRectangle())){
-				currentActor.revertToOldPosition();
+		//first check player
+		if(Intersector.overlaps(playerHitBox, currentActor.getRectangle())){
+			currentActor.revertToOldPosition();
+			return;
+		}
+		//then other actors
+		for(Actor actr : actors) {
+			if(actr == currentActor) {
 				continue;
 			}
-			//then other actors
-			for(Actor actr : actors) {
-				if(actr == currentActor) {
-					continue;
-				}
-				Rectangle actorHitBox = actr.getRectangle();
-				if(Intersector.overlaps(actorHitBox, currentActor.getRectangle())){
-					currentActor.revertToOldPosition();
-					continue nextactor;
-				}
+			Rectangle actorHitBox = actr.getRectangle();
+			if(Intersector.overlaps(actorHitBox, currentActor.getRectangle())){
+				currentActor.revertToOldPosition();
+				return;
 			}
-			//lastly map objects
-			Iterator<MapObject> iterCollision = collisionObjects.iterator();
-			while(iterCollision.hasNext()){
-				RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
-				if(Intersector.overlaps(currentActor.getRectangle(), collRect.getRectangle())){
-					currentActor.revertToOldPosition();
-				}
+		}
+		//lastly map objects
+		Iterator<MapObject> iterCollision = collisionObjects.iterator();
+		while(iterCollision.hasNext()){
+			RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
+			if(Intersector.overlaps(currentActor.getRectangle(), collRect.getRectangle())){
+				currentActor.revertToOldPosition();
+				return;
 			}
 		}
 	}
