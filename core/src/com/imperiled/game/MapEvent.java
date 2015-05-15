@@ -1,9 +1,12 @@
 package com.imperiled.game;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Event;
 
@@ -155,6 +158,41 @@ public class MapEvent extends Event {
 			//player has finished the game
 			Imperiled game = PropertyHandler.currentGame;
 			game.setScreen(new WinScreen(game));
+		}
+		/**
+		 * If the player enters this area, it checks if all
+		 * the actors in the current map are inactive, and if they
+		 * are , we remove the collisionObject specified in the event
+		 * 
+		 * Required argument:
+		 * collisionObject ,target should be player
+		 * 
+		 */
+		else if(act.equalsIgnoreCase("blockUntilClear")){
+			String collisionObjectName = props.get("collisionObject");
+			//check that no enemy is still alive
+			Iterator<Entry<String, Actor>> iterActor = PropertyHandler.currentActors.entrySet().iterator();
+			boolean anyOneAlive = false;
+			while(iterActor.hasNext()){
+				Entry<String, Actor> nextActor = iterActor.next();
+				if(nextActor.getValue().currentState != State.INACTIVE && !nextActor.getValue().name.equals("player")){
+					System.out.println(nextActor.getValue().name);
+					anyOneAlive = true;
+					break;
+				}
+			}
+			if(!anyOneAlive){
+				//no one is alive, circle through all the collision objects until we find what
+				//we are looking for and remove it
+				Iterator<MapObject> iterCollision = PropertyHandler.collisionObjects.iterator();
+				while(iterCollision.hasNext()){
+					MapObject nextCollision = iterCollision.next();
+					if(nextCollision.getName() != null && nextCollision.getName().equals(collisionObjectName)){
+						iterCollision.remove();
+						break;
+					}
+				}
+			}
 		}
 	}
 	
