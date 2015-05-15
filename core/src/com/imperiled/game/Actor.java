@@ -12,7 +12,7 @@ abstract public class Actor {
 	//old position , saved for collision checking
 	int oldX, oldY;
 	float speed;
-	float attackSpeed;
+	float attackingSpeed;
 	float aggroRange;
 	
 	//time variables
@@ -181,16 +181,8 @@ abstract public class Actor {
 			return 2;
 		case LEFT:
 			return 1;
-		case RIGHT:
+		default: //RIGHT
 			return 3;
-		case UP_LEFT:
-			return 4;
-		case UP_RIGHT:
-			return 5;
-		case DOWN_LEFT:
-			return 6;
-		default: //DOWN_RIGHT
-			return 7;
 		}
 	}
 	
@@ -236,7 +228,7 @@ abstract public class Actor {
 	 * @return
 	 */
 	public float getAttackSpeed(){
-		return this.attackSpeed;
+		return this.attackingSpeed;
 	}
 	
 	/**

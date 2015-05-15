@@ -15,9 +15,9 @@ public class Bee extends Actor {
 	public Bee (int x, int y){
 		this.setPosition(x, y);
 		this.loadAnimation();
-		this.health = 100;
+		this.health = 60;
 		this.speed = 70f;
-		this.attackSpeed = 100f;
+		this.attackingSpeed = 100f;
 		this.ai = new AI(this);
 		this.behaviour = Behaviour.AGGRESSIVE;
 		this.aggroRange = 140f;
@@ -68,7 +68,7 @@ public class Bee extends Actor {
 		newRect.rectangle.y = this.y;
 		newRect.rectangle.height = this.getHeight();
 		newRect.rectangle.width = this.getWidth();
-		newRect.dmg = 20;
+		newRect.dmg = 10;
 		return newRect;
 	}
 
