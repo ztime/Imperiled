@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="32" tileheight="32" nextobjectid="46">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="32" tileheight="32" nextobjectid="49">
  <tileset firstgid="1" source="grass.tsx"/>
  <tileset firstgid="19" source="water.tsx"/>
  <tileset firstgid="37" source="bridges.tsx"/>
@@ -30,11 +30,13 @@
   <object id="29" x="-36.6087" y="-23.2964" width="775.439" height="20.8004"/>
   <object id="30" x="-19.585" y="-58.2411" width="18.3044" height="573.259"/>
   <object id="31" x="-111.49" y="447.897" width="853.648" height="16.6403"/>
+  <object id="46" name="blocking" x="475" y="301" width="75" height="17"/>
  </objectgroup>
  <objectgroup name="events">
   <object id="32" name="death" x="65.7293" y="32.4486" width="59.9052" height="32.4486"/>
   <object id="36" name="changeMap" x="560" y="399" width="69" height="38"/>
   <object id="42" name="winGame" x="352" y="409" width="50" height="28"/>
+  <object id="47" name="blockUntilClear" x="468" y="273" width="90" height="49"/>
  </objectgroup>
  <objectgroup name="markers">
   <object id="33" name="playerStart" x="534.154" y="141.443"/>
