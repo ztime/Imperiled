@@ -189,7 +189,6 @@ public class MapEvent extends Event {
 					MapObject nextCollision = iterCollision.next();
 					if(nextCollision.getName() != null && nextCollision.getName().equals(collisionObjectName)){
 						iterCollision.remove();
-						break;
 					}
 				}
 			}
