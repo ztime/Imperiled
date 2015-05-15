@@ -7,11 +7,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Bee extends Actor {
-
+	
+	//variables to store animation
 	private Animation[] movement; // 0 = up, 1 = left, 2 = down, 3 = left;
 	private TextureRegion[][] movementFrames;
 	private Texture characterSheet;
 	
+	/**
+	 * Constructor for the bee, sets it's position
+	 * and some default vaules
+	 * 
+	 * @param x 
+	 * @param y
+	 */
 	public Bee (int x, int y){
 		this.setPosition(x, y);
 		this.loadAnimation();
@@ -37,8 +45,9 @@ public class Bee extends Actor {
 	}
 
 	/**
-	 * Returns a rectangle of where the bee is
-	 * @return
+	 * Returns a rectangle representing the body of the bee
+	 * 
+	 * @return rectangle
 	 */
 	@Override
 	public Rectangle getRectangle() {
@@ -55,8 +64,8 @@ public class Bee extends Actor {
 
 	/**
 	 * Get a damage rectangle for when the bee attacks
-	 * bee attacks all the time
-	 * @return
+	 * Bee attacks all the time
+	 * @return DamageRectangle 
 	 */
 	@Override
 	public DamageRectangle getDamageRectangle() {
@@ -64,21 +73,27 @@ public class Bee extends Actor {
 		if(!isActive()){
 			return newRect;
 		}
-		newRect.rectangle.x = this.x;
-		newRect.rectangle.y = this.y;
-		newRect.rectangle.height = this.getHeight();
-		newRect.rectangle.width = this.getWidth();
-		newRect.dmg = 20;
+		newRect.rectangle = this.getRectangle();
+		newRect.rectangle.x -= 5;
+		newRect.rectangle.y -= 5;
+		newRect.rectangle.width += 10;
+		newRect.rectangle.height += 10;
+		newRect.dmg = 1;
 		return newRect;
 	}
 
-
+	/**
+	 * Clears the assets from memory
+	 */
 	@Override
 	public void dispose() {
 		this.characterSheet.dispose();
 
 	}
 	
+	/**
+	 * Load the animation from sprite 
+	 */
 	public void loadAnimation() {
 		int sheetRows = 4;
 		int sheetCols = 3;

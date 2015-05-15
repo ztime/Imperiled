@@ -7,12 +7,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+/**
+ * A winner screen! Should be displayed when the player has 
+ * finished the game
+ *
+ */
 public class WinScreen implements Screen{
 	final Imperiled game;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
+	private float elapsedTime;
 	
 	/**
 	 * Creates a new win screen!
@@ -36,6 +41,7 @@ public class WinScreen implements Screen{
 	 */
 	@Override
 	public void render(float delta) {
+		elapsedTime += delta;
 		camera.update();
 		//Clear screen
 		Gdx.gl.glClearColor(0,0,0,1); //Black
@@ -50,21 +56,29 @@ public class WinScreen implements Screen{
 		batch.end();
 		
 		//check if we should switch screens 
-		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+		if((Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)) && elapsedTime > 2.0f){
 			//start default map
 			this.game.map = this.game.startMap;
+			this.game.playerHealth = 100;
 			game.setScreen(new MainGameScreen(game));
 			dispose();
 			return; //just to make sure we don't render anything more
 		}
 	}
 
+	/**
+	 * If the screen is resized we need to set the camera 
+	 * to the new screen and with
+	 */
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		camera.setToOrtho(false);
 		
 	}
 	
+	/**
+	 * Clears up memory from font and camera
+	 */
 	@Override
 	public void dispose() {
 		batch.dispose();
@@ -95,7 +109,4 @@ public class WinScreen implements Screen{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-
 }

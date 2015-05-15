@@ -3,6 +3,8 @@ package com.imperiled.game;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.badlogic.gdx.maps.MapObjects;
+
 /**
  * PropertyHandler is a class that organizes and manages
  * all data that needs to be changed or accessed from
@@ -19,6 +21,7 @@ public class PropertyHandler {
 	public static final String[] musicReqs = {"name", "filename"};
 	public static HashMap<String, Actor> currentActors;
 	public static HashMap<String, MapEvent> currentEvents;
+	public static MapObjects collisionObjects;
 	public static Imperiled currentGame;
 	
 	/**

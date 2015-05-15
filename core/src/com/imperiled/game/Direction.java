@@ -1,5 +1,7 @@
 package com.imperiled.game;
-
+/**
+ * Represents the direction an actor is facing
+ */
 public enum Direction {
 	UP,DOWN,RIGHT,LEFT;
 	
@@ -11,11 +13,20 @@ public enum Direction {
 		LEFT.opposite = RIGHT;
 		RIGHT.opposite = LEFT;
 	}
-	
+	/**
+	 * Returns the opposite direction of an other direction
+	 * @return
+	 */
 	public Direction getOpposite() {
 		return opposite;
 	}
-	
+	/**
+	 * Translates between int representing direction
+	 * and the state
+	 * 
+	 * @param i
+	 * @return State 
+	 */
 	public Direction translateInt(int i) {
 		Direction dir;
 		switch(i) {

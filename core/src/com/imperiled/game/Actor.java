@@ -6,19 +6,29 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * A base class that represents an monster or player
+ * on the screen , i.e something that should be rendered
+ * controlled and take / give damage
+ * 
+ * @author Jonas Wedin
+ * @version 2015-05-15
+ */
 abstract public class Actor {
 	//position
 	int x, y;
 	//old position , saved for collision checking
 	int oldX, oldY;
 	float speed;
+	
+	//for actors controlled by AI
 	float attackSpeed;
 	float aggroRange;
 	
 	//time variables
 	float elapsedTime;
 	float elapsedTimeDeath;			//time since death
-	float elapsedTimeDamage = 2f;	// - || -    damage was taken, start with 2 so player aint red
+	float elapsedTimeDamage = 2f;	// - || -    damage was taken
 	float elapsedTimeAttack;		// - || -    attack begun
 	
 	//other
@@ -33,16 +43,19 @@ abstract public class Actor {
 	Behaviour behaviour;
 	
 	//functions that must be implemented
-	
 	public abstract Rectangle getRectangle();
 	public abstract DamageRectangle getDamageRectangle();
 	public abstract void dispose();
 	public abstract TextureRegion getKeyFrame();
 	
-	
 	/**
-	 * Draws the current key frame 
-	 * @param batch
+	 * Draws the current key frame from animation.
+	 * Also colors the animation red if the actor has taken damage
+	 * in the last 1.2 seconds and blue if the actor is inactive
+	 * 
+	 * Does not call batch.begin() or batch.end()!
+	 * 
+	 * @param batch SpriteBatch to paint with 
 	 */
 	public void draw(SpriteBatch batch) {
 		if(this.elapsedTimeDamage < 1.2f && 
@@ -55,9 +68,13 @@ abstract public class Actor {
 		batch.draw(this.getKeyFrame(), x, y);
 		batch.setColor(Color.WHITE);
 	}
+	
 	/**
 	 * Updates the current time according to state
-	 * @param deltaTime the time between the last frame and this
+	 * Also keeps track on how long the actor has been dead and if he should
+	 * switch state to inactive.
+	 * 
+	 * @param deltaTime the time between the last frame and the one to be drawn
 	 */
 	public void update(float elapsedTime){
 		this.elapsedTime += elapsedTime;
@@ -74,7 +91,10 @@ abstract public class Actor {
 	}
 	
 	/**
-	 * Should be called when the player takes damage 
+	 * Makes the actor take damage. Also keeps track of
+	 * health and sets the actor to death if health is <= 0
+	 * 
+	 * @param dmg the amount of damage to take
 	 */
 	public void takeDamage(int dmg) {
 		if(!this.invulnerable){
@@ -92,8 +112,12 @@ abstract public class Actor {
 			}
 		}
 	}
+	
 	/**
-	 * Sets the current position to x & y
+	 * Sets the current position to x & y.
+	 * Also saves the old position should we need to back up
+	 * with revertToOldPosition()
+	 * 
 	 * @param x
 	 * @param y
 	 */
@@ -116,8 +140,10 @@ abstract public class Actor {
 	}
 	
 	/**
-	 * returns the old position 
-	 * @return
+	 * Returns the players old position through a vector
+	 * Does not change the position back!
+	 *  
+	 * @return Vector2 the old position
 	 */
 	public Vector2 getOldPosition(){
 		Vector2 retVec = new Vector2();
@@ -128,14 +154,18 @@ abstract public class Actor {
 	
 	/**
 	 * Moves actor back to it's old position
+	 * This only works once! If it is called again 
+	 * without setting a new position , it will return 
+	 * the same position 
 	 */
 	public void revertToOldPosition(){
 		this.x = this.oldX;
 		this.y = this.oldY;
 	}
+	
 	/**
 	 * Returns current position as a vector2
-	 * @return
+	 * @return Vector2 the position
 	 */
 	public Vector2 getPosition(){
 		Vector2 vector = new Vector2();
@@ -146,7 +176,7 @@ abstract public class Actor {
 	
 	/**
 	 * Gets the current x position
-	 * @return
+	 * @return int x
 	 */
 	public int getX(){
 		return x;
@@ -154,7 +184,7 @@ abstract public class Actor {
 	
 	/**
 	 * Gets the current y position
-	 * @return
+	 * @return int y
 	 */
 	public int getY(){
 		return y;
@@ -162,16 +192,16 @@ abstract public class Actor {
 	
 	/**
 	 * Returns the current health
-	 * @return
+	 * @return int current health
 	 */
 	public int getHealth(){
 		return this.health;
 	}
 	
 	/**
-	 * Translates between enum and int 
-	 * @param dir
-	 * @return
+	 * Translates between enum and int. 
+	 * For use with the animation sprites
+	 * @return int Number representing the current direction
 	 */
 	public int translateCurrentDirection(){
 		switch(this.currentDirection){
@@ -188,8 +218,9 @@ abstract public class Actor {
 	
 
 	/**
-	 * Change the direction the player is facing
-	 * @param newDir
+	 * Change the direction the actor is facing
+	 * using the enum Direction
+	 * @param newDir the new direction
 	 */
 	public void setDirection(Direction newDir){
 		this.currentDirection = newDir;
@@ -202,8 +233,11 @@ abstract public class Actor {
 	public boolean isActive(){
 		return (this.currentState != State.INACTIVE);
 	}
+	
 	/**
-	 * Change the state of the player
+	 * Change the state of the actor
+	 * will not change state if the actor is attacking, dead
+	 * or inactive
 	 * @param newState
 	 */
 	public void setState(State newState){
@@ -217,15 +251,15 @@ abstract public class Actor {
 	/**
 	 * Returns the current speed
 	 * 
-	 * @return speed
+	 * @return float speed
 	 */
 	public float getSpeed(){
 		return this.speed;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns the current attack speed
+	 * @return float attack speed
 	 */
 	public float getAttackSpeed(){
 		return this.attackSpeed;
@@ -233,7 +267,7 @@ abstract public class Actor {
 	
 	/**
 	 * Returs the current direction
-	 * @return
+	 * @return Direction current direction
 	 */
 	public Direction getDirection(){
 		return this.currentDirection;
@@ -241,14 +275,14 @@ abstract public class Actor {
 	
 	/**
 	 * Returns the current state
-	 * @return
+	 * @return State current State
 	 */
 	public State getState(){
 		return this.currentState;
 	}
 	
 	/**
-	 * Returns true if player is MOVEing
+	 * Returns true if the actor is moving
 	 * @return
 	 */
 	public boolean isMoving(){
@@ -259,13 +293,18 @@ abstract public class Actor {
 		}
 	}
 	
+	/**
+	 * Returns an instance of the current AI for the actor
+	 * 
+	 * @return AI ai
+	 */
 	public AI getAI() {
 		return ai;
 	}
 	
 	/**
 	 * Returns the name of the actor
-	 * @return
+	 * @return String name
 	 */
 	public String getName() {
 		return this.name;
