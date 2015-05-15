@@ -64,10 +64,15 @@ public class Bee extends Actor {
 		if(!isActive()){
 			return newRect;
 		}
-		newRect.rectangle.x = this.x;
-		newRect.rectangle.y = this.y;
-		newRect.rectangle.height = this.getHeight();
-		newRect.rectangle.width = this.getWidth();
+//		newRect.rectangle.x = this.x;
+//		newRect.rectangle.y = this.y;
+//		newRect.rectangle.height = this.getHeight();
+//		newRect.rectangle.width = this.getWidth();
+		newRect.rectangle = this.getRectangle();
+		newRect.rectangle.x -= 5;
+		newRect.rectangle.y -= 5;
+		newRect.rectangle.width += 10;
+		newRect.rectangle.height += 10;
 		newRect.dmg = 20;
 		return newRect;
 	}
