@@ -124,11 +124,6 @@ public class MainGameScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-		//if game is paused we dont want to continue
-		if(this.game.paused){
-			ui.draw();
-			return;
-		}
 		//check if we need to return to main menu screen
 		if(player.getState() == State.INACTIVE && Gdx.input.isKeyPressed(Keys.ANY_KEY)){
 			this.game.setScreen(new MainMenuScreen(this.game));
@@ -138,7 +133,11 @@ public class MainGameScreen implements Screen{
 		
 		//Everything that needs to change position or do something 
 		//needs to to that in update(float delta) , not here.
-		this.update(delta);
+		//we only want to update if the game is running
+		if(!this.game.paused) {
+			this.update(delta);
+		}
+		
 		//This should run before anything else i rendered on screen
 		camera.update();
 		
@@ -414,6 +413,7 @@ public class MainGameScreen implements Screen{
 	@Override
 	public void resize(int width, int height) {
 		ui.updateScreen(width, height);
+		ui.draw();
 		camera.setToOrtho(false, cameraWidth, cameraHeight);
 	}
 
