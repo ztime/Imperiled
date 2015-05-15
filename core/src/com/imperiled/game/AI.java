@@ -136,6 +136,16 @@ public class AI {
 		actor.setPosition(x, y);
 	}
 	
+	/**
+	 * Checks the aggro range of the actor. If the player is
+	 * within the actors aggro range both for x and y it sets
+	 * the actors state to attacking.
+	 * 
+	 * Only checks aggro range if the actor is set to be of
+	 * aggressive behaviour.
+	 * 
+	 * @param player Reference to the player object.
+	 */
 	private void checkAggroRange(Player player) {
 		if(actor.behaviour == Behaviour.AGGRESSIVE) {
 			float xdist = Math.abs(player.getX() - actor.getX());
