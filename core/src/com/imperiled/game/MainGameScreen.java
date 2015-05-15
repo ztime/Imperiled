@@ -440,11 +440,17 @@ public class MainGameScreen implements Screen{
 		
 	}
 
+	/**
+	 * Releases memory for assets that are no longer being used
+	 */
 	@Override
 	public void dispose() {
 		map.dispose();
 		batch.dispose();
 		player.dispose();
+		for(Actor actor : actors){
+			actor.dispose();
+		}
 	}
 	
 	/**
