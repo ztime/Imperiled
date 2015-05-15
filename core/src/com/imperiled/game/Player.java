@@ -34,12 +34,13 @@ public class Player extends Actor {
 	 * @param x
 	 * @param y
 	 */
-	public Player(int x, int y){
+	public Player(int x, int y, int health){
 		this.setPosition(x, y);
 		weapons = new ArrayList<Weapon>();
 		this.loadAnimation();
 		this.speed = 200f;
 		this.name = "player";
+		this.health = health;
 		//Temporarly add a sword as the only weapon
 		Weapon sword = new Sword();
 		weapons.add(sword);

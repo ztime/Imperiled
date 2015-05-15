@@ -64,6 +64,8 @@ public class MainMenuScreen implements Screen {
 		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)){
 			//start default map
 			this.game.map = this.game.startMap;
+			//with full health
+			this.game.playerHealth = 100;
 			game.setScreen(new MainGameScreen(game));
 			dispose();
 			return; //just to make sure we don't render anything more
