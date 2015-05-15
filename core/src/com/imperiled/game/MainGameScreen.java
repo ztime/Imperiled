@@ -84,6 +84,7 @@ public class MainGameScreen implements Screen{
 			listOfEvents.add(eventObject.getName());
 		}
 		new FileParser(this.game.map, listOfEvents);
+		//System.out.println(PropertyHandler.currentEvents.get("healPlayer").listOfProperties());
 		
 		//setup actors in the map
 		actors = new ArrayList<Actor>();

@@ -240,10 +240,7 @@ public class MapEvent extends Event {
 		if(mapName == null) {
 			return false;
 		}
-		if (Gdx.app.getType() == ApplicationType.Android) {
-			return Gdx.files.internal("map/" + mapName + ".tmx").exists();
-		}
-		return Gdx.files.internal("./bin/map/" + mapName + ".tmx").exists();
+		return Gdx.files.internal("map/" + mapName + ".tmx").name().equals(mapName + ".tmx");
 	}
 	
 	/**
