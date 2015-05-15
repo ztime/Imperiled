@@ -79,8 +79,11 @@ public class MainGameScreen implements Screen{
 		//events
 		// Adds the events associated with this map to the PropertyHandler.
 		eventObjects = map.getLayers().get("events").getObjects();
-		
-		new FileParser(this.game.map);
+		ArrayList<String> listOfEvents = new ArrayList<String>();
+		for(MapObject eventObject : eventObjects) {
+			listOfEvents.add(eventObject.getName());
+		}
+		new FileParser(this.game.map, listOfEvents);
 		
 		//setup actors in the map
 		actors = new ArrayList<Actor>();
