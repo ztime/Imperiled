@@ -23,6 +23,7 @@ abstract public class Actor {
 	
 	//other
 	int health = 100;
+	int maxHP = health;
 	boolean invulnerable = false;
 	String name;
 	AI ai;

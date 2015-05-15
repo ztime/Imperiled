@@ -90,6 +90,7 @@ public class MapEvent extends Event {
 			}
 			int amount = Integer.parseInt(sAmount);
 			PropertyHandler.currentActors.get(target).takeDamage(amount);
+			return;
 		}
 		
 		/*
@@ -110,7 +111,7 @@ public class MapEvent extends Event {
 		 * xcor & ycor
 		 * direction
 		 */
-		else if(act.equalsIgnoreCase("changeMap")) {
+		if(act.equalsIgnoreCase("changeMap")) {
 			String mapTarget = props.get("mapTarget");
 			String xcor = props.get("xcor");
 			String ycor = props.get("ycor");
@@ -142,9 +143,22 @@ public class MapEvent extends Event {
 			} else {
 				eventError("Specified direction not valid.", act, target);
 			}
-			//get the player health so we save it to next game
+			//Get the players health to save it for the new map.
 			game.playerHealth = PropertyHandler.currentActors.get("player").health;
 			game.setScreen(new MainGameScreen(game));
+			return;
+		}
+		
+		/*
+		 * This action-typ sets the health of a target
+		 * to it's specified max health.
+		 * 
+		 * Only the three standard properties are
+		 * required.
+		 */
+		if(act.equalsIgnoreCase("restoreHealth")) {
+			Actor trgt = PropertyHandler.currentActors.get(target);
+			trgt.health = trgt.maxHP;
 		}
 	}
 	
