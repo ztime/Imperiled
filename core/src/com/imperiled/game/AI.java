@@ -48,7 +48,7 @@ public class AI {
 	public void act(MapObjects collisionObjects, Player player) {
 		switch(actor.currentState) {
 		case IDLE:
-			idling();
+			idling(player);
 			break;
 		case ATTACKING:
 			attacking(collisionObjects, player);
@@ -59,8 +59,7 @@ public class AI {
 		case MOVE:
 			//
 			break;
-		case INACTIVE:
-			//
+		default:
 			break;
 		}
 	}
@@ -68,7 +67,8 @@ public class AI {
 	/**
 	 * If the actor is idling.
 	 */
-	private void idling() {
+	private void idling(Player player) {
+		checkAggroRange(player);
 		if(System.nanoTime() - lastTime > idleTime) {
 			currentIdleOption = rand.nextInt(IDLE_OPTIONS);
 			generateIdleInterval();
@@ -94,6 +94,7 @@ public class AI {
 		}
 		actor.currentDirection = dir;
 		move();
+		checkAggroRange(player);
 	}
 	
 	/**
@@ -113,7 +114,11 @@ public class AI {
 	private void move() {
 		int x = actor.getX();
 		int y = actor.getY();
-		int dist = Math.round(Gdx.graphics.getDeltaTime() * actor.getSpeed());
+		float speed = actor.getSpeed();
+		if(actor.currentState == State.ATTACKING) {
+			speed = actor.getAttackSpeed();
+		}
+		int dist = Math.round(Gdx.graphics.getDeltaTime() * speed);
 		
 		switch(actor.currentDirection) {
 		case UP:
@@ -129,5 +134,27 @@ public class AI {
 			x += dist;
 		}
 		actor.setPosition(x, y);
+	}
+	
+	/**
+	 * Checks the aggro range of the actor. If the player is
+	 * within the actors aggro range both for x and y it sets
+	 * the actors state to attacking.
+	 * 
+	 * Only checks aggro range if the actor is set to be of
+	 * aggressive behaviour.
+	 * 
+	 * @param player Reference to the player object.
+	 */
+	private void checkAggroRange(Player player) {
+		if(actor.behaviour == Behaviour.AGGRESSIVE) {
+			float xdist = Math.abs(player.getX() - actor.getX());
+			float ydist = Math.abs(player.getY() - actor.getY());
+			if(ydist <= actor.aggroRange && xdist <= actor.aggroRange) {
+				actor.currentState = State.ATTACKING;
+				return;
+			}
+			actor.currentState = State.IDLE;
+		}
 	}
 }

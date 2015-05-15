@@ -21,7 +21,7 @@ public class Imperiled extends Game {
 	public String startMap = "testmap";
 	
 	@Override
-	public void create () {
+	public void create () {		
 		// we simply switch to main manu screen
 		this.setScreen(new MainMenuScreen(this));
 	}
