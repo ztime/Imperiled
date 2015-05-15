@@ -74,6 +74,7 @@ public class MainGameScreen implements Screen{
 		//load map objects
 		collisionObjects = map.getLayers().get("collision").getObjects();
 		markers = map.getLayers().get("markers").getObjects();
+		PropertyHandler.collisionObjects = collisionObjects;
 		
 		//events
 		// Adds the events associated with this map to the PropertyHandler.
