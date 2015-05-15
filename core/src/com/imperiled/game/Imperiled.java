@@ -16,6 +16,8 @@ public class Imperiled extends Game {
 	
 	//set this to true if we want do draw rectangels for collision and things
 	public boolean debug = true;
+	//Set this to start map for the game
+	public String startMap = "testmap";
 	
 	@Override
 	public void create () {
