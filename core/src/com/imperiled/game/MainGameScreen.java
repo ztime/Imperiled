@@ -373,7 +373,21 @@ public class MainGameScreen implements Screen{
 		while(iterCollision.hasNext()){
 			RectangleMapObject collisionObject = (RectangleMapObject) iterCollision.next();
 			if(Intersector.overlaps(playerHitBox, collisionObject.getRectangle())){
+				//Code duplication CLEAN UP LATER!!
+				int tempX = player.x;
+				player.x = player.oldX;
+				if(!Intersector.overlaps(player.getRectangle(), collisionObject.getRectangle())) {
+					checkPlayerCollision();
+					return;
+				}
+				player.x = tempX;
+				player.y = player.oldY;
+				if(!Intersector.overlaps(player.getRectangle(), collisionObject.getRectangle())) {
+					checkPlayerCollision();
+					return;
+				}
 				player.revertToOldPosition(); //moves to old position
+				return;
 			}
 		}
 		//next is all the actors
@@ -381,7 +395,21 @@ public class MainGameScreen implements Screen{
 		while(iterActors.hasNext()){
 			Rectangle rectangleActor = iterActors.next().getRectangle();
 			if(Intersector.overlaps(playerHitBox, rectangleActor)){
-				player.revertToOldPosition();
+				//Code duplication CLEAN UP LATER!!
+				int tempX = player.x;
+				player.x = player.oldX;
+				if(!Intersector.overlaps(player.getRectangle(), rectangleActor)) {
+					checkPlayerCollision();
+					return;
+				}
+				player.x = tempX;
+				player.y = player.oldY;
+				if(!Intersector.overlaps(player.getRectangle(), rectangleActor)) {
+					checkPlayerCollision();
+					return;
+				}
+				player.revertToOldPosition(); //moves to old position
+				return;
 			}
 		}
 	}

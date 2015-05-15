@@ -123,6 +123,7 @@ public class MapEvent extends Event {
 			}
 			Imperiled game = PropertyHandler.currentGame; 
 			game.map = mapTarget;
+			game.startPos = null;
 			if(xcor != null && ycor != null) {
 				if(!xcor.matches("^\\d+$") || !ycor.matches("^\\d+$")) {
 					eventError("Coordinates not integers.", act, mapTarget);
