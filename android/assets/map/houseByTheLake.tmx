@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="10">
+ <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
+  <image source="inside.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="101" name="holek" tilewidth="32" tileheight="32">
+  <image source="holek.png" width="96" height="192"/>
+ </tileset>
+ <layer name="Void" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6HbOPv/OkdBwVVTVVVVVVVVVVXV5w8KNzw5
+  </data>
+ </layer>
+ <layer name="Floor" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztz7ERACAMA7Gsw/4LUlHSO4l0595fBQAwz/msGx1ZdGTRkan7/2dKBwAAAAAAbHMBrIIHXw==
+  </data>
+ </layer>
+ <layer name="Walls" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1bEOQDAYReGiJowYsbLy/q/mNkxNSBqJlpwvOYPtvwyMAQAgHqsylXsVqox4V6hZVar2atQS8a5QbkerOq/efG/HFXa8jx1pYUda/rJjVYOazPH/tufzqLZ4Zz3i3v/d9wEAAAAAAAAAAGnaATnIBSU=
+  </data>
+ </layer>
+ <objectgroup color="#ffffff" name="collision">
+  <object id="1" x="587.333" y="242" width="19.3333" height="362"/>
+  <object id="2" x="596.667" y="576.667" width="82" height="62.6667"/>
+  <object id="3" x="657.333" y="638" width="100.667" height="20.6667"/>
+  <object id="4" x="728" y="576" width="86" height="67.3333"/>
+  <object id="5" x="800" y="238.667" width="9.33333" height="350"/>
+  <object id="7" x="592.667" y="326.667" width="238" height="24"/>
+ </objectgroup>
+ <objectgroup color="#00aa00" name="events">
+  <object id="8" name="leaveHouse" x="680.667" y="613.333" width="44.6667" height="22"/>
+ </objectgroup>
+ <objectgroup color="#d33769" name="markers">
+  <object id="9" name="playerStart" x="704" y="576.667"/>
+ </objectgroup>
+</map>
