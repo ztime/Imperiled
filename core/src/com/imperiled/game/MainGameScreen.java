@@ -285,11 +285,14 @@ public class MainGameScreen implements Screen{
 	 */
 	private void spawnActor(String type, String name, int x, int y){
 		//check that the type is valid
-		//currently bee is the only accepted one 
 		if(type.equals("bee")){
 			Bee newBee = new Bee(x,y);
 			newBee.name = name;
 			actors.add(newBee);
+		} else if(type.equals("ghost")){
+			Ghost newGhost = new Ghost(x,y);
+			newGhost.name = name;
+			actors.add(newGhost);
 		} else {
 			System.out.println("Invalid actortype: " + type);
 		}
