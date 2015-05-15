@@ -64,7 +64,7 @@ public class WinScreen implements Screen{
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+		camera.setToOrtho(false);
 		
 	}
 	

@@ -43,12 +43,6 @@ public class MainGameScreen implements Screen{
 	
 	private UiWrapper ui;
 	
-	
-	//Settings
-	private float SCALE_WIDTH = 1.2f;
-
-	
-	
 	public MainGameScreen(Imperiled game){
 		this.game = game;
 		PropertyHandler.currentGame = game;
@@ -65,12 +59,11 @@ public class MainGameScreen implements Screen{
 				* map.getProperties().get("width", Integer.class);
 		
 		//set camera viewport to smaller than resolution of window
-		//sort of like a zoom 
-		cameraWidth = Gdx.graphics.getWidth() / SCALE_WIDTH;
-		cameraHeight = Gdx.graphics.getHeight() * (cameraWidth / Gdx.graphics.getWidth());
+		//set it to a fixed resoultion to fix resizing
 		camera = new OrthographicCamera();
+		cameraWidth = 533.333f;
+		cameraHeight = 400.0f;
 		camera.setToOrtho(false, cameraWidth, cameraHeight);
-		//camera.setToOrtho(false, 533.3333f, 400.0f); //NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 		camera.update();
 		//Starting position of camera is 0,0 (lower left corner) of map
 		cameraLowerBound = camera.position.y;
@@ -131,11 +124,6 @@ public class MainGameScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-		//if game is paused we dont want to continue
-		if(this.game.paused){
-			ui.draw();
-			return;
-		}
 		//check if we need to return to main menu screen
 		if(player.getState() == State.INACTIVE && Gdx.input.isKeyPressed(Keys.ANY_KEY)){
 			this.game.setScreen(new MainMenuScreen(this.game));
@@ -145,7 +133,11 @@ public class MainGameScreen implements Screen{
 		
 		//Everything that needs to change position or do something 
 		//needs to to that in update(float delta) , not here.
-		this.update(delta);
+		//we only want to update if the game is running
+		if(!this.game.paused) {
+			this.update(delta);
+		}
+		
 		//This should run before anything else i rendered on screen
 		camera.update();
 		
@@ -173,9 +165,6 @@ public class MainGameScreen implements Screen{
 		//ui rendering should always happen last
 		ui.update(player);
 		ui.draw();
-		
-		// This fixes resizing, but breaks ui click.
-		//camera.setToOrtho(false, 533.3333f, 400.0f); //NEEDS FIXED WIDTH AND HEIGHT TO SOLVE RESIZING
 	}
 
 	/**
@@ -414,10 +403,17 @@ public class MainGameScreen implements Screen{
 		
 	}
 
+	/*
+	 * This gets called if the screen gets resized
+	 * only here should we adapt the ui and camera to the new resolution
+	 * 
+	 * @see com.badlogic.gdx.Screen#resize(int, int)
+	 */
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		ui.updateScreen(width, height);
+		ui.draw();
+		camera.setToOrtho(false, cameraWidth, cameraHeight);
 	}
 
 	@Override
