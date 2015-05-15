@@ -8,10 +8,17 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Ghost extends Actor {
 
+	//Places for storing the animation
 	private Animation[] movement; // 0 = up, 1 = left, 2 = down, 3 = left;
 	private TextureRegion[][] movementFrames;
 	private Texture characterSheet;
 	
+	/**
+	 * Creates a new ghost at x & y 
+	 * Also sets some default values 
+	 * @param x
+	 * @param y
+	 */
 	public Ghost (int x, int y){
 		this.setPosition(x, y);
 		this.loadAnimation();
@@ -22,6 +29,11 @@ public class Ghost extends Actor {
 		this.behaviour = Behaviour.AGGRESSIVE;
 		this.aggroRange = 140f;
 	}
+	
+	/**
+	 * Returns a rectangle representing the hitbox 
+	 * of the ghost
+	 */
 	@Override
 	public Rectangle getRectangle() {
 		if(!this.isActive()){
@@ -35,16 +47,17 @@ public class Ghost extends Actor {
 		return newRect;
 	}
 
+	/**
+	 * Returs a damage rectangle representing an attack
+	 * of the ghost, returns an empty rectangle
+	 * if ghost is inactive
+	 */
 	@Override
 	public DamageRectangle getDamageRectangle() {
 		DamageRectangle newRect = new DamageRectangle();
 		if(!isActive()){
 			return newRect;
 		}
-//		newRect.rectangle.x = this.x;
-//		newRect.rectangle.y = this.y;
-//		newRect.rectangle.height = this.getHeight();
-//		newRect.rectangle.width = this.getWidth();
 		newRect.rectangle = this.getRectangle();
 		newRect.rectangle.x -= 5;
 		newRect.rectangle.y -= 5;
@@ -54,12 +67,20 @@ public class Ghost extends Actor {
 		return newRect;
 	}
 
+	/**
+	 * Clears the ghosts assets from memory
+	 */
 	@Override
 	public void dispose() {
 		this.characterSheet.dispose();
 
 	}
-
+	
+	/**
+	 * Returns the current keyframe in the animation
+	 * with regards to the current state and direction
+	 * @return TextureRegion current keyframe
+	 */
 	@Override
 	public TextureRegion getKeyFrame() {
 		boolean moving = true;
@@ -69,6 +90,9 @@ public class Ghost extends Actor {
 		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, moving);
 	}
 	
+	/**
+	 * Load the animations for the ghost!
+	 */
 	public void loadAnimation() {
 		int sheetRows = 4;
 		int sheetCols = 3;

@@ -7,7 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+/**
+ * A winner screen! Should be displayed when the player has 
+ * finished the game
+ *
+ */
 public class WinScreen implements Screen{
 	final Imperiled game;
 	private OrthographicCamera camera;
@@ -62,12 +66,19 @@ public class WinScreen implements Screen{
 		}
 	}
 
+	/**
+	 * If the screen is resized we need to set the camera 
+	 * to the new screen and with
+	 */
 	@Override
 	public void resize(int width, int height) {
 		camera.setToOrtho(false);
 		
 	}
 	
+	/**
+	 * Clears up memory from font and camera
+	 */
 	@Override
 	public void dispose() {
 		batch.dispose();
@@ -98,7 +109,4 @@ public class WinScreen implements Screen{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-
 }

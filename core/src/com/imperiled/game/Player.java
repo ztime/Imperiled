@@ -83,6 +83,10 @@ public class Player extends Actor {
 		return walking[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving()).getRegionWidth();
 	}
 	
+	/**
+	 * Returns a DamageRectangle based on the current weapon and positioned
+	 * around the player depending on the current direction
+	 */
 	@Override
 	public DamageRectangle getDamageRectangle() {
 		if(currentWeapon == null || currentState != State.ATTACKING){

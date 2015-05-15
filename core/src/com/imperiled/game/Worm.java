@@ -6,12 +6,23 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * Represents an actor Worm
+ *
+ */
 public class Worm extends Actor {
 
+	//place to save the animation
 	private Animation[] movement; // 0 = up, 1 = left, 2 = down, 3 = left;
 	private TextureRegion[][] movementFrames;
 	private Texture characterSheet;
 	
+	/**
+	 * Creates a new worm at x & y 
+	 * and sets some default values
+	 * @param x
+	 * @param y
+	 */
 	public Worm (int x, int y){
 		this.setPosition(x, y);
 		this.loadAnimation();
@@ -23,10 +34,9 @@ public class Worm extends Actor {
 		this.aggroRange = 140f;
 	}
 	
-	
 	/**
-	 * Gets the current key frame
-	 * @return
+	 * Gets the current key frame depending on animation and direction
+	 * @return TextureRegion
 	 */
 	public TextureRegion getKeyFrame(){
 		boolean moving = true;
@@ -54,8 +64,8 @@ public class Worm extends Actor {
 	}
 
 	/**
-	 * Get a damage rectangle for when the bee attacks
-	 * bee attacks all the time
+	 * Get a damage rectangle for when the worm attacks
+	 * Returns an empty damage rectangle if the worm is inactive
 	 * @return
 	 */
 	@Override
@@ -64,10 +74,6 @@ public class Worm extends Actor {
 		if(!isActive()){
 			return newRect;
 		}
-//		newRect.rectangle.x = this.x;
-//		newRect.rectangle.y = this.y;
-//		newRect.rectangle.height = this.getHeight();
-//		newRect.rectangle.width = this.getWidth();
 		newRect.rectangle = this.getRectangle();
 		newRect.rectangle.x -= 5;
 		newRect.rectangle.y -= 5;
@@ -77,13 +83,17 @@ public class Worm extends Actor {
 		return newRect;
 	}
 
-
+	/**
+	 * Clears memory from textures and assets
+	 */
 	@Override
 	public void dispose() {
 		this.characterSheet.dispose();
-
 	}
 	
+	/**
+	 * Sets up the animation 
+	 */
 	public void loadAnimation() {
 		int sheetRows = 4;
 		int sheetCols = 3;
@@ -113,6 +123,4 @@ public class Worm extends Actor {
 	private int getWidth(){
 		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, isMoving()).getRegionWidth();
 	}
-
-
 }
