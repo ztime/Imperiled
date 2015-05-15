@@ -21,9 +21,8 @@ import com.badlogic.gdx.files.FileHandle;
  * @version 2015.05.12
  */
 public class FileParser {
-	private FileHandle folder;
-	private String suffix = "jwx2";
 	private ArrayList<FileHandle> files;
+	private static String prefix = "";
 	
 	/**
 	 * Creates a FileParser that fetches a folder
@@ -36,18 +35,14 @@ public class FileParser {
 	 * 
 	 * @param path Name of the map without ".tmx"
 	 */
-	public FileParser(String mapName) {
-		if (Gdx.app.getType() == ApplicationType.Android) {
-			folder = Gdx.files.internal("data/" + mapName);
-		} else {
-			folder = Gdx.files.internal("./bin/data/" + mapName);
+	public FileParser(String mapName, ArrayList<String> listOfEvents) {
+		if (Gdx.app.getType() != ApplicationType.Android) {
+			prefix = "./bin/";
 		}
 		files = new ArrayList<FileHandle>();
-		for(FileHandle file : folder.list()) {
-			if(file.extension().equalsIgnoreCase(suffix) &&
-					!file.isDirectory()) {
-				files.add(file);
-			}
+		for(String file : listOfEvents) {
+			FileHandle f = Gdx.files.internal(prefix + "data/" + mapName + "/" + file + ".jwx2");
+			files.add(f);
 		}
 		parseFiles();
 	}
@@ -61,12 +56,18 @@ public class FileParser {
 	private void parseFiles() {
 		ArrayList<MapEvent> events = new ArrayList<MapEvent>();
 		for(FileHandle file : files) {
-			try(BufferedReader in = new BufferedReader(file.reader())) {
+			try {
+				String in = file.readString();
 				events.add(new MapEvent(fileParser(in, file.name())));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.exit(1);
 			}
+			//try(BufferedReader in = new BufferedReader(file.reader())) {
+			//	events.add(new MapEvent(fileParser(in, file.name())));
+			//} catch (Exception e) {
+			//	// TODO Auto-generated catch block
+			//	e.printStackTrace();
+			//}
 		}
 		PropertyHandler.newEvents(events);
 	}
@@ -82,18 +83,18 @@ public class FileParser {
 	 * ...
 	 * etc.
 	 * 
+	 * private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
+	 * 
 	 * @param in A BufferedReader with the file loaded.
 	 * @param filename Name of the file being parsed.
 	 * @return A HashMap with each value bound
 	 *         to its property.
 	 */
-	private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
+	private HashMap<String, String> fileParser(String fileText, String filename) throws IOException {
 		HashMap<String, String> properties = new HashMap<String, String>();
-		String line;
-		int lnCnt = 0;
-		while ((line = in.readLine()) != null) { // reads each line
-            lnCnt++;
-            String[] parts = line.trim().split("\\=");
+		String[] lines = fileText.split("\\n");
+		for(int lnCnt = 1; lnCnt < lines.length + 1; lnCnt++) { // reads each line
+            String[] parts = lines[lnCnt - 1].trim().split("\\=");
             if(parts[0].equals("")) {
                 continue;
             }
@@ -116,11 +117,11 @@ public class FileParser {
             properties.put(parts[0], parts[1]);
 		}
 		if(properties.size() == 0) {
-			formatError(lnCnt, "No information in file.", filename);
+			formatError(0, "No information in file.", filename);
 		}
 		for(String req : PropertyHandler.eventReqs) {
 			if(!properties.containsKey(req)) {
-				formatError(lnCnt, "File does not contain the required property: " + req, filename);
+				formatError(0, "File does not contain the required property: " + req, filename);
 			}
 		}
 		return properties;
