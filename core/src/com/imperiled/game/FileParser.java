@@ -36,13 +36,9 @@ public class FileParser {
 	 * @param path Name of the map without ".tmx"
 	 */
 	public FileParser(String mapName, ArrayList<String> listOfEvents) {
-		if (Gdx.app.getType() != ApplicationType.Android) {
-			prefix = "./bin/";
-		}
 		files = new ArrayList<FileHandle>();
 		for(String file : listOfEvents) {
-			FileHandle f = Gdx.files.internal(prefix + "data/" + mapName + "/" + file + ".jwx2");
-			files.add(f);
+			files.add(Gdx.files.internal(prefix + "data/" + mapName + "/" + file + ".jwx2"));
 		}
 		parseFiles();
 	}
@@ -56,18 +52,12 @@ public class FileParser {
 	private void parseFiles() {
 		ArrayList<MapEvent> events = new ArrayList<MapEvent>();
 		for(FileHandle file : files) {
-			try {
-				String in = file.readString();
+			try(BufferedReader in = new BufferedReader(file.reader())) {
 				events.add(new MapEvent(fileParser(in, file.name())));
 			} catch (Exception e) {
-				System.exit(1);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			//try(BufferedReader in = new BufferedReader(file.reader())) {
-			//	events.add(new MapEvent(fileParser(in, file.name())));
-			//} catch (Exception e) {
-			//	// TODO Auto-generated catch block
-			//	e.printStackTrace();
-			//}
 		}
 		PropertyHandler.newEvents(events);
 	}
@@ -90,11 +80,13 @@ public class FileParser {
 	 * @return A HashMap with each value bound
 	 *         to its property.
 	 */
-	private HashMap<String, String> fileParser(String fileText, String filename) throws IOException {
+	private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
 		HashMap<String, String> properties = new HashMap<String, String>();
-		String[] lines = fileText.split("\\n");
-		for(int lnCnt = 1; lnCnt < lines.length + 1; lnCnt++) { // reads each line
-            String[] parts = lines[lnCnt - 1].trim().split("\\=");
+		String line;
+		int lnCnt = 0;
+		while((line = in.readLine()) != null) { // reads each line
+			lnCnt++;
+            String[] parts = line.trim().split("\\=");
             if(parts[0].equals("")) {
                 continue;
             }
