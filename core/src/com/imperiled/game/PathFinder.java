@@ -23,7 +23,6 @@ public class PathFinder {
 
 	Vector2 position;
 	Actor actor;
-	ArrayList<Vector2> ends;
 	ArrayList<Vector2> visited;
 	HashMap<Vector2, Vector2> previous;
 	HashMap<Vector2, Integer> distance;
@@ -52,11 +51,11 @@ public class PathFinder {
 		Vector2 originalPos = new Vector2(actor.x, actor.y);
 		recreateArrays();
 		LinkedList<Vector2> queue = new LinkedList<Vector2>();
+		Vector2 end = null;
 		queue.add(actor.getPosition());
 		distance.put(actor.getPosition(), 0);
 		visited.add(actor.getPosition());
 		while(queue.size() > 0) { // >>Start of while-loop<<
-			
 			// Gets the first candidate in the queue.
 			Vector2 pos = queue.removeFirst();
 			actor.setPosition(pos);
@@ -64,9 +63,11 @@ public class PathFinder {
 			
 			// Checks if pos is colliding with the player
 			if(Intersector.overlaps(rect, target.getRectangle())) {
-				if(!ends.contains(pos)) {
-					ends.add(pos);
-				}
+				end = pos;
+				break;
+				// Ends the pathfinder since BFS properies
+				// ensures that this will give the shortest
+				// route to the target.
 			}
 			
 			// Gets reference to position if it has already been
@@ -90,8 +91,10 @@ public class PathFinder {
 			// on the map. If it does it is not counted as valid.
 			nextneighbor:
 			for(Vector2 nb : nbs) {
+				if(visited.contains(nb)) {
+					continue;
+				}
 				actor.setPosition(nb);
-				rect = actor.getRectangle();
 				Iterator<MapObject> iterCollision = collisionObjects.iterator();
 				while(iterCollision.hasNext()){
 					RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
@@ -121,21 +124,15 @@ public class PathFinder {
 		
 		actor.setPosition(originalPos);
 		
-		// Checks the found position to move to.
-		Vector2 shortestRoute = null;
-		for(Vector2 pLoc : ends) {
-			if(shortestRoute == null || distance.get(pLoc) < distance.get(shortestRoute)) {
-				shortestRoute = pLoc;
-			}
-		}
-		if(shortestRoute == null) {
+		if(end == null || previous.get(end) == null) {
 			return null;
 		}
-		while(!previous.get(shortestRoute).equals(actor.getPosition())) {
-			shortestRoute = previous.get(shortestRoute);
+		while(!previous.get(end).equals(actor.getPosition())) {
+			end = previous.get(end);
 		}
-		float xval = shortestRoute.x - actor.getPosition().x;
-		float yval = shortestRoute.y - actor.getPosition().y;
+		
+		float xval = end.x - actor.getPosition().x;
+		float yval = end.y - actor.getPosition().y;
 		if(yval > 0) {
 			return Direction.UP;
 		}
@@ -155,7 +152,6 @@ public class PathFinder {
 	 * Creates the neccesary arrays for the pathfinding.
 	 */
 	private void recreateArrays() {
-		ends = new ArrayList<Vector2>();
 		visited = new ArrayList<Vector2>();
 		previous = new HashMap<Vector2, Vector2>();
 		distance = new HashMap<Vector2, Integer>();

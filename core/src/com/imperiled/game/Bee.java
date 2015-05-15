@@ -16,9 +16,11 @@ public class Bee extends Actor {
 		this.setPosition(x, y);
 		this.loadAnimation();
 		this.health = 100;
-		this.speed = 100f;
+		this.speed = 70f;
+		this.attackSpeed = 100f;
 		this.ai = new AI(this);
-		currentState = State.ATTACKING;
+		this.behaviour = Behaviour.AGGRESSIVE;
+		this.aggroRange = 140f;
 	}
 	
 	
