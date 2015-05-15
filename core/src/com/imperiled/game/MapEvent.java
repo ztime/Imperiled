@@ -146,7 +146,10 @@ public class MapEvent extends Event {
 			game.setScreen(new MainGameScreen(game));
 		}
 		/**
-		 * Lets the player go to a winning screen
+		 * Lets the player go to a winning screen, i.e a player has won
+		 * the game. 
+		 * 
+		 * No required arguments nor any optional
 		 */
 		else if(act.equalsIgnoreCase("winGame")){
 			//player has finished the game
