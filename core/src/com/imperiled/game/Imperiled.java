@@ -18,7 +18,7 @@ public class Imperiled extends Game {
 	public boolean debug = true;
 	
 	@Override
-	public void create () {
+	public void create () {		
 		// we simply switch to main manu screen
 		this.setScreen(new MainMenuScreen(this));
 	}

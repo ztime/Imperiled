@@ -21,7 +21,7 @@ public class MainMenuScreen implements Screen {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	
-	public MainMenuScreen(final Imperiled game){		
+	public MainMenuScreen(final Imperiled game){
 		//save the super-game object so we can pass it on
 		this.game = game;
 		//New camera with the same resolution as our window
@@ -108,6 +108,4 @@ public class MainMenuScreen implements Screen {
 		font.dispose();
 		background.dispose();
 	}
-
-	
 }
