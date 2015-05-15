@@ -13,6 +13,7 @@ public class WinScreen implements Screen{
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
+	private float elapsedTime;
 	
 	/**
 	 * Creates a new win screen!
@@ -36,6 +37,7 @@ public class WinScreen implements Screen{
 	 */
 	@Override
 	public void render(float delta) {
+		elapsedTime += delta;
 		camera.update();
 		//Clear screen
 		Gdx.gl.glClearColor(0,0,0,1); //Black
@@ -50,9 +52,10 @@ public class WinScreen implements Screen{
 		batch.end();
 		
 		//check if we should switch screens 
-		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+		if((Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)) && elapsedTime > 2.0f){
 			//start default map
 			this.game.map = this.game.startMap;
+			this.game.playerHealth = 100;
 			game.setScreen(new MainGameScreen(game));
 			dispose();
 			return; //just to make sure we don't render anything more

@@ -145,6 +145,14 @@ public class MapEvent extends Event {
 			game.playerHealth = PropertyHandler.currentActors.get("player").health;
 			game.setScreen(new MainGameScreen(game));
 		}
+		/**
+		 * Lets the player go to a winning screen
+		 */
+		else if(act.equalsIgnoreCase("winGame")){
+			//player has finished the game
+			Imperiled game = PropertyHandler.currentGame;
+			game.setScreen(new WinScreen(game));
+		}
 	}
 	
 	/**

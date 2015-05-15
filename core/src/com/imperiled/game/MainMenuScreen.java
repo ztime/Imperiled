@@ -20,6 +20,7 @@ public class MainMenuScreen implements Screen {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private BitmapFont font;
+	private float elapsedTime;
 	
 	public MainMenuScreen(final Imperiled game){		
 		//save the super-game object so we can pass it on
@@ -38,6 +39,7 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		elapsedTime += delta;
 		// This apparently fixes scaling
 		// Don't ask me why.
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -61,7 +63,7 @@ public class MainMenuScreen implements Screen {
 		batch.end();
 		
 		//check if we should switch screens 
-		if(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+		if((Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)) && elapsedTime > 2.0f){
 			//start default map
 			this.game.map = this.game.startMap;
 			//with full health
