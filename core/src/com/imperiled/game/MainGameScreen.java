@@ -293,6 +293,10 @@ public class MainGameScreen implements Screen{
 			Ghost newGhost = new Ghost(x,y);
 			newGhost.name = name;
 			actors.add(newGhost);
+		} else if (type.equals("worm")){
+			Worm newWorm = new Worm(x,y);
+			newWorm.name = name;
+			actors.add(newWorm);
 		} else {
 			System.out.println("Invalid actortype: " + type);
 		}

@@ -73,7 +73,7 @@ public class Bee extends Actor {
 		newRect.rectangle.y -= 5;
 		newRect.rectangle.width += 10;
 		newRect.rectangle.height += 10;
-		newRect.dmg = 20;
+		newRect.dmg = 1;
 		return newRect;
 	}
 

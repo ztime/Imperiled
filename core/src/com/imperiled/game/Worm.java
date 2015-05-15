@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Ghost extends Actor {
+public class Worm extends Actor {
 
 	private Animation[] movement; // 0 = up, 1 = left, 2 = down, 3 = left;
 	private TextureRegion[][] movementFrames;
 	private Texture characterSheet;
 	
-	public Ghost (int x, int y){
+	public Worm (int x, int y){
 		this.setPosition(x, y);
 		this.loadAnimation();
 		this.health = 100;
@@ -22,6 +22,24 @@ public class Ghost extends Actor {
 		this.behaviour = Behaviour.AGGRESSIVE;
 		this.aggroRange = 140f;
 	}
+	
+	
+	/**
+	 * Gets the current key frame
+	 * @return
+	 */
+	public TextureRegion getKeyFrame(){
+		boolean moving = true;
+		if(currentState == State.DEAD || currentState == State.INACTIVE){
+			moving = false;
+		}
+		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, moving);
+	}
+
+	/**
+	 * Returns a rectangle of where the bee is
+	 * @return
+	 */
 	@Override
 	public Rectangle getRectangle() {
 		if(!this.isActive()){
@@ -35,6 +53,11 @@ public class Ghost extends Actor {
 		return newRect;
 	}
 
+	/**
+	 * Get a damage rectangle for when the bee attacks
+	 * bee attacks all the time
+	 * @return
+	 */
 	@Override
 	public DamageRectangle getDamageRectangle() {
 		DamageRectangle newRect = new DamageRectangle();
@@ -54,26 +77,18 @@ public class Ghost extends Actor {
 		return newRect;
 	}
 
+
 	@Override
 	public void dispose() {
 		this.characterSheet.dispose();
 
-	}
-
-	@Override
-	public TextureRegion getKeyFrame() {
-		boolean moving = true;
-		if(currentState == State.DEAD || currentState == State.INACTIVE){
-			moving = false;
-		}
-		return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, moving);
 	}
 	
 	public void loadAnimation() {
 		int sheetRows = 4;
 		int sheetCols = 3;
 		float wAnimationSpeed = 0.1f;
-		characterSheet = new Texture(Gdx.files.internal("sprites/ghost.png"));
+		characterSheet = new Texture(Gdx.files.internal("sprites/worm.png"));
 		movement = new Animation[4];
 		movementFrames = TextureRegion.split(characterSheet, characterSheet.getWidth() / sheetCols, characterSheet.getHeight() / sheetRows);
 		for(int i = 0; i < sheetRows; i++){
