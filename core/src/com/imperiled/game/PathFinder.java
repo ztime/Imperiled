@@ -2,6 +2,7 @@ package com.imperiled.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -25,7 +26,7 @@ public class PathFinder {
 	Actor actor;
 	ArrayList<Vector2> visited;
 	HashMap<Vector2, Vector2> previous;
-	HashMap<Vector2, Integer> distance;
+	HashMap<Vector2, Float> distance;
 	
 	/**
 	 * Constructor for PathFinder. Assigns a specific
@@ -53,7 +54,7 @@ public class PathFinder {
 		LinkedList<Vector2> queue = new LinkedList<Vector2>();
 		Vector2 end = null;
 		queue.add(actor.getPosition());
-		distance.put(actor.getPosition(), 0);
+		distance.put(actor.getPosition(), 0f);
 		visited.add(actor.getPosition());
 		while(queue.size() > 0) { // >>Start of while-loop<<
 			// Gets the first candidate in the queue.
@@ -91,20 +92,42 @@ public class PathFinder {
 			
 			// Checks if the position collides with anything
 			// on the map. If it does it is not counted as valid.
+			HashSet<Vector2> prevs = new HashSet<Vector2>();
 			nextneighbor:
 			for(int i = 0; i < 4; i++) {
 				if(visited.contains(nbs[i])) {
 					continue;
 				}
 				actor.setPosition(nbs[i]);
-				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange ||
-						Math.abs(originalPos.y - actor.y) > actor.aggroRange) {
+				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange * 3 ||
+						Math.abs(originalPos.y - actor.y) > actor.aggroRange * 3) {
 					continue;
 				}
+				prevs.add(new Vector2(nbs[i]));
+				rect = actor.getRectangle();
 				Iterator<MapObject> iterCollision = collisionObjects.iterator();
 				while(iterCollision.hasNext()){
 					RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
-					if(Intersector.overlaps(rect, collRect.getRectangle())){
+					Rectangle cr = collRect.getRectangle();
+					if(Intersector.overlaps(rect, cr)){
+						if(i != 1 && cr.x < (nbs[i].x + rect.width) && (0 < cr.x - (pos.x + rect.width + 4)) && cr.x - (pos.x + rect.width + 3) < rect.width) {
+							nbs[i].x = cr.x - (rect.width + 2);
+						} else if(i != 0 && (cr.x + cr.width) > nbs[i].x && (0 < pos.x - (cr.x + cr.width + 4)) && (pos.x - (cr.x + cr.width + 3) < rect.width)) {
+							nbs[i].x = cr.x + cr.width + 2;
+						}
+						if(i != 3 && cr.y < (nbs[i].y + rect.height) && (0 < cr.y - (pos.y + rect.height + 4)) && (cr.y - (pos.y + rect.height + 3) < rect.height)) {
+							nbs[i].y = cr.y - (rect.height + 2);
+						} else if(i != 2 && (cr.y + cr.height) > nbs[i].y && (0 < pos.y - (cr.y + cr.height + 4)) && (pos.y - (cr.y + cr.height + 3) < rect.height)) {
+							nbs[i].y = cr.y + cr.height + 2;
+						}
+						for(Vector2 prev : prevs) {
+							if(prev.equals(nbs[i])) {
+								continue nextneighbor;
+							}
+						}
+						//actor.setPosition(nbs[i]);
+						//rect = actor.getRectangle();
+						i--;
 						continue nextneighbor;
 					}
 				}
@@ -113,7 +136,7 @@ public class PathFinder {
 			
 			// Iterates over the valid neighbors.
 			for(Vector2 neighbor : neighbors) {
-				int alt = distance.get(pos) + 1;
+				float alt = distance.get(pos) + Math.abs(neighbor.x - pos.x) + Math.abs(neighbor.y - pos.y);
 				if(distance.get(neighbor) == null || alt < distance.get(neighbor)) {
 					distance.put(neighbor, alt);
 					previous.put(neighbor, pos);
@@ -160,6 +183,6 @@ public class PathFinder {
 	private void recreateArrays() {
 		visited = new ArrayList<Vector2>();
 		previous = new HashMap<Vector2, Vector2>();
-		distance = new HashMap<Vector2, Integer>();
+		distance = new HashMap<Vector2, Float>();
 	}
 }
