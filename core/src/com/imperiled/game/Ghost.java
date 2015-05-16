@@ -56,7 +56,7 @@ public class Ghost extends Actor {
 	@Override
 	public DamageRectangle getDamageRectangle() {
 		DamageRectangle newRect = new DamageRectangle();
-		if(!isActive()){
+		if(!isActive() || !isAlive()){
 			return newRect;
 		}
 		newRect.rectangle = this.getRectangle();
