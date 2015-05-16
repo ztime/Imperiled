@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -162,19 +161,23 @@ public class MapEvent extends Event {
 		if(act.equalsIgnoreCase("restoreHealth")) {
 			Actor trgt = PropertyHandler.currentActors.get(target);
 			trgt.health = trgt.maxHP;
+			return;
 		}
-		/**
+		
+		/*
 		 * Lets the player go to a winning screen, i.e a player has won
 		 * the game. 
 		 * 
 		 * No required arguments nor any optional
 		 */
-		else if(act.equalsIgnoreCase("winGame")){
+		if(act.equalsIgnoreCase("winGame")){
 			//player has finished the game
 			Imperiled game = PropertyHandler.currentGame;
 			game.setScreen(new WinScreen(game));
+			return;
 		}
-		/**
+		
+		/*
 		 * If the player enters this area, it checks if all
 		 * the actors in the current map are inactive, and if they
 		 * are , we remove the collisionObject specified in the event
@@ -183,7 +186,7 @@ public class MapEvent extends Event {
 		 * collisionObject ,target should be player
 		 * 
 		 */
-		else if(act.equalsIgnoreCase("blockUntilClear")){
+		if(act.equalsIgnoreCase("blockUntilClear")){
 			String collisionObjectName = props.get("collisionObject");
 			//check that no enemy is still alive
 			Iterator<Entry<String, Actor>> iterActor = PropertyHandler.currentActors.entrySet().iterator();
@@ -207,6 +210,7 @@ public class MapEvent extends Event {
 					}
 				}
 			}
+			return;
 		}
 	}
 	

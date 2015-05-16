@@ -27,8 +27,9 @@ public class Worm extends Actor {
 		this.setPosition(x, y);
 		this.loadAnimation();
 		this.health = 100;
+		this.maxHP = this.health;
 		this.speed = 70f;
-		this.attackSpeed = 100f;
+		this.attackingSpeed = 100f;
 		this.ai = new AI(this);
 		this.behaviour = Behaviour.AGGRESSIVE;
 		this.aggroRange = 140f;
