@@ -19,9 +19,9 @@ abstract public class Actor {
 	int x, y;
 	//old position , saved for collision checking
 	int oldX, oldY;
-	float speed;
 	
 	//for actors controlled by AI
+	float speed;
 	float attackingSpeed;
 	float aggroRange;
 	
