@@ -81,6 +81,8 @@ public class PathFinder {
 			for(int i = 0; i < 4; i++) {
 				for(Vector2 neighbor : visited) {
 					if(nbs[i].equals(neighbor)) {
+						// This is used later on only to
+						// avoid duplicates.
 						nbs[i] = neighbor;
 						break;
 					}
@@ -90,11 +92,15 @@ public class PathFinder {
 			// Checks if the position collides with anything
 			// on the map. If it does it is not counted as valid.
 			nextneighbor:
-			for(Vector2 nb : nbs) {
-				if(visited.contains(nb)) {
+			for(int i = 0; i < 4; i++) {
+				if(visited.contains(nbs[i])) {
 					continue;
 				}
-				actor.setPosition(nb);
+				actor.setPosition(nbs[i]);
+				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange ||
+						Math.abs(originalPos.y - actor.y) > actor.aggroRange) {
+					continue;
+				}
 				Iterator<MapObject> iterCollision = collisionObjects.iterator();
 				while(iterCollision.hasNext()){
 					RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
@@ -102,7 +108,7 @@ public class PathFinder {
 						continue nextneighbor;
 					}
 				}
-				neighbors.add(nb);
+				neighbors.add(nbs[i]);
 			}
 			
 			// Iterates over the valid neighbors.

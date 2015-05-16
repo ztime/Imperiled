@@ -23,6 +23,7 @@ public class Ghost extends Actor {
 		this.setPosition(x, y);
 		this.loadAnimation();
 		this.health = 100;
+		this.maxHP = this.health;
 		this.speed = 70f;
 		this.attackingSpeed = 100f;
 		this.ai = new AI(this);
