@@ -52,12 +52,17 @@ public class FileParser {
 	private void parseFiles() {
 		ArrayList<MapEvent> events = new ArrayList<MapEvent>();
 		for(FileHandle file : files) {
-			try(BufferedReader in = new BufferedReader(file.reader())) {
-				events.add(new MapEvent(fileParser(in, file.name())));
+			try {
+				events.add(new MapEvent(fileParser(new BufferedReader(file.reader()), file.name())));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.exit(1);
 			}
+			//try(BufferedReader in = new BufferedReader(file.reader())) {
+			//	events.add(new MapEvent(fileParser(in, file.name())));
+			//} catch (Exception e) {
+			//	// TODO Auto-generated catch block
+			//	e.printStackTrace();
+			//}
 		}
 		PropertyHandler.newEvents(events);
 	}
