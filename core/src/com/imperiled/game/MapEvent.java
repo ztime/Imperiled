@@ -153,7 +153,18 @@ public class MapEvent extends Event {
 		}
 		
 		/*
-<<<<<<< HEAD
+		 * This action-typ sets the health of a target
+		 * to it's specified max health.
+		 * 
+		 * Only the three standard properties are
+		 * required.
+		 */
+		if(act.equalsIgnoreCase("restoreHealth")) {
+			Actor trgt = PropertyHandler.currentActors.get(target);
+			trgt.health = trgt.maxHP;
+		}
+		
+		/*
 		 * Lets the player go to a winning screen, i.e a player has won
 		 * the game. 
 		 * 
@@ -199,19 +210,6 @@ public class MapEvent extends Event {
 					}
 				}
 			}
-			return;
-		}
-		
-		/*
-		 * This action-typ sets the health of a target
-		 * to it's specified max health.
-		 * 
-		 * Only the three standard properties are
-		 * required.
-		 */
-		if(act.equalsIgnoreCase("restoreHealth")) {
-			Actor trgt = PropertyHandler.currentActors.get(target);
-			trgt.health = trgt.maxHP;
 			return;
 		}
 	}
