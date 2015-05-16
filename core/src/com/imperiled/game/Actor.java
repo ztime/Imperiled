@@ -212,8 +212,16 @@ abstract public class Actor {
 			return 2;
 		case LEFT:
 			return 1;
-		default: //RIGHT
+		case RIGHT:
 			return 3;
+		case UP_LEFT:
+			return 4;
+		case UP_RIGHT:
+			return 5;
+		case DOWN_LEFT:
+			return 6;
+		default: //DOWN_RIGHT
+			return 7;
 		}
 	}
 	
