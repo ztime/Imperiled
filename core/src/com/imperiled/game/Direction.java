@@ -3,7 +3,7 @@ package com.imperiled.game;
  * Represents the direction an actor is facing
  */
 public enum Direction {
-	UP,DOWN,RIGHT,LEFT,UP_LEFT,UP_RIGHT,DOWN_LEFT,DOWN_RIGHT;
+	UP,DOWN,RIGHT,LEFT;
 	
 	private Direction opposite;
 	
@@ -12,10 +12,6 @@ public enum Direction {
 		DOWN.opposite = UP;
 		LEFT.opposite = RIGHT;
 		RIGHT.opposite = LEFT;
-		UP_LEFT.opposite = DOWN_RIGHT;
-		UP_RIGHT.opposite = DOWN_LEFT;
-		DOWN_LEFT.opposite = UP_RIGHT;
-		DOWN_RIGHT.opposite = UP_LEFT;
 	}
 	/**
 	 * Returns the opposite direction of an other direction
@@ -39,16 +35,8 @@ public enum Direction {
 			return DOWN;
 		case 1:
 			return LEFT;
-		case 3:
+		default: // 3
 			return RIGHT;
-		case 4:
-			return UP_LEFT;
-		case 5:
-			return UP_RIGHT;
-		case 6:
-			return DOWN_LEFT;
-		default: // 7
-			return DOWN_RIGHT;
 		}
 	}
 }

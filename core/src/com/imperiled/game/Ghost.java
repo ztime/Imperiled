@@ -24,7 +24,7 @@ public class Ghost extends Actor {
 		this.loadAnimation();
 		this.health = 100;
 		this.speed = 70f;
-		this.attackSpeed = 100f;
+		this.attackingSpeed = 100f;
 		this.ai = new AI(this);
 		this.behaviour = Behaviour.AGGRESSIVE;
 		this.aggroRange = 140f;

@@ -93,6 +93,7 @@ public class MapEvent extends Event {
 			}
 			int amount = Integer.parseInt(sAmount);
 			PropertyHandler.currentActors.get(target).takeDamage(amount);
+			return;
 		}
 		
 		/*
@@ -148,8 +149,10 @@ public class MapEvent extends Event {
 			//get the player health so we save it to next game
 			game.playerHealth = PropertyHandler.currentActors.get("player").health;
 			game.setScreen(new MainGameScreen(game));
+			return;
 		}
-		/**
+		
+		/*
 		 * Lets the player go to a winning screen, i.e a player has won
 		 * the game. 
 		 * 
@@ -159,8 +162,10 @@ public class MapEvent extends Event {
 			//player has finished the game
 			Imperiled game = PropertyHandler.currentGame;
 			game.setScreen(new WinScreen(game));
+			return;
 		}
-		/**
+		
+		/*
 		 * If the player enters this area, it checks if all
 		 * the actors in the current map are inactive, and if they
 		 * are , we remove the collisionObject specified in the event
@@ -193,6 +198,7 @@ public class MapEvent extends Event {
 					}
 				}
 			}
+			return;
 		}
 	}
 	
