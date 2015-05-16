@@ -59,6 +59,8 @@ public class MainMenuScreen implements Screen {
 		//draw background in top left corner
 		batch.begin();
 		batch.draw(background, 0, screenHeight - imgHeight, screenWidth, imgHeight);
+		//for demo
+		font.draw(batch, "Find the maze and make your way through to win!", 100, 120);
 		font.draw(batch, "Press any key to play . . .", 100, 100);
 		batch.end();
 		
