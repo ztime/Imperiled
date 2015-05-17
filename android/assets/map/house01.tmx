@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="27">
  <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
   <image source="inside.png" width="320" height="320"/>
  </tileset>
  <tileset firstgid="101" name="holek" tilewidth="32" tileheight="32">
   <image source="holek.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="119" name="house" tilewidth="32" tileheight="32">
+  <image source="house.png" width="288" height="224"/>
+ </tileset>
+ <tileset firstgid="182" name="victoria" tilewidth="32" tileheight="32">
+  <image source="victoria.png" width="352" height="160"/>
  </tileset>
  <layer name="Void" width="50" height="50">
   <data encoding="base64" compression="zlib">
@@ -13,26 +19,65 @@
  </layer>
  <layer name="Floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztz7ERACAMA7Gsw/4LUlHSO4l0595fBQAwz/msGx1ZdGTRkan7/2dKBwAAAAAAbHMBrIIHXw==
+   eJztz7ENACAMA8Gsw/4LUtEj0TjhTnLvrwIAAG6shyXRkUVHPzqy6MjU/f8xpQMAAAAAfrIBJCIQgA==
   </data>
  </layer>
  <layer name="Walls" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1bEOQDAYReGiJowYsbLy/q/mNkxNSBqJlpwvOYPtvwyMAQAgHqsylXsVqox4V6hZVar2atQS8a5QbkerOq/efG/HFXa8jx1pYUda/rJjVYOazPH/tufzqLZ4Zz3i3v/d9wEAAAAAAAAAAGnaATnIBSU=
+   eJzt0zsKgDAQRdH4q9RSba211f1vzYEQsIgSYhhCvAduYTePoDEAAABWK1VSHVEjdfone21SLw0RjdKuf7JXSTsmaY5oMXnt+IIdabHDYkdah7QG9CSXHSHe3owd+krZcf+HHPd9ql8DAAAAAAAA4K8ufcgI6Q==
+  </data>
+ </layer>
+ <layer name="Walls (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt06kNADAMBEHXk6f/9kINHQVYkWbQwSUXAQAAAFTs7gD4QP7Jaqt4N9KebRUAAAAAwK0DF/YA3A==
+  </data>
+ </layer>
+ <layer name="WallDecorations" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztyCEOACAMBMG+HCzPxlZyriEzyZqtAgD4026lb5LVSt8kp5U+AAAAAAAAgBcXcOANrg==
+  </data>
+ </layer>
+ <layer name="WallDecorations (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztyDEOgDAMBEH//1EhLaJFvIeUyFXcWWhGuuI2AgDgf8ba8dkstE7O9K9C6+RO/yk0AAAAAAAAgF0vo5cU7A==
+  </data>
+ </layer>
+ <layer name="Props (lower prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzqENADAMBLHsv1h4JyoJDWvBS7Z0/KoAAIAfekqxvZ4pRdIrAAAAAAAAb12d5wTM
+  </data>
+ </layer>
+ <layer name="Tables" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztz7EJACAQBEH7L0ljjbUjvwGzhweZgc3vWgMAAHjr0agekWBGq3pEgl9+7OhUjwAAAAAAAL5zAXqiBi0=
+  </data>
+ </layer>
+ <layer name="Props" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt07EKgzAUBVD//4N0qUOdHNqpm879j76Agy0ZUhoxhXPgQnhkuI+QrgMAgOP1keHsEj9aI9fIdHaRCm6Re8G9y+48HtSlptQ3vdNn19b3WDKzOTNrfY9n4b3W9/jGYwvtyP2nf1T6nwAAAAAAePcC8kYTiQ==
   </data>
  </layer>
  <objectgroup color="#ffffff" name="collision">
-  <object id="1" x="587.333" y="242" width="19.3333" height="362"/>
-  <object id="2" x="596.667" y="576.667" width="82" height="62.6667"/>
-  <object id="3" x="657.333" y="638" width="100.667" height="20.6667"/>
-  <object id="4" x="728" y="576" width="86" height="67.3333"/>
-  <object id="5" x="800" y="238.667" width="9.33333" height="350"/>
-  <object id="7" x="592.667" y="326.667" width="238" height="24"/>
+  <object id="10" x="604" y="440" width="491" height="7"/>
+  <object id="11" x="1088" y="434" width="7" height="311"/>
+  <object id="12" x="1023" y="736" width="74" height="64"/>
+  <object id="14" x="889" y="737" width="71" height="63"/>
+  <object id="15" x="943" y="785" width="91" height="14"/>
+  <object id="16" x="599" y="609" width="296" height="141"/>
+  <object id="17" x="596" y="439" width="12" height="184"/>
+  <object id="18" x="606" y="443" width="97" height="38"/>
+  <object id="19" x="641" y="477" width="62" height="31"/>
+  <object id="21" x="643" y="561" width="24" height="30"/>
+  <object id="22" x="775" y="513" width="82" height="27"/>
+  <object id="23" x="803" y="492" width="24" height="79"/>
+  <object id="24" x="965" y="479" width="118" height="126"/>
+  <object id="25" x="996" y="461" width="57" height="179"/>
+  <object id="26" x="1027" y="689" width="24" height="30"/>
  </objectgroup>
  <objectgroup color="#00aa00" name="events">
-  <object id="8" name="leaveHouse" x="680.667" y="613.333" width="44.6667" height="22"/>
+  <object id="8" name="leaveHouse" x="963.667" y="767.333" width="56.6667" height="23"/>
  </objectgroup>
  <objectgroup color="#d33769" name="markers">
-  <object id="9" name="playerStart" x="704" y="576.667"/>
+  <object id="9" name="playerStart" x="978" y="740.667"/>
  </objectgroup>
 </map>

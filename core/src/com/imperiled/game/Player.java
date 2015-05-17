@@ -63,7 +63,7 @@ public class Player extends Actor {
 		Rectangle newRect = new Rectangle();
 		newRect.x = this.x + this.getWidth() / 4;
 		newRect.y = this.y;
-		newRect.height = (3 * this.getHeight()) / 7;
+		newRect.height = (3 * this.getHeight()) / 9;
 		newRect.width = this.getWidth() / 2;
 		return newRect;
 	}

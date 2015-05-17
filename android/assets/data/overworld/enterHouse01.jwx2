@@ -2,4 +2,6 @@ enterHouse01
 action=changeMap
 target=player
 mapTarget=house01
+xcor=960
+ycor=844
 direction=up
