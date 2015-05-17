@@ -89,6 +89,7 @@ public class AI {
 	 */
 	private void attacking(MapObjects collisionObjects, Player player) {
 		Direction dir = pathfinder.findPath(collisionObjects, player);
+		System.out.println(dir);
 		if(dir == null) {
 			actor.currentState = State.IDLE;
 			return;
