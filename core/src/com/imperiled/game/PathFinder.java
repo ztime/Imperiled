@@ -2,7 +2,6 @@ package com.imperiled.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -54,7 +53,6 @@ public class PathFinder {
 		LinkedList<Vector2> queue = new LinkedList<Vector2>();
 		ArrayList<Vector2> prevs = new ArrayList<Vector2>();
 		Vector2 end = null;
-		int counter = 0;
 		queue.add(actor.getPosition());
 		distance.put(actor.getPosition(), 0f);
 		visited.add(actor.getPosition());
@@ -66,15 +64,8 @@ public class PathFinder {
 			
 			// Checks if pos is colliding with the player
 			if(Intersector.overlaps(rect, target.getRectangle())) {
-				counter++;
-				System.out.println("Found player! " + distance.get(pos) + "<" + distance.get(end));
-				if(end == null || distance.get(pos) < distance.get(end)) {
-					end = pos;
-					//break;
-				}
-				if(counter > 2) {
-					break;
-				}
+				end = pos;
+				break;
 				// Ends the pathfinder since BFS properies
 				// ensures that this will give the shortest
 				// route to the target.
@@ -102,25 +93,31 @@ public class PathFinder {
 					}
 				}
 				actor.setPosition(nbs[i]);
-				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange * 3 ||
-						Math.abs(originalPos.y - actor.y) > actor.aggroRange * 3) {
-					continue;
-				}
 				prevs.add(new Vector2(nbs[i]));
 				rect = actor.getRectangle();
+				
+				// If things spiral out of control this tells the AI to
+				// Go into State.IDLE.
+				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange * 2 ||
+						Math.abs(originalPos.y - actor.y) > actor.aggroRange * 2) {
+					actor.setPosition(originalPos);
+					return null;
+				}
 				Iterator<MapObject> iterCollision = collisionObjects.iterator();
 				while(iterCollision.hasNext()){
 					RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
 					Rectangle cr = collRect.getRectangle();
 					if(Intersector.overlaps(rect, cr)){
-						System.out.println(nbs[i]);
 						if(cr.x < (nbs[i].x + rect.width) && 0 < cr.x - (pos.x + rect.width + 2) && cr.x - (pos.x + rect.width + 2) < rect.width) {
 							nbs[i].x = cr.x - (rect.width + 2);
-						} else if((cr.x + cr.width) > nbs[i].x && 0 < pos.x - (cr.x + cr.width + 2) && pos.x - (cr.x + cr.width + 2) < rect.width) {
+						}
+						if((cr.x + cr.width) > nbs[i].x && 0 < pos.x - (cr.x + cr.width + 2) && pos.x - (cr.x + cr.width + 2) < rect.width) {
 							nbs[i].x = cr.x + cr.width + 2;
-						} else if(cr.y < (nbs[i].y + rect.height) && 0 < cr.y - (pos.y + rect.height + 2) && cr.y - (pos.y + rect.height + 2) < rect.height) {
+						}
+						if(cr.y < (nbs[i].y + rect.height) && 0 < cr.y - (pos.y + rect.height + 2) && cr.y - (pos.y + rect.height + 2) < rect.height) {
 							nbs[i].y = cr.y - (rect.height + 2);
-						} else if((cr.y + cr.height) > nbs[i].y && 0 < pos.y - (cr.y + cr.height + 2) && pos.y - (cr.y + cr.height + 2) < rect.height) {
+						}
+						if((cr.y + cr.height) > nbs[i].y && 0 < pos.y - (cr.y + cr.height + 2) && pos.y - (cr.y + cr.height + 2) < rect.height) {
 							nbs[i].y = cr.y + cr.height + 2;
 						}
 						for(Vector2 prev : prevs) {
@@ -128,7 +125,6 @@ public class PathFinder {
 								continue nextneighbor;
 							}
 						}
-						System.out.println(nbs[i] + "-2");
 						//actor.setPosition(nbs[i]);
 						//rect = actor.getRectangle();
 						i--;
@@ -153,13 +149,11 @@ public class PathFinder {
 			}
 			
 		} // >>End of while-loop<<
-		System.out.println("yahoo");
 		actor.setPosition(originalPos);
 		
 		if(end == null || previous.get(end) == null) {
 			return null;
 		}
-		
 		while(!previous.get(end).equals(actor.getPosition())) {
 			end = previous.get(end);
 		}

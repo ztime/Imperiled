@@ -90,6 +90,7 @@ public class AI {
 	private void attacking(MapObjects collisionObjects, Player player) {
 		Direction dir = pathfinder.findPath(collisionObjects, player);
 		if(dir == null) {
+			actor.currentState = State.IDLE;
 			return;
 		}
 		actor.currentDirection = dir;
@@ -119,6 +120,12 @@ public class AI {
 			speed = actor.getAttackSpeed();
 		}
 		int dist = Math.round(Gdx.graphics.getDeltaTime() * speed);
+		if(dist > actor.getRectangle().width) {
+			dist = Math.round(actor.getRectangle().width);
+		}
+		if(dist > actor.getRectangle().height) {
+			dist = Math.round(actor.getRectangle().height);
+		}
 		
 		switch(actor.currentDirection) {
 		case UP:
