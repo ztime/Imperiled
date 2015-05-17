@@ -295,6 +295,17 @@ abstract public class Actor {
 	}
 	
 	/**
+	 * Returns true if the actor is alive
+	 */
+	public boolean isAlive(){
+		if(this.currentState != State.DEAD) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Returns an instance of the current AI for the actor
 	 * 
 	 * @return AI ai

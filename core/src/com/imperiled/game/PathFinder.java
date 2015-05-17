@@ -2,7 +2,6 @@ package com.imperiled.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -52,11 +51,13 @@ public class PathFinder {
 		Vector2 originalPos = new Vector2(actor.x, actor.y);
 		recreateArrays();
 		LinkedList<Vector2> queue = new LinkedList<Vector2>();
+		ArrayList<Vector2> prevs = new ArrayList<Vector2>();
 		Vector2 end = null;
 		queue.add(actor.getPosition());
 		distance.put(actor.getPosition(), 0f);
 		visited.add(actor.getPosition());
-		while(queue.size() > 0) { // >>Start of while-loop<<
+		// >>>>>>Start of while-loop<<<<<<
+		while(queue.size() > 0) {
 			// Gets the first candidate in the queue.
 			Vector2 pos = queue.removeFirst();
 			actor.setPosition(pos);
@@ -79,7 +80,11 @@ public class PathFinder {
 			nbs[1] = new Vector2(pos.x - rect.width, pos.y);
 			nbs[2] = new Vector2(pos.x, pos.y + rect.height);
 			nbs[3] = new Vector2(pos.x, pos.y - rect.height);
-			for(int i = 0; i < 4; i++) {
+			
+			// Checks if the position collides with anything
+			// on the map. If it does it is not counted as valid.
+			nextneighbor:
+			for(int i = 0; i < 4; i++) { //START OF NEXTNEIGHBOR
 				for(Vector2 neighbor : visited) {
 					if(nbs[i].equals(neighbor)) {
 						// This is used later on only to
@@ -88,51 +93,51 @@ public class PathFinder {
 						break;
 					}
 				}
-			}
-			
-			// Checks if the position collides with anything
-			// on the map. If it does it is not counted as valid.
-			HashSet<Vector2> prevs = new HashSet<Vector2>();
-			nextneighbor:
-			for(int i = 0; i < 4; i++) {
-				if(visited.contains(nbs[i])) {
-					continue;
+				for(Vector2 prev : prevs) {
+					if(prev.equals(nbs[i])) {
+						continue nextneighbor;
+					}
 				}
 				actor.setPosition(nbs[i]);
-				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange * 3 ||
-						Math.abs(originalPos.y - actor.y) > actor.aggroRange * 3) {
-					continue;
-				}
 				prevs.add(new Vector2(nbs[i]));
 				rect = actor.getRectangle();
+				
+				// If things spiral out of control this resets the actor
+				// and returns null.
+				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange * 2 ||
+						Math.abs(originalPos.y - actor.y) > actor.aggroRange * 2) {
+					actor.setPosition(originalPos);
+					return null;
+				}
+				
 				Iterator<MapObject> iterCollision = collisionObjects.iterator();
 				while(iterCollision.hasNext()){
 					RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
 					Rectangle cr = collRect.getRectangle();
 					if(Intersector.overlaps(rect, cr)){
-						if(i != 1 && cr.x < (nbs[i].x + rect.width) && (0 < cr.x - (pos.x + rect.width + 4)) && cr.x - (pos.x + rect.width + 3) < rect.width) {
-							nbs[i].x = cr.x - (rect.width + 2);
-						} else if(i != 0 && (cr.x + cr.width) > nbs[i].x && (0 < pos.x - (cr.x + cr.width + 4)) && (pos.x - (cr.x + cr.width + 3) < rect.width)) {
-							nbs[i].x = cr.x + cr.width + 2;
+						// Ugly-fix:
+						// Earlier tests with +2 instead of +6 worked fine
+						// everywhere except for the labyrinth. Why +6 works
+						// but not +2 or +4 is yet unknown.
+						// (Referring to nbs[i].axis increment, not the if-statement)
+						if(cr.x < (nbs[i].x + rect.width) && 0 < cr.x - (pos.x + rect.width + 2) && cr.x - (pos.x + rect.width + 2) < rect.width) {
+							nbs[i].x = cr.x - (rect.width + 6);
 						}
-						if(i != 3 && cr.y < (nbs[i].y + rect.height) && (0 < cr.y - (pos.y + rect.height + 4)) && (cr.y - (pos.y + rect.height + 3) < rect.height)) {
-							nbs[i].y = cr.y - (rect.height + 2);
-						} else if(i != 2 && (cr.y + cr.height) > nbs[i].y && (0 < pos.y - (cr.y + cr.height + 4)) && (pos.y - (cr.y + cr.height + 3) < rect.height)) {
-							nbs[i].y = cr.y + cr.height + 2;
+						if((cr.x + cr.width) > nbs[i].x && 0 < pos.x - (cr.x + cr.width + 2) && pos.x - (cr.x + cr.width + 2) < rect.width) {
+							nbs[i].x = cr.x + cr.width + 6;
 						}
-						for(Vector2 prev : prevs) {
-							if(prev.equals(nbs[i])) {
-								continue nextneighbor;
-							}
+						if(cr.y < (nbs[i].y + rect.height) && 0 < cr.y - (pos.y + rect.height + 2) && cr.y - (pos.y + rect.height + 2) < rect.height) {
+							nbs[i].y = cr.y - (rect.height + 6);
 						}
-						//actor.setPosition(nbs[i]);
-						//rect = actor.getRectangle();
+						if((cr.y + cr.height) > nbs[i].y && 0 < pos.y - (cr.y + cr.height + 2) && pos.y - (cr.y + cr.height + 2) < rect.height) {
+							nbs[i].y = cr.y + cr.height + 6;
+						}
 						i--;
 						continue nextneighbor;
 					}
 				}
 				neighbors.add(nbs[i]);
-			}
+			} //END OF NEXTNEIGHBOR
 			
 			// Iterates over the valid neighbors.
 			for(Vector2 neighbor : neighbors) {
@@ -149,7 +154,7 @@ public class PathFinder {
 				}
 			}
 			
-		} // >>End of while-loop<<
+		} // >>>>>>End of while-loop<<<<<<
 		
 		actor.setPosition(originalPos);
 		
