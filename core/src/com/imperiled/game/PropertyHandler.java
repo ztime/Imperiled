@@ -23,7 +23,6 @@ public class PropertyHandler {
 	public static HashMap<String, MapEvent> currentEvents;
 	public static MapObjects collisionObjects;
 	public static Imperiled currentGame;
-	public static MainGameScreen previousMainGameScreen;
 	
 	/**
 	 * Refreshes the actors in currentActors to contain

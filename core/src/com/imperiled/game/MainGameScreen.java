@@ -149,6 +149,7 @@ public class MainGameScreen implements Screen{
 		camera.update();
 		
 		//And render
+		
 		mapRenderer.setView(camera);
 		mapRenderer.render();
 		//-------------------------------------- //
@@ -489,6 +490,7 @@ public class MainGameScreen implements Screen{
 		map.dispose();
 		batch.dispose();
 		player.dispose();
+		mapRenderer.dispose();
 		for(Actor actor : actors){
 			actor.dispose();
 		}
@@ -548,6 +550,7 @@ public class MainGameScreen implements Screen{
 		//Debug drawing done
 		
 		shRend.end();
+		shRend.dispose();
 	}
 
 }

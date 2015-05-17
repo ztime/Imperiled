@@ -80,7 +80,9 @@ public class AI {
 		if(Math.abs(actor.x - actor.initX) > actor.aggroRange ||
 				Math.abs(actor.y - actor.initY) > actor.aggroRange) {
 			Direction prevDir = actor.currentDirection;
-			actor.currentDirection = pathfinder.findPath(collisionObjects, new DummyActor(actor.initX, actor.initY));
+			Actor dummy = new DummyActor(actor.initX, actor.initY);
+			actor.currentDirection = pathfinder.findPath(collisionObjects, dummy);
+			dummy.dispose();
 			currentIdleOption = IDLE_OPTIONS - 1;
 			if(actor.currentDirection == null) {
 				actor.currentDirection = prevDir;
