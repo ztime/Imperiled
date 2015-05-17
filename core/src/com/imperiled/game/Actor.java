@@ -19,6 +19,8 @@ abstract public class Actor {
 	int x, y;
 	//old position , saved for collision checking
 	int oldX, oldY;
+	//intial position, used for AI
+	int initX, initY;
 	
 	//for actors controlled by AI
 	float speed;

@@ -31,6 +31,8 @@ public class Enemy extends Actor {
 			this.spritePath = spritePath;
 			this.setPosition(x, y);
 			this.loadAnimation();
+			this.initX = this.x;
+			this.initY = this.y;
 		}
 		
 		/**

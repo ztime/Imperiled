@@ -42,6 +42,8 @@ public class Player extends Actor {
 		this.name = "player";
 		this.health = health;
 		this.maxHP = health;
+		this.initX = this.x;
+		this.initY = this.y;
 		//Temporarly add a sword as the only weapon
 		Weapon sword = new Sword();
 		weapons.add(sword);

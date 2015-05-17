@@ -48,7 +48,7 @@ public class AI {
 	public void act(MapObjects collisionObjects, Player player) {
 		switch(actor.currentState) {
 		case IDLE:
-			idling(player);
+			idling(collisionObjects, player);
 			break;
 		case ATTACKING:
 			attacking(collisionObjects, player);
@@ -67,12 +67,24 @@ public class AI {
 	/**
 	 * If the actor is idling.
 	 */
-	private void idling(Player player) {
+	private void idling(MapObjects collisionObjects, Player player) {
 		checkAggroRange(player);
 		if(System.nanoTime() - lastTime > idleTime) {
 			currentIdleOption = rand.nextInt(IDLE_OPTIONS);
 			generateIdleInterval();
 			lastTime = System.nanoTime();
+		}
+		
+		// If an enemy strays too far from its
+		// spawn point.
+		if(Math.abs(actor.x - actor.initX) > actor.aggroRange ||
+				Math.abs(actor.y - actor.initY) > actor.aggroRange) {
+			Direction prevDir = actor.currentDirection;
+			actor.currentDirection = pathfinder.findPath(collisionObjects, new DummyActor(actor.initX, actor.initY));
+			currentIdleOption = IDLE_OPTIONS - 1;
+			if(actor.currentDirection == null) {
+				actor.currentDirection = prevDir;
+			}
 		}
 		switch(currentIdleOption) {
 		case 0:

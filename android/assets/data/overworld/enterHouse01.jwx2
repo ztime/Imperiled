@@ -1,0 +1,5 @@
+enterHouse01
+action=changeMap
+target=player
+mapTarget=house01
+direction=up
