@@ -192,6 +192,11 @@ public class MainGameScreen implements Screen{
 		int x = player.getX();
 		int y = player.getY();
 		int moveDist = Math.round(Gdx.graphics.getDeltaTime() * player.getSpeed());
+		if(moveDist > player.getRectangle().width) {
+			moveDist = Math.round(player.getRectangle().width);
+		} else if(moveDist > player.getRectangle().height) {
+			moveDist = Math.round(player.getRectangle().height);
+		}
 		
 		if(player.getState() != State.ATTACKING && 
 				player.getState() != State.DEAD &&
