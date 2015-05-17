@@ -142,6 +142,9 @@ public class MainGameScreen implements Screen{
 			this.update(delta);
 		}
 		
+		//we also need to adapt the camera to the players position
+		setCameraPosition(player.x, player.y);
+		
 		//This should run before anything else i rendered on screen
 		camera.update();
 		
@@ -256,9 +259,6 @@ public class MainGameScreen implements Screen{
 		
 		//check damage
 		this.checkDamage();
-		
-		//we also need to adapt the camera to the players position
-		setCameraPosition(player.x, player.y);
 	}
 	
 	/**
