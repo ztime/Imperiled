@@ -238,7 +238,10 @@ public class MainGameScreen implements Screen{
 		// actors.moveBitch() or something
 		// or maybe that should be handled by update()
 		for(Actor acts : actors) {
-			acts.getAI().act(collisionObjects, player);
+			if(Math.abs(acts.x - player.x) < cameraWidth/2 + 20 ||
+					Math.abs(acts.y - player.y) < cameraHeight/2 + 20) {
+				acts.getAI().act(collisionObjects, player);
+			}
 			this.checkActorsCollision(acts);
 		}
 		//here we need to move the actors with some fancy ai
