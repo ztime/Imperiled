@@ -104,7 +104,7 @@ public class MainGameScreen implements Screen{
 		//remove the player starting position from markers
 		markers.remove(markers.get("playerStart"));
 		
-		player = new Player(startX, startY, this.game.playerHealth);
+		player = new Player(startX, startY, 100);
 		//change direction if needed
 		if(game.startDirection != null){
 			player.setDirection(game.startDirection);
@@ -119,7 +119,9 @@ public class MainGameScreen implements Screen{
 			String actorName = currentMarker.getName();
 			Integer startPosX = Math.round((Float) currentMarker.getProperties().get("x"));
 			Integer startPosY = Math.round((Float) currentMarker.getProperties().get("y"));
-			this.spawnActor(actorType, actorName, startPosX, startPosY);
+			// 'this.game.map + "-" + actorName' allows actors to
+			// have an equal name on another map.
+			this.spawnActor(actorType, this.game.map + "-" + actorName, startPosX, startPosY);
 		}
 		//add to propertyhandler
 		PropertyHandler.newActors(actors);
@@ -297,6 +299,13 @@ public class MainGameScreen implements Screen{
 	 * @param y		Int		Starting position y
 	 */
 	private void spawnActor(String type, String name, int x, int y){
+		// If the actor has been marked as inactive
+		// previously in this map, it does not spawn
+		// the actor.
+		if(PropertyHandler.inactiveActors.contains(name)) {
+			return;
+		}
+		
 		//check that the type is valid
 		if(type.equals("bee")){
 			Bee newBee = new Bee(x,y);
@@ -310,6 +319,10 @@ public class MainGameScreen implements Screen{
 			Worm newWorm = new Worm(x,y);
 			newWorm.name = name;
 			actors.add(newWorm);
+		} else if (type.equals("soldier")){
+			Soldier newSoldier = new Soldier(x,y);
+			newSoldier.name = name;
+			actors.add(newSoldier);
 		} else {
 			System.out.println("Invalid actortype: " + type);
 		}

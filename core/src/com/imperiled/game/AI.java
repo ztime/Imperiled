@@ -13,7 +13,7 @@ import com.badlogic.gdx.maps.MapObjects;
  */
 public class AI {
 	
-	private static final int IDLE_OPTIONS = 3;
+	private static final int IDLE_OPTIONS = 2;
 	private long idleTime;
 	private long lastTime;
 	private int currentIdleOption;
@@ -57,7 +57,7 @@ public class AI {
 			//
 			break;
 		case MOVE:
-			//
+			idling(collisionObjects, player);
 			break;
 		default:
 			break;
@@ -69,6 +69,9 @@ public class AI {
 	 */
 	private void idling(MapObjects collisionObjects, Player player) {
 		checkAggroRange(player);
+		if(actor.currentState == State.ATTACKING) {
+			return;
+		}
 		if(System.nanoTime() - lastTime > idleTime) {
 			currentIdleOption = rand.nextInt(IDLE_OPTIONS);
 			generateIdleInterval();
@@ -88,11 +91,13 @@ public class AI {
 				actor.currentDirection = prevDir;
 			}
 		}
+		
 		switch(currentIdleOption) {
 		case 0:
-			//do nothing
+			actor.currentState = State.IDLE;
 			break;
 		default:
+			actor.currentState = State.MOVE;
 			move();
 			break;
 		}

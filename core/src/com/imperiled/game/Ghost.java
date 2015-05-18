@@ -14,6 +14,7 @@ public class Ghost extends Enemy {
 		this.setData(x, 				// x - coordinate
 				y, 						// y - coordinate
 				100, 					// Health
+				5,						// Damage
 				70f, 					// Speed
 				100f, 					// Attacking speed
 				Behaviour.AGGRESSIVE, 	// Behaviour for ai 

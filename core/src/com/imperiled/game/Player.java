@@ -40,7 +40,7 @@ public class Player extends Actor {
 		this.loadAnimation();
 		this.speed = 200f;
 		this.name = "player";
-		this.health = health;
+		this.health = PropertyHandler.currentGame.playerHealth;
 		this.maxHP = health;
 		this.initX = this.x;
 		this.initY = this.y;

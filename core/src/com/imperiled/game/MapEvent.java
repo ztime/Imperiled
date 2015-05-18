@@ -145,7 +145,8 @@ public class MapEvent extends Event {
 			} else {
 				eventError("Specified direction not valid.", act, target);
 			}
-			//Get the players health to save it for the new map.
+			//Get the difference in players health
+			//to save it for the new map.
 			game.playerHealth = PropertyHandler.currentActors.get("player").health;
 			game.setScreen(new MainGameScreen(game));
 			return;

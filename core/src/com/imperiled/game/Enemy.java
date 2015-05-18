@@ -13,6 +13,7 @@ public class Enemy extends Actor {
 		protected TextureRegion[][] movementFrames;
 		protected Texture characterSheet;
 		protected String spritePath;
+		protected int damage;
 		
 		/**
 		 * Creates a new ghost at x & y 
@@ -20,7 +21,7 @@ public class Enemy extends Actor {
 		 * @param x
 		 * @param y
 		 */
-		protected void setData(int x, int y, int health, float speed, float attackingSpeed, Behaviour behaviour , float aggroRange, String spritePath){
+		protected void setData(int x, int y, int health, int damage, float speed, float attackingSpeed, Behaviour behaviour , float aggroRange, String spritePath){
 			this.health = health;
 			this.maxHP = this.health;
 			this.speed = speed;
@@ -33,6 +34,7 @@ public class Enemy extends Actor {
 			this.loadAnimation();
 			this.initX = this.x;
 			this.initY = this.y;
+			this.damage = damage;
 		}
 		
 		/**
@@ -68,7 +70,7 @@ public class Enemy extends Actor {
 			newRect.rectangle.y -= 5;
 			newRect.rectangle.width += 10;
 			newRect.rectangle.height += 10;
-			newRect.dmg = 1;
+			newRect.dmg = damage;
 			return newRect;
 		}
 

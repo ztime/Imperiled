@@ -40,14 +40,25 @@ public class PathFinder {
 	}
 	
 	/**
+	 * Finds the path with the actors aggro range *2 set as the
+	 * search range.
+	 * 
+	 * @return findPath with aggro range *2 as the search range.
+	 */
+	public Direction findPath(MapObjects collisionObjects, Actor target) {
+		return findPath(collisionObjects, target, actor.aggroRange * 2);
+	}
+	
+	/**
 	 * Uses a hybrid between BFS and dijkstras algorithm to find
 	 * the shortest path between the pathfinders actor and a target
 	 * actor.
 	 * 
-	 * @param collisionObjects Collision objects on the current map.
-	 * @param target The target in which to find a path to.
+	 * @param collisionObjects 	Collision objects on the current map.
+	 * @param target 			The target in which to find a path to.
+	 * @param searchRange 		The maximum range allowed to search before giving up.
 	 */
-	public Direction findPath(MapObjects collisionObjects, Actor target) {
+	public Direction findPath(MapObjects collisionObjects, Actor target, float searchRange) {
 		Vector2 originalPos = new Vector2(actor.x, actor.y);
 		recreateArrays();
 		LinkedList<Vector2> queue = new LinkedList<Vector2>();
@@ -104,8 +115,8 @@ public class PathFinder {
 				
 				// If things spiral out of control this resets the actor
 				// and returns null.
-				if(Math.abs(originalPos.x - actor.x) > actor.aggroRange * 2 ||
-						Math.abs(originalPos.y - actor.y) > actor.aggroRange * 2) {
+				if(Math.abs(originalPos.x - actor.x) > searchRange ||
+						Math.abs(originalPos.y - actor.y) > searchRange) {
 					actor.setPosition(originalPos);
 					return null;
 				}

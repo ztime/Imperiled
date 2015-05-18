@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="51">
  <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
   <image source="inside.png" width="320" height="320"/>
  </tileset>
  <tileset firstgid="101" name="holek" tilewidth="32" tileheight="32">
   <image source="holek.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="119" name="house" tilewidth="32" tileheight="32">
+  <image source="house.png" width="288" height="224"/>
+ </tileset>
+ <tileset firstgid="182" name="barrel" tilewidth="32" tileheight="32">
+  <image source="barrel.png" width="128" height="64"/>
+ </tileset>
+ <tileset firstgid="190" name="buckets" tilewidth="32" tileheight="32">
+  <image source="buckets.png" width="96" height="64"/>
+ </tileset>
+ <tileset firstgid="196" name="country" tilewidth="32" tileheight="32">
+  <image source="country.png" width="160" height="128"/>
+ </tileset>
+ <tileset firstgid="216" name="hole" tilewidth="32" tileheight="32">
+  <image source="hole.png" width="96" height="192"/>
  </tileset>
  <layer name="Void" width="50" height="50">
   <data encoding="base64" compression="zlib">
@@ -13,21 +28,81 @@
  </layer>
  <layer name="Floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztz7ERACAMA7Gsw/4LUlHSO4l0595fBQAwz/msGx1ZdGTRkan7/2dKBwAAAAAAbHMBrIIHXw==
+   eJztz7ENACAMA0HWYf8FqZDS0jnhTnLvXwuATvbjUunIoiOLjixTOqrO3ysdmbr/v6Z0AAAAAADAbw68LBLn
   </data>
  </layer>
  <layer name="Walls" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1bEOQDAYReGiJowYsbLy/q/mNkxNSBqJlpwvOYPtvwyMAQAgHqsylXsVqox4V6hZVar2atQS8a5QbkerOq/efG/HFXa8jx1pYUda/rJjVYOazPH/tufzqLZ4Zz3i3v/d9wEAAAAAAAAAAGnaATnIBSU=
+   eJzt1rEKwjAUheGrrZN2VEfrWld9/9dwEgfxOTxBhywJqRJykf+DfxAs5LRFNANQQ68WallYp1ZNTpo3qbXaFDaoU5OT5oUdW7UrbG9+d8zFjnrY4Uu846buBdd43nFVD/UsuMbzjjnYUc9ZjVEp8XcuVU/0u9yz8fgMUv5lR3jHDupo7/+0/efzaP7fpZRw/7/5DQAAAAAAAAAAAG29ABaLDIU=
+  </data>
+ </layer>
+ <layer name="Walls (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztziEBAAAIwDACQf96NMCBYbM3jwAAAL6ooeXZBQAAAAAAAOxoi1cAWg==
+  </data>
+ </layer>
+ <layer name="WallDecorations" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztyaERAAAIBCA3tzq2K3imD1CpArjr56WZ5wEAAAAAAAAAkGsB2e4CDw==
+  </data>
+ </layer>
+ <layer name="WallDecorations (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztybENAAAIA6D+7fP+0MlEWEkA/pnyAAAAAAAAAAC4awHatAD3
+  </data>
+ </layer>
+ <layer name="Props (lower prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzrEJACAMAMHsv5CFA9g4lE16LcQg3MH3HwEAsDeqBy6Z1QMHWva7ngEAAAAAAAC8sgARiAR4
+  </data>
+ </layer>
+ <layer name="Props" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0uEKgjAUxfG9/wOpaRKGEUUo9aFepyMmjHGFyGjD/j84cDfuhwObcwDwH45KqxyM2T9Pu6m6KCflbMz+edpNWaf0xmydgW+4Kplyi13kTdnM/V0plccPu3yiUDZu7Don9/ZStVXq1zy8SW7sVMFe6oY3qYK7XYwiC4V/p1H2kbosYf2dJkYRAAAAAAAAAACAFXgCTW8sUA==
+  </data>
+ </layer>
+ <layer name="Props (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzrEJACAQBEH7L8jASDC0KSuQRxTeYCa8S7YUAMjRg333/2YE++6HGzM74EDNDnikZQcAAAAAAAAAoQWAfwbF
   </data>
  </layer>
  <objectgroup color="#ffffff" name="collision">
-  <object id="1" x="587.333" y="242" width="19.3333" height="362"/>
   <object id="2" x="596.667" y="576.667" width="82" height="62.6667"/>
   <object id="3" x="657.333" y="638" width="100.667" height="20.6667"/>
   <object id="4" x="728" y="576" width="86" height="67.3333"/>
-  <object id="5" x="800" y="238.667" width="9.33333" height="350"/>
-  <object id="7" x="592.667" y="326.667" width="238" height="24"/>
+  <object id="10" x="505" y="410" width="99" height="78"/>
+  <object id="11" x="601" y="359" width="18" height="47"/>
+  <object id="12" x="615" y="367" width="14" height="31"/>
+  <object id="13" x="584" y="367" width="20" height="47"/>
+  <object id="14" x="548.25" y="388" width="43" height="31"/>
+  <object id="15" x="603" y="459" width="32" height="36"/>
+  <object id="16" x="633" y="475" width="35" height="35"/>
+  <object id="17" x="602" y="512" width="53" height="73"/>
+  <object id="18" x="743" y="518" width="19" height="21"/>
+  <object id="19" x="773" y="550" width="19" height="21"/>
+  <object id="20" x="771" y="502" width="21" height="21"/>
+  <object id="21" x="803" y="444" width="102" height="137"/>
+  <object id="23" x="799" y="481" width="14" height="103"/>
+  <object id="24" x="834" y="430" width="70" height="23"/>
+  <object id="26" x="856" y="418" width="50" height="19"/>
+  <object id="27" x="894" y="216" width="33" height="228"/>
+  <object id="28" x="507" y="213" width="420" height="9"/>
+  <object id="29" x="489" y="211" width="23" height="220"/>
+  <object id="31" x="516" y="223" width="23" height="15"/>
+  <object id="32" x="611" y="221" width="25" height="18"/>
+  <object id="33" x="709" y="220" width="54" height="17"/>
+  <object id="34" x="867" y="221" width="26" height="18"/>
+  <object id="35" x="776" y="219" width="48" height="65"/>
+  <object id="36" x="807" y="280" width="17" height="17"/>
+  <object id="37" x="742" y="278" width="19" height="20"/>
+  <object id="38" x="649" y="219" width="45" height="67"/>
+  <object id="39" x="553" y="220" width="46" height="65"/>
+  <object id="44" x="553" y="277" width="14" height="21"/>
+  <object id="45" x="805" y="336" width="23" height="32"/>
+  <object id="46" x="805" y="364" width="22" height="29"/>
+  <object id="47" x="806" y="394" width="19" height="20"/>
+  <object id="48" x="773" y="369" width="21" height="29"/>
+  <object id="49" x="837" y="371" width="23" height="27"/>
  </objectgroup>
  <objectgroup color="#00aa00" name="events">
   <object id="8" name="leaveHouse" x="680.667" y="613.333" width="44.6667" height="22"/>

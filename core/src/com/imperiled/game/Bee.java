@@ -14,6 +14,7 @@ public class Bee extends Enemy {
 		this.setData(x, 				// x - coordinate
 				y, 						// y - coordinate
 				60, 					// Health
+				2,						// Damage
 				70f, 					// Speed
 				100f, 					// Attacking speed
 				Behaviour.AGGRESSIVE, 	// Behaviour for ai 

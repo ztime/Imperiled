@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="35">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="36">
  <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
   <image source="inside.png" width="320" height="320"/>
  </tileset>
@@ -99,5 +99,6 @@
  </objectgroup>
  <objectgroup color="#d33769" name="markers">
   <object id="9" name="playerStart" x="824" y="820.667"/>
+  <object id="35" name="SoldatenFridolf" type="soldier" x="821.333" y="606"/>
  </objectgroup>
 </map>

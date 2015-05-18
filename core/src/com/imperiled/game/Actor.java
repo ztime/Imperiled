@@ -112,6 +112,10 @@ abstract public class Actor {
 					currentState != State.DEAD &&
 					currentState != State.INACTIVE){
 				currentState = State.DEAD;
+				
+				// Ensures that they do not respawn
+				// when re-entering their map.
+				PropertyHandler.inactiveActors.add(this.name);
 			}
 		}
 	}
@@ -291,9 +295,8 @@ abstract public class Actor {
 	public boolean isMoving(){
 		if(this.currentState == State.MOVE){
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 	
 	/**

@@ -2,6 +2,7 @@ package com.imperiled.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import com.badlogic.gdx.maps.MapObjects;
 
@@ -21,6 +22,7 @@ public class PropertyHandler {
 	public static final String[] musicReqs = {"name", "filename"};
 	public static HashMap<String, Actor> currentActors;
 	public static HashMap<String, MapEvent> currentEvents;
+	public static HashSet<String> inactiveActors = new HashSet<String>();
 	public static MapObjects collisionObjects;
 	public static Imperiled currentGame;
 	
