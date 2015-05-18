@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.maps.MapObjects;
 
 /**

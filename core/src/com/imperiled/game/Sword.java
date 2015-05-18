@@ -17,7 +17,7 @@ public class Sword implements Weapon {
 	 */
 	@Override
 	public int getDamage() {
-		return 20;
+		return this.damage;
 	}
 
 	/**

@@ -38,8 +38,6 @@ public class MainGameScreen implements Screen{
 	private Player player;
 	
 	private ArrayList<Actor> actors; //actors , not player
-	// du får typ ha något liknande här:
-	// private ArrayList<MapEvent> events;
 	
 	private UiWrapper ui;
 	
@@ -247,9 +245,8 @@ public class MainGameScreen implements Screen{
 		//move the player back if it needs to 
 		this.checkPlayerCollision(); 
 		
-		//here we need to move the actors with some fancy ai
-		// actors.moveBitch() or something
-		// or maybe that should be handled by update()
+		//circle trough all the actors and if they are inside
+		//the cameras view we check there collision
 		for(Actor acts : actors) {
 			if(Math.abs(acts.x - player.x) < cameraWidth/2 + 20 ||
 					Math.abs(acts.y - player.y) < cameraHeight/2 + 20) {
@@ -257,9 +254,6 @@ public class MainGameScreen implements Screen{
 			}
 			this.checkActorsCollision(acts);
 		}
-		//here we need to move the actors with some fancy ai
-		// actors.moveBitch() or something
-		// or maybe that should be handled by update()
 		
 		//--- check events ---
 		this.checkEventCollision(player);

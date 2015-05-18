@@ -1,11 +1,7 @@
 package com.imperiled.game;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -13,7 +9,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -151,7 +146,7 @@ public class UiWrapper {
 					currentBar.setValue(currentActor.health);
 				} else {
 					//ok so the enemy is not on the screen but they are still alive, se simply dont 
-					//show the healthBar
+					//draw the healthBar
 					enemySkin.get(currentActor.name, ProgressBar.class).setVisible(false);
 				}
 			} else if((currentActor instanceof Enemy)){
@@ -169,7 +164,6 @@ public class UiWrapper {
 	 * 
 	 */
 	public void createEnemyHealthBars(ArrayList<Actor> currentActors){
-		System.out.println("new map");
 		Iterator<Actor> actors = currentActors.iterator();
 		while(actors.hasNext()){
 			Actor currentActor = actors.next();
@@ -184,7 +178,6 @@ public class UiWrapper {
 				
 				enemyStage.addActor(enemyHealthBar);
 				enemySkin.add(currentActor.name, enemyHealthBar);
-				System.out.println(currentActor.name);
 			}
 		}
 	}
