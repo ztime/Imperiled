@@ -1,0 +1,7 @@
+goUpstairs
+action=changeMap
+target=player
+mapTarget=townHall
+xcor=659
+ycor=779
+direction=right
