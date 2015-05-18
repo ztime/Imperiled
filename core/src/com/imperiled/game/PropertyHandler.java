@@ -59,4 +59,12 @@ public class PropertyHandler {
 			currentEvents.put(event.getName(), event);
 		}
 	}
+	
+	public static void clearProperties() {
+		currentActors = null;
+		currentEvents = null;
+		inactiveActors = new HashSet<String>();
+		collisionObjects = null;
+		currentGame = null;
+	}
 }
