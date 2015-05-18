@@ -70,7 +70,7 @@ public class MainGameScreen implements Screen{
 		cameraLeftBound = camera.position.x;
 		//set batch to render the same as camera
 		batch.setProjectionMatrix(camera.combined);
-		
+		PropertyHandler.currentCamera = camera;
 		//load map objects
 		collisionObjects = map.getLayers().get("collision").getObjects();
 		markers = map.getLayers().get("markers").getObjects();
@@ -125,6 +125,8 @@ public class MainGameScreen implements Screen{
 		}
 		//add to propertyhandler
 		PropertyHandler.newActors(actors);
+		//we need to add them to the ui skin
+		ui.createEnemyHealthBars();
 		PropertyHandler.currentActors.put("player", player);
 	}
 
@@ -513,6 +515,7 @@ public class MainGameScreen implements Screen{
 		for(Actor actor : actors){
 			actor.dispose();
 		}
+		ui.dispose();
 	}
 	
 	/**

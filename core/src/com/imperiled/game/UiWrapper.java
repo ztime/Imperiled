@@ -1,11 +1,17 @@
 package com.imperiled.game;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -26,7 +32,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class UiWrapper {
 
 	private Stage stage;
+	private Stage enemyStage;
 	private Skin skin;
+	private Skin enemySkin;
+	
+	private ProgressBar.ProgressBarStyle progStyle;
 	
 	/**
 	 * Creates a new ui based on preferences set in class
@@ -34,7 +44,9 @@ public class UiWrapper {
 	public UiWrapper(final Imperiled game){
 		//creates a new stage that covers all of the current view
 		this.stage = new Stage(new ScreenViewport());
+		this.enemyStage = new Stage(new ScreenViewport());
 		this.skin = new Skin();
+		this.enemySkin = new Skin();
 		
 		//we need to recive input for buttons
 		Gdx.input.setInputProcessor(stage);
@@ -61,7 +73,7 @@ public class UiWrapper {
 		//Store a default progressbar style
 		//we make the knob the same color as the background, that way it looks
 		//like the progressbar goes all the way down 
-		ProgressBar.ProgressBarStyle progStyle = new ProgressBar.ProgressBarStyle();
+		progStyle = new ProgressBar.ProgressBarStyle();
 		progStyle.background = skin.newDrawable("whiteBig", Color.BLACK);
 	    progStyle.knobBefore = skin.newDrawable("whiteBig", Color.GREEN);
 	    progStyle.knob = skin.newDrawable("white", Color.GREEN);
@@ -112,12 +124,76 @@ public class UiWrapper {
 	}
 	
 	/**
+	 * This updates all the enemy healthbars.
+	 * 
+	 * If the enemy is within the cameras view, it checks if it's still alive
+	 * and if it is the healthBar is set to visible and updates health & position
+	 */
+	private void updateEnemyScreen(){
+		//save the current camera
+		Camera currentCamera = PropertyHandler.currentCamera;
+		Iterator<Entry<String, Actor>> actors = PropertyHandler.currentActors.entrySet().iterator();
+		while(actors.hasNext()){
+			Actor currentActor = actors.next().getValue();
+			//only draw a health bar if its not the player/npc and it's still active
+			if(currentActor.isActive() && (currentActor instanceof Enemy)){
+				int xPos = (int) currentActor.getRectangle().x;
+				int yPos = (int) currentActor.getRectangle().y + (int) currentActor.getRectangle().height + 15; //10 is for padding
+				Vector3 screenCoords = new Vector3(xPos, yPos, 0);
+				if(currentCamera.frustum.pointInFrustum(screenCoords)){
+					//transform to coordinates for stage
+					Vector3 stageCoords = currentCamera.project(screenCoords);
+					ProgressBar currentBar = enemySkin.get(currentActor.name, ProgressBar.class);
+					currentBar.setVisible(true);
+					currentBar.setPosition(stageCoords.x, stageCoords.y);
+					currentBar.setValue(currentActor.health);
+				} else {
+					//ok so the enemy is not on the screen but they are still alive, se simply dont 
+					//show the healthBar
+					enemySkin.get(currentActor.name, ProgressBar.class).setVisible(false);
+				}
+			} else if(!currentActor.isActive() && (currentActor instanceof Enemy)){
+				//so the actor is not active BUT is still an enemy, so the health bar 
+				//should never show again
+				enemySkin.get(currentActor.name, ProgressBar.class).setVisible(false);
+			}
+		}
+	}
+	
+	/**
+	 * This initilazies all the enemyHealthBars for all enemies in the map
+	 * and sets values according to max hp and such. 
+	 * 
+	 * WARNING:
+	 * This function can only be called after all the enemies has been added to propertyHandler
+	 */
+	public void createEnemyHealthBars(){
+		Iterator<Entry<String, Actor>> actors = PropertyHandler.currentActors.entrySet().iterator();
+		while(actors.hasNext()){
+			Actor currentActor = actors.next().getValue();
+			if(currentActor instanceof Enemy){
+				ProgressBar enemyHealthBar = new ProgressBar(0, currentActor.maxHP, 1, false, progStyle);
+				float width = currentActor.getRectangle().width + 10;
+				enemyHealthBar.setSize(width, 10);
+				enemyHealthBar.setValue((float) currentActor.health);
+				//These settings dont matter, we will update them if we need to
+				enemyHealthBar.setPosition(0,0);
+				enemyHealthBar.setVisible(false);
+				
+				enemyStage.addActor(enemyHealthBar);
+				enemySkin.add(currentActor.name, enemyHealthBar);
+			}
+		}
+	}
+	
+	/**
 	 * Adjusts the ui viewport to the new screen size
 	 * @param width
 	 * @param height
 	 */
 	public void updateScreen(int width, int height){
 		stage.getViewport().update(width, height, true);
+		enemyStage.getViewport().update(width, height, true);
 	}
 	
 	/**
@@ -126,6 +202,7 @@ public class UiWrapper {
 	 */
 	public void update(Actor player){
 		skin.get("healthBar", ProgressBar.class).setValue((float) player.getHealth());
+		this.updateEnemyScreen();
 	}
 	
 	/**
@@ -133,5 +210,16 @@ public class UiWrapper {
 	 */
 	public void draw(){
 		stage.draw();
+		enemyStage.draw();
+	}
+	
+	/**
+	 * clears the current skins / stages from memory
+	 */
+	public void dispose(){
+		stage.dispose();
+		skin.dispose();
+		enemyStage.dispose();
+		enemySkin.dispose();
 	}
 }

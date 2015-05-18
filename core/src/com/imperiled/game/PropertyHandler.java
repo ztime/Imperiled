@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.maps.MapObjects;
 
 /**
@@ -25,6 +26,7 @@ public class PropertyHandler {
 	public static HashSet<String> inactiveActors = new HashSet<String>();
 	public static MapObjects collisionObjects;
 	public static Imperiled currentGame;
+	public static Camera currentCamera;
 	
 	/**
 	 * Refreshes the actors in currentActors to contain
