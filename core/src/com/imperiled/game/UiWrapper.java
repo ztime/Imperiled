@@ -132,14 +132,11 @@ public class UiWrapper {
 	 * If the enemy is within the cameras view, it checks if it's still alive
 	 * and if it is the healthBar is set to visible and updates health & position
 	 */
-	private void updateEnemyScreen(){
-		//save the current camera
-		Camera currentCamera = PropertyHandler.currentCamera;
-		HashSet<String> inactiveActors = PropertyHandler.inactiveActors;
-		Iterator<Entry<String, Actor>> actors = PropertyHandler.currentActors.entrySet().iterator();
+	private void updateEnemyScreen(Camera currentCamera, ArrayList<Actor> currentActors){
+		Iterator<Actor> actors = currentActors.iterator();
 		
 		while(actors.hasNext()){
-			Actor currentActor = actors.next().getValue();
+			Actor currentActor = actors.next();
 			//only draw a health bar if its not the player/npc and it's still active
 			if(currentActor.isActive() && (currentActor instanceof Enemy)){
 				int xPos = (int) currentActor.getRectangle().x;
@@ -157,7 +154,7 @@ public class UiWrapper {
 					//show the healthBar
 					enemySkin.get(currentActor.name, ProgressBar.class).setVisible(false);
 				}
-			} else if(inactiveActors.contains(currentActor.name) && (currentActor instanceof Enemy)){
+			} else if((currentActor instanceof Enemy)){
 				//so the actor is not active BUT is still an enemy, so the health bar 
 				//should never show again
 				enemySkin.get(currentActor.name, ProgressBar.class).setVisible(false);
@@ -206,9 +203,9 @@ public class UiWrapper {
 	 * Sets the healthbar with the new player health
 	 * @param playerHealth
 	 */
-	public void update(Actor player){
+	public void update(Actor player, Camera camera, ArrayList<Actor> actors){
 		skin.get("healthBar", ProgressBar.class).setValue((float) player.getHealth());
-		this.updateEnemyScreen();
+		this.updateEnemyScreen(camera, actors);
 	}
 	
 	/**

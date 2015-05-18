@@ -26,7 +26,7 @@ public class PropertyHandler {
 	public static HashSet<String> inactiveActors = new HashSet<String>();
 	public static MapObjects collisionObjects;
 	public static Imperiled currentGame;
-	public static Camera currentCamera;
+	
 	
 	/**
 	 * Refreshes the actors in currentActors to contain

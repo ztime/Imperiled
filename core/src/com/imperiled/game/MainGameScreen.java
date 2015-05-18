@@ -37,7 +37,7 @@ public class MainGameScreen implements Screen{
 	
 	private Player player;
 	
-	private static ArrayList<Actor> actors; //actors , not player
+	private ArrayList<Actor> actors; //actors , not player
 	// du får typ ha något liknande här:
 	// private ArrayList<MapEvent> events;
 	
@@ -70,7 +70,6 @@ public class MainGameScreen implements Screen{
 		cameraLeftBound = camera.position.x;
 		//set batch to render the same as camera
 		batch.setProjectionMatrix(camera.combined);
-		PropertyHandler.currentCamera = camera;
 		//load map objects
 		collisionObjects = map.getLayers().get("collision").getObjects();
 		markers = map.getLayers().get("markers").getObjects();
@@ -175,7 +174,7 @@ public class MainGameScreen implements Screen{
 			debugDrawing();
 		}
 		//ui rendering should always happen last
-		ui.update(player);
+		
 		ui.draw();
 	}
 
@@ -270,6 +269,9 @@ public class MainGameScreen implements Screen{
 		
 		//check damage
 		this.checkDamage();
+		
+		//update ui
+		ui.update(player, camera, actors);
 	}
 	
 	/**
