@@ -197,16 +197,22 @@ public class MainGameScreen implements Screen{
 		//new position 
 		int x = player.getX();
 		int y = player.getY();
-		int moveDist = Math.round(Gdx.graphics.getDeltaTime() * player.getSpeed());
-		if(moveDist > player.getRectangle().width) {
-			moveDist = Math.round(player.getRectangle().width);
-		} else if(moveDist > player.getRectangle().height) {
-			moveDist = Math.round(player.getRectangle().height);
-		}
 		
 		if(player.getState() != State.ATTACKING && 
 				player.getState() != State.DEAD &&
 				player.getState() != State.INACTIVE){
+			//get speed
+			int moveDist = Math.round(Gdx.graphics.getDeltaTime() * player.getSpeed());
+			if(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) ||
+					Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)){
+				moveDist = Math.round(Gdx.graphics.getDeltaTime() * player.attackingSpeed);
+			}
+			if(moveDist > player.getRectangle().width) {
+				moveDist = Math.round(player.getRectangle().width);
+			} else if(moveDist > player.getRectangle().height) {
+				moveDist = Math.round(player.getRectangle().height);
+			}
+			
 			if(Gdx.input.isKeyPressed(Keys.A)){
 				x -= moveDist;
 				newState = State.MOVE;

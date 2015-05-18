@@ -39,6 +39,7 @@ public class Player extends Actor {
 		weapons = new ArrayList<Weapon>();
 		this.loadAnimation();
 		this.speed = 200f;
+		this.attackingSpeed = 280f;
 		this.name = "player";
 		this.health = PropertyHandler.currentGame.playerHealth;
 		this.maxHP = health;
