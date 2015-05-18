@@ -38,6 +38,7 @@ public class PropertyHandler {
 	 *               be stored in currentActors.
 	 */
 	public static void newActors(ArrayList<Actor> actors) {
+		currentActors = null;
 		currentActors = new HashMap<String, Actor>();
 		for(Actor actor : actors) {
 			currentActors.put(actor.getName(), actor);

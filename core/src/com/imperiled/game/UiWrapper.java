@@ -1,6 +1,9 @@
 package com.imperiled.game;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
@@ -132,7 +135,9 @@ public class UiWrapper {
 	private void updateEnemyScreen(){
 		//save the current camera
 		Camera currentCamera = PropertyHandler.currentCamera;
+		HashSet<String> inactiveActors = PropertyHandler.inactiveActors;
 		Iterator<Entry<String, Actor>> actors = PropertyHandler.currentActors.entrySet().iterator();
+		
 		while(actors.hasNext()){
 			Actor currentActor = actors.next().getValue();
 			//only draw a health bar if its not the player/npc and it's still active
@@ -152,7 +157,7 @@ public class UiWrapper {
 					//show the healthBar
 					enemySkin.get(currentActor.name, ProgressBar.class).setVisible(false);
 				}
-			} else if(!currentActor.isActive() && (currentActor instanceof Enemy)){
+			} else if(inactiveActors.contains(currentActor.name) && (currentActor instanceof Enemy)){
 				//so the actor is not active BUT is still an enemy, so the health bar 
 				//should never show again
 				enemySkin.get(currentActor.name, ProgressBar.class).setVisible(false);
@@ -164,13 +169,13 @@ public class UiWrapper {
 	 * This initilazies all the enemyHealthBars for all enemies in the map
 	 * and sets values according to max hp and such. 
 	 * 
-	 * WARNING:
-	 * This function can only be called after all the enemies has been added to propertyHandler
+	 * 
 	 */
-	public void createEnemyHealthBars(){
-		Iterator<Entry<String, Actor>> actors = PropertyHandler.currentActors.entrySet().iterator();
+	public void createEnemyHealthBars(ArrayList<Actor> currentActors){
+		System.out.println("new map");
+		Iterator<Actor> actors = currentActors.iterator();
 		while(actors.hasNext()){
-			Actor currentActor = actors.next().getValue();
+			Actor currentActor = actors.next();
 			if(currentActor instanceof Enemy){
 				ProgressBar enemyHealthBar = new ProgressBar(0, currentActor.maxHP, 1, false, progStyle);
 				float width = currentActor.getRectangle().width + 10;
@@ -182,6 +187,7 @@ public class UiWrapper {
 				
 				enemyStage.addActor(enemyHealthBar);
 				enemySkin.add(currentActor.name, enemyHealthBar);
+				System.out.println(currentActor.name);
 			}
 		}
 	}

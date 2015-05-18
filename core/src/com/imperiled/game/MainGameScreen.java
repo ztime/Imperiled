@@ -126,7 +126,7 @@ public class MainGameScreen implements Screen{
 		//add to propertyhandler
 		PropertyHandler.newActors(actors);
 		//we need to add them to the ui skin
-		ui.createEnemyHealthBars();
+		ui.createEnemyHealthBars(actors);
 		PropertyHandler.currentActors.put("player", player);
 	}
 
