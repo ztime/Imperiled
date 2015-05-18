@@ -3,6 +3,7 @@ package com.imperiled.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -59,11 +60,13 @@ public class MainMenuScreen implements Screen {
 		//draw background in top left corner
 		batch.begin();
 		batch.draw(background, 0, screenHeight - imgHeight, screenWidth, imgHeight);
-		font.draw(batch, "Press any key to play . . .", 100, 100);
+		font.setColor(Color.BLACK);
+		font.draw(batch, "Controls:\nA,D,W,S moves the player\nSHIFT makes him sprint\nSPACEBAR makes him attack", 380,200);
+		font.draw(batch, "Press any key to play . . .", 100, 170);
 		batch.end();
 		
 		//check if we should switch screens 
-		if((Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)) && elapsedTime > 2.0f){
+		if((Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.ANY_KEY)) && elapsedTime > 0.5f){
 			//start default map
 			this.game.map = this.game.startMap;
 			//with full health
