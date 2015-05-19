@@ -220,13 +220,16 @@ public class UiWrapper {
 		this.updateEnemyScreen(camera, actors);
 	}
 	
+	/**
+	 * 
+	 */
 	public void updateNPCText() {
 		if(currentInterraction == null) {
 			bubbleLabel.setText("");
 			counter = 0;
 			return;
 		}
-		bubbleText = currentInterraction.getNPCText().get("default");
+		bubbleText = currentInterraction.getNPCText();
 		if(PropertyHandler.currentGame.paused) {
 			if(counter < bubbleText.length()*2) {
 				counter++;

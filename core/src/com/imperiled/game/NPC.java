@@ -20,6 +20,7 @@ public class NPC extends Actor {
 			protected TextureRegion[][] movementFrames;
 			protected Texture characterSheet;
 			protected String spritePath;
+			protected String interractionState;
 			protected HashMap<String, String> npcText;
 			
 			/**
@@ -42,6 +43,7 @@ public class NPC extends Actor {
 				this.loadAnimation();
 				this.initX = this.x;
 				this.initY = this.y;
+				this.interractionState = "default";
 			}
 			
 			/**
@@ -107,8 +109,8 @@ public class NPC extends Actor {
 			/**
 			 * Returns all the texts for this NPC.
 			 */
-			public HashMap<String, String> getNPCText() {
-				return this.npcText;
+			public String getNPCText() {
+				return this.npcText.get(interractionState);
 			}
 			
 			/**
