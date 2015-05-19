@@ -41,6 +41,9 @@ public class MainGameScreen implements Screen{
 	
 	private UiWrapper ui;
 	
+	//this represents if this is the currently running game map
+	private boolean isRunning = true; 
+	
 	public MainGameScreen(Imperiled game){
 		this.game = game;
 		PropertyHandler.currentGame = game;
@@ -129,6 +132,10 @@ public class MainGameScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
+		//if this is not the current screen we dont want to render
+		if(!this.isRunning) {
+			return;
+		}
 		//check if we need to return to main menu screen
 		if(player.getState() == State.INACTIVE && Gdx.input.isKeyPressed(Keys.ANY_KEY)){
 			this.game.setScreen(new MainMenuScreen(this.game));
@@ -257,9 +264,14 @@ public class MainGameScreen implements Screen{
 		
 		//--- check events ---
 		this.checkEventCollision(player);
+		//if event has changed map we dont want to render
+		if(!this.isRunning){
+			return;
+		}
 		for(Actor actor : actors){
 			this.checkEventCollision(actor);
 		}
+		
 		
 		//check damage
 		this.checkDamage();
@@ -352,6 +364,11 @@ public class MainGameScreen implements Screen{
 					PropertyHandler.currentEvents.get(eventName).action();
 				}
 			}
+			//if we changed map we need to break out of the while loop
+			if(!isRunning){
+				break;
+			}
+			
 		}
 	}
 	
@@ -495,7 +512,8 @@ public class MainGameScreen implements Screen{
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
+		this.isRunning = false;
+		this.dispose();
 		
 	}
 
@@ -512,6 +530,7 @@ public class MainGameScreen implements Screen{
 			actor.dispose();
 		}
 		ui.dispose();
+		System.out.println("Disposed!");
 	}
 	
 	/**
