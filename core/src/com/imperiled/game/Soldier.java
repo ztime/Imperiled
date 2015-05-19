@@ -20,6 +20,6 @@ public class Soldier extends NPC {
 				Behaviour.PASSIVE, 	    // Behaviour for ai 
 				40f, 					// Aggrorange for ai
 				"sprites/soldier.png");	// The path to sprite
-		this.npcText = "Hejsan morsan, hejsan stabben. Här är brev från älsklingsgrabben.";
+		this.npcText = "Hejsan morsan, hejsan stabben. HÃ¤r Ã¤r brev frÃ¥n Ã¤lsklingsgrabben.";
 	}
 }

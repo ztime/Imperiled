@@ -244,16 +244,6 @@ public class MainGameScreen implements Screen{
 				moveDist = Math.round(player.getRectangle().height);
 			}
 			
-			if(Gdx.input.isKeyPressed(Keys.A)){
-				x -= moveDist;
-				newState = State.MOVE;
-				newDir = Direction.LEFT;
-			}
-			if(Gdx.input.isKeyPressed(Keys.D)){
-				x += moveDist;
-				newState = State.MOVE;
-				newDir = Direction.RIGHT;
-			}
 			if(Gdx.input.isKeyPressed(Keys.W)){
 				y += moveDist;
 				newState = State.MOVE;
@@ -263,6 +253,16 @@ public class MainGameScreen implements Screen{
 				y -= moveDist;
 				newState = State.MOVE;
 				newDir = Direction.DOWN;
+			}
+			if(Gdx.input.isKeyPressed(Keys.A)){
+				x -= moveDist;
+				newState = State.MOVE;
+				newDir = Direction.LEFT;
+			}
+			if(Gdx.input.isKeyPressed(Keys.D)){
+				x += moveDist;
+				newState = State.MOVE;
+				newDir = Direction.RIGHT;
 			}
 			if(Gdx.input.isKeyPressed(Keys.SPACE)){
 				newState = State.ATTACKING;
