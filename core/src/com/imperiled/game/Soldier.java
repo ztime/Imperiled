@@ -17,8 +17,9 @@ public class Soldier extends NPC {
 				60, 					// Health
 				30f, 					// Speed
 				this.speed,				// Attacking speed
-				Behaviour.PASSIVE, 	// Behaviour for ai 
+				Behaviour.PASSIVE, 	    // Behaviour for ai 
 				40f, 					// Aggrorange for ai
 				"sprites/soldier.png");	// The path to sprite
+		this.npcText = "Hejsan morsan, hejsan stabben. Här är brev från älsklingsgrabben.";
 	}
 }

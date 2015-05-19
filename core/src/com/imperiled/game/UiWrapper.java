@@ -27,6 +27,10 @@ public class UiWrapper {
 
 	private Stage stage;
 	private Skin skin;
+	private int counter;
+	private String bubbleText;
+	private Label bubbleLabel;
+	private NPC currentInterraction;
 	
 	/**
 	 * Creates a new ui based on preferences set in class
@@ -109,6 +113,19 @@ public class UiWrapper {
 				}
 			}
 	    });
+	    
+	    
+	    //NPC TEXT
+	    Table textBubble = new Table();
+	    //this fills the viewport with the table
+	    textBubble.setFillParent(true);
+	    textBubble.setDebug(game.debug);
+	    counter = 0;
+	    stage.addActor(textBubble);
+	    bubbleLabel = new Label("", skin);
+	    textBubble.add(bubbleLabel);
+	    textBubble.center().bottom().pad(10);
+	    //NPC TEXT
 	}
 	
 	/**
@@ -126,6 +143,40 @@ public class UiWrapper {
 	 */
 	public void update(Actor player){
 		skin.get("healthBar", ProgressBar.class).setValue((float) player.getHealth());
+		
+		// NPC STUFF
+		//
+		if(currentInterraction == null) {
+			bubbleLabel.setText("");
+			counter = 0;
+			return;
+		}
+		bubbleText = currentInterraction.getNPCText();
+		if(PropertyHandler.currentGame.paused) {
+			if(counter < bubbleText.length()*2) {
+				counter++;
+			}
+			bubbleText = bubbleText.substring(0, counter/2);
+			if(counter > 80) {
+				charloop:
+				for(int i = 40; i < bubbleText.length(); i += 40) {
+					while(bubbleText.charAt(i) != ' ') {
+						if(i < 2) {
+							continue charloop;
+						}
+						i--;
+					}
+					bubbleText = bubbleText.substring(0, i) + "\n" + bubbleText.substring(i+1, bubbleText.length());
+				}
+			}
+			bubbleLabel.setText(bubbleText);
+		}
+		//
+		// NPC STUFF
+	}
+	
+	public void setInterraction(NPC npc) {
+		this.currentInterraction = npc;
 	}
 	
 	/**
