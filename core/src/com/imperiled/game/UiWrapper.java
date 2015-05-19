@@ -122,6 +122,7 @@ public class UiWrapper {
 	    textBubble.setDebug(game.debug);
 	    counter = 0;
 	    stage.addActor(textBubble);
+	    //adds the label that contains the text
 	    bubbleLabel = new Label("", skin);
 	    textBubble.add(bubbleLabel);
 	    textBubble.center().bottom().pad(10);
@@ -157,9 +158,14 @@ public class UiWrapper {
 				counter++;
 			}
 			bubbleText = bubbleText.substring(0, counter/2);
+			//if text is too long this will split it
+			//up into several lines
 			if(counter > 80) {
 				charloop:
 				for(int i = 40; i < bubbleText.length(); i += 40) {
+					//if line does not end with a whitespace,
+					//try to go back a little bit and one
+					//and do a linebreak there instead
 					while(bubbleText.charAt(i) != ' ') {
 						if(i < 2) {
 							continue charloop;
