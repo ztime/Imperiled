@@ -139,7 +139,6 @@ public class MainGameScreen implements Screen{
 		//check if we need to return to main menu screen
 		if(player.getState() == State.INACTIVE && Gdx.input.isKeyPressed(Keys.ANY_KEY)){
 			this.game.setScreen(new MainMenuScreen(this.game));
-			this.dispose();
 			return; // make sure we dont draw anyting more
 		}
 		
@@ -148,6 +147,10 @@ public class MainGameScreen implements Screen{
 		//we only want to update if the game is running
 		if(!this.game.paused) {
 			this.update(delta);
+			//if we have changed map we dont want to draw anything more
+			if(!this.isRunning){
+				return;
+			}
 		}
 		
 		//we also need to adapt the camera to the players position
@@ -264,14 +267,13 @@ public class MainGameScreen implements Screen{
 		
 		//--- check events ---
 		this.checkEventCollision(player);
-		//if event has changed map we dont want to render
+		//if we have changed map we dont want to draw anything more
 		if(!this.isRunning){
 			return;
 		}
 		for(Actor actor : actors){
 			this.checkEventCollision(actor);
 		}
-		
 		
 		//check damage
 		this.checkDamage();
@@ -364,11 +366,10 @@ public class MainGameScreen implements Screen{
 					PropertyHandler.currentEvents.get(eventName).action();
 				}
 			}
-			//if we changed map we need to break out of the while loop
-			if(!isRunning){
-				break;
+			//if we have changed map we dont want to do anything more
+			if(!this.isRunning){
+				return;
 			}
-			
 		}
 	}
 	
@@ -512,9 +513,8 @@ public class MainGameScreen implements Screen{
 
 	@Override
 	public void hide() {
-		this.isRunning = false;
 		this.dispose();
-		
+		this.isRunning = false;
 	}
 
 	/**
@@ -530,7 +530,6 @@ public class MainGameScreen implements Screen{
 			actor.dispose();
 		}
 		ui.dispose();
-		System.out.println("Disposed!");
 	}
 	
 	/**
