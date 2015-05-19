@@ -19,14 +19,13 @@ import com.badlogic.gdx.maps.MapObjects;
  */
 public class PropertyHandler {
 	public static final String[] eventReqs = {"name", "action", "target"};
-	public static final String[] musicReqs = {"name", "filename"};
+	public static final String[] interractionReqs = {"name", "default"};
 	public static HashMap<String, Actor> currentActors;
 	public static HashMap<String, MapEvent> currentEvents;
 	public static HashSet<String> inactiveActors = new HashSet<String>();
 	public static MapObjects collisionObjects;
 	public static Imperiled currentGame;
 	public static Actor currentInterraction;
-	
 	
 	/**
 	 * Refreshes the actors in currentActors to contain
@@ -38,7 +37,6 @@ public class PropertyHandler {
 	 *               be stored in currentActors.
 	 */
 	public static void newActors(ArrayList<Actor> actors) {
-		currentActors = null;
 		currentActors = new HashMap<String, Actor>();
 		for(Actor actor : actors) {
 			currentActors.put(actor.getName(), actor);

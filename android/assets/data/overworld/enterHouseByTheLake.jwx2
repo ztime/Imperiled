@@ -1,7 +1,0 @@
-enterHouseByTheLake
-action=changeMap
-target=player
-mapTarget=houseByTheLake
-xcor=671
-ycor=1013
-direction=up
