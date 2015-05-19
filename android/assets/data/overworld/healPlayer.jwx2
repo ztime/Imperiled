@@ -1,4 +1,0 @@
-healPlayer
-action=restoreHealth
-target=player
-repeatable=true

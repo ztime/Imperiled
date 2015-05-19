@@ -152,7 +152,7 @@ public class UiWrapper {
 			counter = 0;
 			return;
 		}
-		bubbleText = currentInterraction.getNPCText();
+		bubbleText = currentInterraction.getNPCText().get("default");
 		if(PropertyHandler.currentGame.paused) {
 			if(counter < bubbleText.length()*2) {
 				counter++;

@@ -1,7 +1,0 @@
-enterTownHall
-action=changeMap
-target=player
-mapTarget=townHall
-xcor=800
-ycor=755
-direction=up

@@ -1,0 +1,5 @@
+blockUntilClear
+action=blockUntilClear
+target=player
+collisionObject=blocking
+repeatable=true

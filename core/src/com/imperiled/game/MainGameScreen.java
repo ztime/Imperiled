@@ -83,7 +83,6 @@ public class MainGameScreen implements Screen{
 		for(MapObject eventObject : eventObjects) {
 			listOfEvents.add(eventObject.getName());
 		}
-		new FileParser(this.game.map, listOfEvents);
 		
 		//setup actors in the map
 		actors = new ArrayList<Actor>();
@@ -126,6 +125,8 @@ public class MainGameScreen implements Screen{
 		//add to propertyhandler
 		PropertyHandler.newActors(actors);
 		PropertyHandler.currentActors.put("player", player);
+		new FileParser(this.game.map, listOfEvents);
+		new FileParser(this.game.map, actors, 0);
 	}
 
 	@Override
@@ -195,7 +196,7 @@ public class MainGameScreen implements Screen{
 		//NPC STUFF
 		if(Gdx.input.isKeyJustPressed(Keys.E)) {
 			NPC npc = checkNPC();
-			if(npc != null) {
+			if(npc != null && npc.getNPCText() != null) {
 				ui.setInterraction(npc);
 				this.game.paused = true;
 				npc.currentDirection = player.currentDirection.getOpposite();

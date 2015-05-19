@@ -32,14 +32,38 @@ public class FileParser {
 	 * 
 	 * Event files have the suffix ".jwx2".
 	 * 
-	 * @param path Name of the map without ".tmx"
+	 * @param mapName Name of the map without ".tmx"
+	 * @param listOfEvents A list containing the events to be loaded.
 	 */
 	public FileParser(String mapName, ArrayList<String> listOfEvents) {
 		files = new ArrayList<FileHandle>();
 		for(String file : listOfEvents) {
-			files.add(Gdx.files.internal(prefix + "data/" + mapName + "/" + file + ".jwx2"));
+			files.add(Gdx.files.internal(prefix + "data/" + mapName + "/events/" + file + ".jwx2"));
 		}
-		parseFiles();
+		parseEvents();
+	}
+	
+	/**
+	 * Creates a FileParser that fetches a folder
+	 * with the same name as the map which the interractions
+	 * belong to. Then takes all the event files in
+	 * that folder and parses them into a MapEvent
+	 * stored in PropertyHandler.
+	 * 
+	 * Interraction files have the suffix ".jwx2".
+	 * 
+	 * @param mapName Name of the map without ".tmx"
+	 * @param actors A list of the actors loaded into the map.
+	 * @param marker This is just to separate from the event constructor.
+	 */
+	public FileParser(String mapName, ArrayList<Actor> actors, int marker) {
+		files = new ArrayList<FileHandle>();
+		for(Actor actor : actors) {
+			if(actor instanceof NPC) {
+				files.add(Gdx.files.internal(prefix + "data/" + mapName + "/interractions/" + actor.getName().substring(mapName.length() + 1) + ".jwx2"));
+			}
+		}
+		parseInterractions(mapName);
 	}
 	
 	/**
@@ -48,11 +72,11 @@ public class FileParser {
 	 * Adds the files to the PropertyHandler
 	 * when done.
 	 */
-	private void parseFiles() {
+	private void parseEvents() {
 		ArrayList<MapEvent> events = new ArrayList<MapEvent>();
 		for(FileHandle file : files) {
 			try(BufferedReader in = new BufferedReader(file.reader())) {
-				events.add(new MapEvent(fileParser(in, file.name())));
+				events.add(new MapEvent(fileParser(in, file.name(), "event")));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -62,8 +86,31 @@ public class FileParser {
 	}
 	
 	/**
-	 * The method called upon by parseFiles to
-	 * parse each file into a MapEvent.
+	 * A method that parses each file
+	 * gathered by the constructor to an
+	 * interraction and associates it with
+	 * an NPC.
+	 * 
+	 * @param mapName Name of current map.
+	 */
+	private void parseInterractions(String mapName) {
+		for(FileHandle file : files) {
+			try(BufferedReader in = new BufferedReader(file.reader())) {
+				// Actor naming format: <mapname>-<actorname> (the substring at the end removes the suffix)
+				NPC currentNPC = (NPC) PropertyHandler.currentActors.get(mapName + "-" + file.name().substring(0, file.name().length() - 5));
+				currentNPC.npcText = fileParser(in, file.name(), "interraction");
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * The method called upon to parse
+	 * each file into a HashMap with
+	 * properties.
 	 * 
 	 * Syntax structure:
 	 * (name)
@@ -72,14 +119,13 @@ public class FileParser {
 	 * ...
 	 * etc.
 	 * 
-	 * private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
-	 * 
 	 * @param in A BufferedReader with the file loaded.
 	 * @param filename Name of the file being parsed.
+	 * @param type The type of file to be parsed.
 	 * @return A HashMap with each value bound
 	 *         to its property.
 	 */
-	private HashMap<String, String> fileParser(BufferedReader in, String filename) throws IOException {
+	private HashMap<String, String> fileParser(BufferedReader in, String filename, String type) throws IOException {
 		HashMap<String, String> properties = new HashMap<String, String>();
 		String line;
 		int lnCnt = 0;
@@ -94,7 +140,7 @@ public class FileParser {
             }
             if(properties.size() == 0) {
             	if(parts.length != 1) {
-            		formatError(lnCnt, "First line has to be the eventname.", filename);
+            		formatError(lnCnt, "First line has to be the name.", filename);
             	}
             	properties.put("name", parts[0]);
             	continue;
@@ -110,9 +156,17 @@ public class FileParser {
 		if(properties.size() == 0) {
 			formatError(0, "No information in file.", filename);
 		}
-		for(String req : PropertyHandler.eventReqs) {
-			if(!properties.containsKey(req)) {
-				formatError(0, "File does not contain the required property: " + req, filename);
+		if(type.equals("event")) {
+			for(String req : PropertyHandler.eventReqs) {
+				if(!properties.containsKey(req)) {
+					formatError(0, "File does not contain the required property: " + req, filename);
+				}
+			}
+		} else if(type.equals("interraction")) {
+			for(String req : PropertyHandler.interractionReqs) {
+				if(!properties.containsKey(req)) {
+					formatError(0, "File does not contain the required property: " + req, filename);
+				}
 			}
 		}
 		return properties;
