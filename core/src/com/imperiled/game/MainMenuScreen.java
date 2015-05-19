@@ -61,7 +61,7 @@ public class MainMenuScreen implements Screen {
 		batch.begin();
 		batch.draw(background, 0, screenHeight - imgHeight, screenWidth, imgHeight);
 		font.setColor(Color.BLACK);
-		font.draw(batch, "Controls:\nA,D,W,S moves the player\nSHIFT makes him sprint\nSPACEBAR makes him attack", 380,200);
+		font.draw(batch, "Controls:\nA,D,W,S to move\nSHIFT to sprint\nSPACEBAR to attack\nE to talk to other characters", 380,200);
 		font.draw(batch, "Press any key to play . . .", 100, 170);
 		batch.end();
 		

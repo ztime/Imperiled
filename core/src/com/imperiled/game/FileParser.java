@@ -60,7 +60,12 @@ public class FileParser {
 		files = new ArrayList<FileHandle>();
 		for(Actor actor : actors) {
 			if(actor instanceof NPC) {
-				files.add(Gdx.files.internal(prefix + "data/" + mapName + "/interractions/" + actor.getName().substring(mapName.length() + 1) + ".jwx2"));
+				String fileName = prefix + "data/" + mapName + "/interractions/" + actor.getName().substring(mapName.length() + 1) + ".jwx2";
+				// This is .jar tested and works fine.
+				if(!Gdx.files.internal(fileName).exists()) {
+					continue;
+				}
+				files.add(Gdx.files.internal(fileName));
 			}
 		}
 		parseInterractions(mapName);

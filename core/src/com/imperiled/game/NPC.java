@@ -110,6 +110,9 @@ public class NPC extends Actor {
 			 * Returns all the texts for this NPC.
 			 */
 			public String getNPCText() {
+				if(npcText == null) {
+					return null;
+				}
 				return this.npcText.get(interractionState);
 			}
 			
