@@ -145,6 +145,7 @@ public class MainGameScreen implements Screen{
 			return; // make sure we dont draw anyting more
 		}
 		
+		
 		//Everything that needs to change position or do something 
 		//needs to to that in update(float delta) , not here.
 		//we only want to update if the game is running
@@ -153,6 +154,12 @@ public class MainGameScreen implements Screen{
 			//if we have changed map we dont want to draw anything more
 			if(!this.isRunning){
 				return;
+			}
+		} else {
+			//NPC STUFF
+			if(Gdx.input.isKeyJustPressed(Keys.E)) {
+				ui.setInterraction(null);
+				game.paused = false;
 			}
 		}
 		
@@ -195,6 +202,18 @@ public class MainGameScreen implements Screen{
 	 * @param delta
 	 */
 	public void update(float delta){
+		
+		//NPC STUFF
+		if(Gdx.input.isKeyJustPressed(Keys.E)) {
+			NPC npc = checkNPC();
+			if(npc != null) {
+				ui.setInterraction(npc);
+				this.game.paused = true;
+				npc.currentDirection = player.currentDirection.getOpposite();
+			}
+		}
+		
+		
 		//circle all actors and call update
 		for(Actor actor : actors){
 			actor.update(delta);
@@ -481,6 +500,42 @@ public class MainGameScreen implements Screen{
 			y = cameraLowerBound + mapHeight - cameraHeight;
 		}
 		camera.position.set(x,y,0);
+	}
+	
+	/**
+	 * Returns an NPC if the player is
+	 * directed towards it and close by
+	 * it.
+	 */
+	private NPC checkNPC() {
+		NPC retNPC = null;
+		Actor dummy = new DummyActor(player.x, player.y);
+		Rectangle rect = player.getRectangle();
+		Rectangle dummyRect = dummy.getRectangle();
+		if(player.currentDirection == Direction.DOWN) {
+			dummy.y -= dummyRect.height;
+			dummy.x += rect.width/2 - dummyRect.width/2;
+		} else if(player.currentDirection == Direction.UP) {
+			dummy.y += rect.height;
+			dummy.x += rect.width/2 - dummyRect.width/2;
+		} else if(player.currentDirection == Direction.LEFT) {
+			dummy.x -= dummyRect.width*1.5;
+			dummy.y += rect.height/2 - dummyRect.height/2;
+		} else {
+			dummy.x += rect.width*1.5;
+			dummy.y += rect.height/2 - dummyRect.height/2;
+		}
+		dummyRect = dummy.getRectangle();
+		for(Actor actor : actors) {
+			if(Intersector.overlaps(actor.getRectangle(), dummyRect)) {
+				if(actor instanceof NPC) {
+					retNPC = (NPC) actor;
+					break;
+				}
+			}
+		}
+		dummy.dispose();
+		return retNPC;
 	}
 	
 	@Override

@@ -18,6 +18,7 @@ public class NPC extends Actor {
 			protected TextureRegion[][] movementFrames;
 			protected Texture characterSheet;
 			protected String spritePath;
+			protected String npcText;
 			
 			/**
 			 * Creates a new NPC at x & y 
@@ -99,6 +100,14 @@ public class NPC extends Actor {
 					moving = false;
 				}
 				return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, moving);
+			}
+			
+			/**
+			 * Gets the text for this npc.
+			 * @return
+			 */
+			public String getNPCText() {
+				return this.npcText;
 			}
 			
 			/**
