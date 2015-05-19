@@ -1,0 +1,7 @@
+leaveHouse
+action=changeMap
+target=player
+mapTarget=overworld
+xcor=7121
+ycor=7768
+direction=down

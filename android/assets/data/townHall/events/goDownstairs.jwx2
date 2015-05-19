@@ -1,0 +1,7 @@
+goDownstairs
+action=changeMap
+target=player
+mapTarget=townHallBasement
+xcor=626
+ycor=1031
+direction=left
