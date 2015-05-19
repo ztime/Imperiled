@@ -1,5 +1,7 @@
 package com.imperiled.game;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -18,6 +20,7 @@ public class NPC extends Actor {
 			protected TextureRegion[][] movementFrames;
 			protected Texture characterSheet;
 			protected String spritePath;
+			protected HashMap<String, String> npcText;
 			
 			/**
 			 * Creates a new NPC at x & y 
@@ -99,6 +102,13 @@ public class NPC extends Actor {
 					moving = false;
 				}
 				return movement[translateCurrentDirection()].getKeyFrame(elapsedTime, moving);
+			}
+			
+			/**
+			 * Returns all the texts for this NPC.
+			 */
+			public HashMap<String, String> getNPCText() {
+				return this.npcText;
 			}
 			
 			/**

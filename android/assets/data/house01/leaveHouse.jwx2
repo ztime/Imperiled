@@ -1,7 +1,0 @@
-leaveHouse
-action=changeMap
-target=player
-mapTarget=overworld
-xcor=7184
-ycor=8033
-direction=down

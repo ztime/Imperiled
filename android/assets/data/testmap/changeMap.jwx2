@@ -1,7 +1,0 @@
-changeMap
-action=changeMap
-target=player
-mapTarget=testmap
-xcor=10
-ycor=10
-direction=down
