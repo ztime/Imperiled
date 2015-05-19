@@ -365,6 +365,10 @@ public class MainGameScreen implements Screen{
 			Soldier newSoldier = new Soldier(x,y);
 			newSoldier.name = name;
 			actors.add(newSoldier);
+		} else if (type.equals("princess")){
+			Princess newPrincess = new Princess(x,y);
+			newPrincess.name = name;
+			actors.add(newPrincess);
 		} else {
 			System.out.println("Invalid actortype: " + type);
 		}

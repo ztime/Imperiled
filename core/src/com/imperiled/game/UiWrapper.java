@@ -2,6 +2,7 @@ package com.imperiled.game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -253,6 +255,7 @@ public class UiWrapper {
 				}
 			}
 			bubbleLabel.setText(bubbleText);
+			//textBubble.background(skin.newDrawable("white", Color.GREEN));
 		}
 	}
 	
