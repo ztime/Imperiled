@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="58">
-=======
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="57">
->>>>>>> 2c34de93a45afa5312a6f98734e50d51082cd880
  <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
   <image source="inside.png" width="320" height="320"/>
  </tileset>
@@ -102,9 +98,6 @@
  </objectgroup>
  <objectgroup color="#d33769" name="markers">
   <object id="9" name="playerStart" x="658.667" y="707.334"/>
-<<<<<<< HEAD
   <object id="57" name="SoldatenMartin" type="soldier" x="843" y="622"/>
-=======
->>>>>>> 2c34de93a45afa5312a6f98734e50d51082cd880
  </objectgroup>
 </map>
