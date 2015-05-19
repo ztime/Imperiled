@@ -53,7 +53,7 @@
  </layer>
  <layer name="Tables" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0jEKg0AQBVAn969EjI12ksOZQ2RBRDsXFHaTvAfTTfGH+U0DAABAaW2UTnDNEOvMJ3d0se/WaIp1nif5tr2p0jtyjZXnz+3K69CrGrvVZ3Rq2/uVbi1p3qVD3CDSHx5f/gsAAAAA+DcfsL0RqA==
+   eJzt0jEKg0AQBVDH+1dB1MZ04uHMIaLIklIhwq76Hvxuij/MVBUAAAC5vSJ3g//0sWXc2aOJ32xf4M7v2NLtdEtzKVc1FN796J9Mhf9Ve+Cn0twd/mo1L/nkLnGCWO5QX/wWAAAAAPA0XxJFEuA=
   </data>
  </layer>
  <layer name="Tables (higher prio)" width="50" height="50">
@@ -63,7 +63,7 @@
  </layer>
  <layer name="Props" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt07EKg0AMgOG7rZSuvl6LYBc7dCgOxcGnq5t9E93dGlHwKDno5AX7fxBCckvC3TkHAAAAq+5+zmclXyJnD7/dfL+qlnmLJV+DuoicPQ3uUctMN4lSyVpvyo3BPWBPn3qADR34E+acdnInuZ8DtgypB1C8JNqgPirv5rtncY9O4h3UmbLH1BvdGgAAAAAAAMA/+ADNsRis
+   eJzt07EKgzAQxvFkK+6+nqWgix0cikPp0KezW30T3bs1kkCDXMCl5sD/Dz6Ouyx3oMYAAABAq876Wgn1nHi72f3226oP+9ahNlFfJ97uCu94uJ2uLq1QpdlSnwrvgD5T7gV2dOKfwJ9crA90mXMvIBhcXlFfCN/NeqbxjrfLGPWlcMcy+5hfAAAAAAAAgCP4AqMLGJ8=
   </data>
  </layer>
  <layer name="Props (higher prio)" width="50" height="50">
@@ -83,10 +83,9 @@
   <object id="20" x="933" y="806" width="84" height="21"/>
   <object id="21" x="1031" y="742" width="17" height="56"/>
   <object id="22" x="970" y="753" width="42" height="43"/>
-  <object id="23" x="928.5" y="589" width="94.5" height="37.75"/>
+  <object id="23" x="928.5" y="589" width="127.25" height="39"/>
   <object id="24" x="928.75" y="627" width="23.75" height="97"/>
   <object id="25" x="948" y="684" width="112" height="40"/>
-  <object id="26" x="965" y="642" width="20.75" height="28.5"/>
   <object id="28" x="935.25" y="576.25" width="17.5" height="13.5"/>
   <object id="30" x="606.667" y="786" width="62.6667" height="7.33333"/>
   <object id="31" x="602" y="790" width="52.6667" height="48.6667"/>
