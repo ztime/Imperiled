@@ -68,7 +68,7 @@ public class AI {
 	 * If the actor is idling.
 	 */
 	private void idling(MapObjects collisionObjects, Player player) {
-		checkAggroRange(player);
+		checkAggroRange(collisionObjects, player);
 		if(actor.currentState == State.ATTACKING) {
 			return;
 		}
@@ -114,7 +114,7 @@ public class AI {
 		}
 		actor.currentDirection = dir;
 		move();
-		checkAggroRange(player);
+		checkAggroRange(collisionObjects, player);
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class AI {
 	 * sets a random idle state.
 	 */
 	private void generateIdleInterval() {
-		idleTime = Math.round(Math.random()*1000000000);
+		idleTime = Math.round(Math.random()*1000000000) + 500000000;
 		actor.currentDirection = actor.currentDirection.translateInt(rand.nextInt(4));
 	}
 	
@@ -172,13 +172,15 @@ public class AI {
 	 * 
 	 * @param player Reference to the player object.
 	 */
-	private void checkAggroRange(Player player) {
+	private void checkAggroRange(MapObjects collisionObjects, Player player) {
 		if(actor.behaviour == Behaviour.AGGRESSIVE) {
 			float xdist = Math.abs(player.getX() - actor.getX());
 			float ydist = Math.abs(player.getY() - actor.getY());
 			if(ydist <= actor.aggroRange && xdist <= actor.aggroRange) {
-				actor.currentState = State.ATTACKING;
-				return;
+				if(pathfinder.findPath(collisionObjects, player) != null) {
+					actor.currentState = State.ATTACKING;
+					return;
+				}
 			}
 			actor.currentState = State.IDLE;
 		}

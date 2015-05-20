@@ -6,6 +6,8 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -40,6 +42,8 @@ public class MainGameScreen implements Screen{
 	private ArrayList<Actor> actors; //actors , not player
 	
 	private UiWrapper ui;
+	
+	private Music music;
 	
 	//this represents if this is the currently running game map
 	private boolean isRunning = true; 
@@ -129,10 +133,15 @@ public class MainGameScreen implements Screen{
 		PropertyHandler.currentActors.put("player", player);
 		new FileParser(this.game.map, listOfEvents);
 		new FileParser(this.game.map, actors, 0);
+		
+		if(music != null) {
+			
+		}
 	}
 
 	@Override
 	public void render(float delta) {
+		
 		//if this is not the current screen we dont want to render
 		if(!this.isRunning) {
 			return;
@@ -196,6 +205,8 @@ public class MainGameScreen implements Screen{
 		}
 		//ui rendering should always happen last
 		ui.draw();
+		
+		handleMusic();
 	}
 
 	/**
@@ -348,8 +359,20 @@ public class MainGameScreen implements Screen{
 			return;
 		}
 		
+		//loads music
+		if(type.equals("music")){
+			String fileName = "music/" + name.substring(game.map.length() + 1) + ".mp3";
+			FileHandle loadMusic = Gdx.files.internal(fileName);
+			if(!loadMusic.exists()) {
+				System.out.println("Music does not exist: " + fileName);
+				return;
+			}
+			music = Gdx.audio.newMusic(loadMusic);
+			music.setVolume(0.5f);
+		}
+		
 		//check that the type is valid
-		if(type.equals("bee")){
+		else if(type.equals("bee")){
 			Bee newBee = new Bee(x,y);
 			newBee.name = name;
 			actors.add(newBee);
@@ -544,6 +567,17 @@ public class MainGameScreen implements Screen{
 		return retNPC;
 	}
 	
+	private void handleMusic() {
+		if(music == null) {
+			return;
+		}
+		if(game.paused && ui.getInterraction() == null) {
+			music.pause();
+			return;
+		}
+		music.play();
+	}
+	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
@@ -594,6 +628,9 @@ public class MainGameScreen implements Screen{
 			actor.dispose();
 		}
 		ui.dispose();
+		if(music != null) {
+			music.dispose();
+		}
 	}
 	
 	/**

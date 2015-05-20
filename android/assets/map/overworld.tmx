@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="400" tilewidth="32" tileheight="32" nextobjectid="837">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="400" tilewidth="32" tileheight="32" nextobjectid="838">
  <tileset firstgid="1" name="desert_wo_spacing" tilewidth="32" tileheight="32">
   <image source="desert_wo_spacing.png" width="256" height="192"/>
  </tileset>
@@ -880,5 +880,6 @@
   <object id="496" name="ghost10" type="ghost" x="5340" y="7787"/>
   <object id="497" name="ghost6" type="ghost" x="5451" y="7809"/>
   <object id="498" name="ghost3" type="ghost" x="5507" y="7771"/>
+  <object id="837" name="oriental" type="music" x="4428" y="3726"/>
  </objectgroup>
 </map>
