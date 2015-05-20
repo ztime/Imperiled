@@ -37,6 +37,7 @@ public class UiWrapper {
 	private Skin enemySkin;
 	
 	private ProgressBar.ProgressBarStyle progStyle;
+	private TextButtonStyle textButtonStyle;
 
 	private int counter;
 	private String bubbleText;
@@ -85,7 +86,7 @@ public class UiWrapper {
 	    skin.add("default-horizontal", progStyle);
 	    
 	    //default button style
-	    TextButtonStyle textButtonStyle = new TextButtonStyle();
+	    textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
@@ -117,6 +118,16 @@ public class UiWrapper {
 	    pauseButton.addListener(new ChangeListener(){
 			public void changed(ChangeEvent event,
 					com.badlogic.gdx.scenes.scene2d.Actor actor) {
+				//Fixes unpause of NPC interraction
+				//----------------------------
+				if(currentInterraction != null) {
+					textButtonStyle.over = skin.newDrawable("white", Color.BLUE);
+					textButtonStyle.checked = skin.newDrawable("white", Color.DARK_GRAY);
+					return;
+				}
+				textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+				textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+				//----------------------------
 				if(game.paused){
 					pauseButton.setText("Pause");
 					game.paused = false;
@@ -124,6 +135,7 @@ public class UiWrapper {
 					pauseButton.setText("Paused");
 					game.paused = true;
 				}
+				
 			}
 	    });
 	    
@@ -257,6 +269,10 @@ public class UiWrapper {
 			bubbleLabel.setText(bubbleText);
 			//textBubble.background(skin.newDrawable("white", Color.GREEN));
 		}
+	}
+	
+	public NPC getInterraction() {
+		return this.currentInterraction;
 	}
 	
 	public void setInterraction(NPC npc) {

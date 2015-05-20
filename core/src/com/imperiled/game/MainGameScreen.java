@@ -159,7 +159,7 @@ public class MainGameScreen implements Screen{
 		} else {
 			//NPC stuff
 			ui.updateNPCText();
-			if(Gdx.input.isKeyJustPressed(Keys.E)) {
+			if(Gdx.input.isKeyJustPressed(Keys.E) && ui.getInterraction() != null) {
 				ui.setInterraction(null);
 				game.paused = false;
 				ui.updateNPCText();
