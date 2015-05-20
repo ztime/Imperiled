@@ -144,13 +144,16 @@ public class MainGameScreen implements Screen{
 		
 		//if this is not the current screen we dont want to render
 		if(!this.isRunning) {
+			// Moved the dispose here temporarily to fix crash
+			// the occurs upon death.
+			this.dispose();
 			return;
 		}
 		
 		//check if we need to return to main menu screen
 		if(player.getState() == State.INACTIVE && Gdx.input.isKeyPressed(Keys.ANY_KEY)){
 			this.game.setScreen(new MainMenuScreen(this.game));
-			this.dispose();
+			//this.dispose(); Crash occurs on windows (maybe all OS?) when the dispose is here.
 			PropertyHandler.clearProperties();
 			return; // make sure we dont draw anyting more
 		}

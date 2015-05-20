@@ -83,9 +83,9 @@
   <object id="20" x="933" y="806" width="84" height="21"/>
   <object id="21" x="1031" y="742" width="17" height="56"/>
   <object id="22" x="970" y="753" width="42" height="43"/>
-  <object id="23" x="928.5" y="589" width="128.583" height="7.41667"/>
-  <object id="24" x="928.5" y="590.25" width="24.4773" height="133.021"/>
-  <object id="25" x="948" y="684" width="112" height="40"/>
+  <object id="23" x="928.5" y="589" width="130.25" height="5.75"/>
+  <object id="24" x="928.5" y="590.25" width="42.8731" height="133.073"/>
+  <object id="25" x="947" y="654.667" width="114.061" height="68.5758"/>
   <object id="28" x="935.25" y="576.25" width="17.5" height="13.5"/>
   <object id="30" x="606.667" y="786" width="62.6667" height="7.33333"/>
   <object id="31" x="602" y="790" width="52.6667" height="48.6667"/>
@@ -100,6 +100,6 @@
  <objectgroup color="#d33769" name="markers">
   <object id="9" name="playerStart" x="824" y="820.667"/>
   <object id="35" name="SoldatenFridolf" type="soldier" x="821.333" y="606"/>
-  <object id="37" name="PrinsessanJasmin" type="princess" x="972.5" y="671"/>
+  <object id="37" name="PrinsessanJasmin" type="princess" x="990.167" y="647"/>
  </objectgroup>
 </map>
