@@ -26,6 +26,7 @@ public class PathFinder {
 	ArrayList<Vector2> visited;
 	HashMap<Vector2, Vector2> previous;
 	HashMap<Vector2, Float> distance;
+	long lastRender;
 	
 	/**
 	 * Constructor for PathFinder. Assigns a specific
@@ -35,6 +36,7 @@ public class PathFinder {
 	 * @param actor The actor to find the path from.
 	 */
 	public PathFinder(Actor actor) {
+		lastRender = System.nanoTime();
 		this.actor = actor;
 		recreateArrays();
 	}
@@ -59,6 +61,12 @@ public class PathFinder {
 	 * @param searchRange 		The maximum range allowed to search before giving up.
 	 */
 	public Direction findPath(MapObjects collisionObjects, Actor target, float searchRange) {
+		// Makes sure that the pathfinder does not
+		// calculate path too close to previous time.
+		if(System.nanoTime() - lastRender < 100000000) {
+			return actor.currentDirection;
+		}
+		lastRender = System.nanoTime();
 		Vector2 originalPos = new Vector2(actor.x, actor.y);
 		recreateArrays();
 		LinkedList<Vector2> queue = new LinkedList<Vector2>();

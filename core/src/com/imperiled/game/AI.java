@@ -92,6 +92,8 @@ public class AI {
 			}
 		}
 		
+		regenerateHealth();
+		
 		switch(currentIdleOption) {
 		case 0:
 			actor.currentState = State.IDLE;
@@ -183,6 +185,17 @@ public class AI {
 				}
 			}
 			actor.currentState = State.IDLE;
+		}
+	}
+	
+	/**
+	 * Regenerates health of the actor by 1
+	 * when called. Though it never regenerates
+	 * over max health.
+	 */
+	private void regenerateHealth() {
+		if(actor.health < actor.maxHP) {
+			actor.health++;
 		}
 	}
 }
