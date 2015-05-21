@@ -16,7 +16,7 @@ public class Imperiled extends Game {
 	public int playerHealth;   //save player health inbetween maps
 	
 	//set this to true if we want do draw rectangels for collision and things
-	public boolean debug = false;
+	public boolean debug = true;
 	//Set this to start map for the game
 	public String startMap = "overworld";
 	

@@ -65,5 +65,6 @@ public class PropertyHandler {
 		inactiveActors = new HashSet<String>();
 		collisionObjects = null;
 		currentGame = null;
+		currentInterraction = null;
 	}
 }

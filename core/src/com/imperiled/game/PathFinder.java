@@ -63,6 +63,28 @@ public class PathFinder {
 		recreateArrays();
 		LinkedList<Vector2> queue = new LinkedList<Vector2>();
 		ArrayList<Vector2> prevs = new ArrayList<Vector2>();
+		// Adds all collision to the pathfinder.
+		ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
+		Iterator<MapObject> iterCollision = collisionObjects.iterator();
+		while(iterCollision.hasNext()){ // Adds map collision
+			RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
+			Rectangle cr = collRect.getRectangle();
+			// Makes sure not to load unneccesary collision
+			if(Math.abs(cr.x - actor.x) <= searchRange
+					|| Math.abs(cr.x + cr.width - actor.x) <= searchRange
+					|| Math.abs(cr.y - actor.y) <= searchRange
+					|| Math.abs(cr.y + cr.width - actor.y) <= searchRange) {
+				rectangles.add(cr);
+			}
+		} // Adds actor collision
+		for(String actorName : PropertyHandler.currentActors.keySet()) {
+			Actor actr = PropertyHandler.currentActors.get(actorName);
+			// Makes sure not to load unneccesary collision
+			if(actr != actor && actr != target && Math.abs(actr.x - actor.x) <= searchRange
+					&& Math.abs(actr.y - actor.y) <= searchRange) {
+				rectangles.add(actr.getRectangle());
+			}
+		}
 		Vector2 end = null;
 		queue.add(actor.getPosition());
 		distance.put(actor.getPosition(), 0f);
@@ -120,11 +142,7 @@ public class PathFinder {
 					actor.setPosition(originalPos);
 					return null;
 				}
-				
-				Iterator<MapObject> iterCollision = collisionObjects.iterator();
-				while(iterCollision.hasNext()){
-					RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
-					Rectangle cr = collRect.getRectangle();
+				for(Rectangle cr : rectangles){
 					if(Intersector.overlaps(rect, cr)){
 						// Ugly-fix:
 						// Earlier tests with +2 instead of +6 worked fine
