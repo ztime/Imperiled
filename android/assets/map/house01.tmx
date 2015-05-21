@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="28">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="30">
  <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
   <image source="inside.png" width="320" height="320"/>
  </tileset>
@@ -80,5 +80,7 @@
  <objectgroup color="#d33769" name="markers">
   <object id="9" name="playerStart" x="978" y="740.667"/>
   <object id="27" name="indoors" type="music" x="323" y="143"/>
+  <object id="28" name="PrinsessanElsa" type="princess_alt" x="721" y="584"/>
+  <object id="29" name="PrinsessanMartin" type="princess_alt" x="890" y="513"/>
  </objectgroup>
 </map>

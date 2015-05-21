@@ -388,15 +388,23 @@ public class MainGameScreen implements Screen{
 			newWorm.name = name;
 			actors.add(newWorm);
 		} else if (type.equals("soldier")){
-			Soldier newSoldier = new Soldier(x,y);
+			Soldier newSoldier = new Soldier(x,y,"");
 			newSoldier.name = name;
 			actors.add(newSoldier);
 		} else if (type.equals("soldier_alt")){
-			SoldierAlt newSoldierAlt = new SoldierAlt(x,y);
-			newSoldierAlt.name = name;
-			actors.add(newSoldierAlt);
+			Soldier newSoldier = new Soldier(x,y,"_altcolor");
+			newSoldier.name = name;
+			actors.add(newSoldier);
+		} else if (type.equals("soldier_alt_hair")){
+			Soldier newSoldier = new Soldier(x,y,"_altcolor_hair");
+			newSoldier.name = name;
+			actors.add(newSoldier);
 		} else if (type.equals("princess")){
-			Princess newPrincess = new Princess(x,y);
+			Princess newPrincess = new Princess(x,y,"");
+			newPrincess.name = name;
+			actors.add(newPrincess);
+		} else if (type.equals("princess_alt")){
+			Princess newPrincess = new Princess(x,y,"_altcolor");
 			newPrincess.name = name;
 			actors.add(newPrincess);
 		} else {
