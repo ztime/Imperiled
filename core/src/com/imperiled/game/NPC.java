@@ -44,6 +44,7 @@ public class NPC extends Actor {
 				this.initX = this.x;
 				this.initY = this.y;
 				this.interractionState = "default";
+				this.damageInterval = 1.2f;
 			}
 			
 			/**

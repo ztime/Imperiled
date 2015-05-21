@@ -35,6 +35,7 @@ public class Enemy extends Actor {
 			this.initX = this.x;
 			this.initY = this.y;
 			this.damage = damage;
+			this.damageInterval = 0.6f;
 		}
 		
 		/**

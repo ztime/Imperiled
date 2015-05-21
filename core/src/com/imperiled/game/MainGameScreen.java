@@ -294,13 +294,13 @@ public class MainGameScreen implements Screen{
 		this.checkPlayerCollision(); 
 		
 		//circle trough all the actors and if they are inside
-		//the cameras view we check there collision
-		for(Actor acts : actors) {
-			if(Math.abs(acts.x - player.x) < cameraWidth/2 + 20 ||
-					Math.abs(acts.y - player.y) < cameraHeight/2 + 20) {
-				acts.getAI().act(collisionObjects, player);
+		//the cameras view we check their collision
+		for(Actor actr : actors) {
+			if(Math.abs(actr.x - player.x) < cameraWidth/2 + 20 ||
+					Math.abs(actr.y - player.y) < cameraHeight/2 + 20) {
+				actr.getAI().act(collisionObjects, player);
 			}
-			this.checkActorsCollision(acts);
+			this.checkActorsCollision(actr);
 		}
 		
 		//--- check events ---
@@ -434,8 +434,9 @@ public class MainGameScreen implements Screen{
 	private void checkActorsCollision(Actor currentActor){
 		//actors collision checking
 		Rectangle playerHitBox = player.getRectangle();
+		Rectangle currentActorHitBox = currentActor.getRectangle();
 		//first check player
-		if(Intersector.overlaps(playerHitBox, currentActor.getRectangle())){
+		if(Intersector.overlaps(playerHitBox, currentActorHitBox)){
 			currentActor.revertToOldPosition();
 			return;
 		}
@@ -445,8 +446,8 @@ public class MainGameScreen implements Screen{
 				continue;
 			}
 			Rectangle actorHitBox = actr.getRectangle();
-			if(Intersector.overlaps(actorHitBox, currentActor.getRectangle())){
-				currentActor.revertToOldPosition();
+			if(Intersector.overlaps(actorHitBox, currentActorHitBox)){
+				currentActor.revertToOldPosition(); //moves to old position
 				return;
 			}
 		}
@@ -454,7 +455,7 @@ public class MainGameScreen implements Screen{
 		Iterator<MapObject> iterCollision = collisionObjects.iterator();
 		while(iterCollision.hasNext()){
 			RectangleMapObject collRect = (RectangleMapObject) iterCollision.next();
-			if(Intersector.overlaps(currentActor.getRectangle(), collRect.getRectangle())){
+			if(Intersector.overlaps(currentActorHitBox, collRect.getRectangle())){
 				currentActor.revertToOldPosition();
 				return;
 			}

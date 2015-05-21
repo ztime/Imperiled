@@ -32,6 +32,7 @@ abstract public class Actor {
 	float elapsedTimeDeath;			//time since death
 	float elapsedTimeDamage = 2f;	// - || -    damage was taken
 	float elapsedTimeAttack;		// - || -    attack begun
+	float damageInterval;
 	
 	//other
 	int health = 100;
@@ -61,7 +62,7 @@ abstract public class Actor {
 	 * @param batch SpriteBatch to paint with 
 	 */
 	public void draw(SpriteBatch batch) {
-		if(this.elapsedTimeDamage < 1.2f && 
+		if(this.elapsedTimeDamage < damageInterval && 
 				this.currentState != State.INACTIVE &&
 				this.currentState != State.DEAD){
 			batch.setColor(1, 0, 0, 1);
@@ -101,7 +102,7 @@ abstract public class Actor {
 	 */
 	public void takeDamage(int dmg) {
 		if(!this.invulnerable){
-			if(this.elapsedTimeDamage > 1.2f && 
+			if(this.elapsedTimeDamage > damageInterval && 
 					this.currentState != State.DEAD &&
 					this.currentState != State.INACTIVE){
 				this.health -= dmg;

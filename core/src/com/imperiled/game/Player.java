@@ -49,6 +49,7 @@ public class Player extends Actor {
 		Weapon sword = new Sword();
 		weapons.add(sword);
 		currentWeapon = sword;
+		this.damageInterval = 1.2f;
 		
 	}
 	
