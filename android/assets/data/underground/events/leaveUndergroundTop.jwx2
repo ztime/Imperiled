@@ -1,0 +1,7 @@
+leaveUndergroundTop
+action=changeMap
+target=player
+mapTarget=overworld
+xcor=8239
+ycor=5125
+direction=down
