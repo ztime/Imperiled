@@ -44,6 +44,11 @@ public class UiWrapper {
 	private Label bubbleLabel;
 	private NPC currentInterraction;
 	
+	private Label fpsLabel;
+	private long lastFpsCheck;
+	private float sumRender;
+	private int amountRender;
+	
 	/**
 	 * Creates a new ui based on preferences set in class
 	 */
@@ -150,6 +155,23 @@ public class UiWrapper {
 	    textBubble.add(bubbleLabel);
 	    textBubble.center().bottom().pad(10);
 	    //NPC TEXT
+	    
+	    // FPS Counter if game is in debug
+	    if(PropertyHandler.currentGame.debug) {
+	    	Table fpsCounter = new Table();
+	    	fpsCounter.setFillParent(true);
+	    	fpsCounter.setDebug(game.debug);
+	    	stage.addActor(textBubble);
+	    	fpsLabel = new Label("", skin);
+	    	fpsLabel.setColor(Color.YELLOW);
+	    	fpsLabel.setFontScale(2f);
+	    	textBubble.add(fpsLabel);
+		    textBubble.left().bottom().pad(10);
+		    lastFpsCheck = System.nanoTime();
+		    // These two variables is used to get the average FPS
+		    sumRender = 0;
+		    amountRender = 0;
+	    }
 	}
 	
 	/**
@@ -230,6 +252,18 @@ public class UiWrapper {
 	public void update(Actor player, Camera camera, ArrayList<Actor> actors){
 		skin.get("healthBar", ProgressBar.class).setValue((float) player.getHealth());
 		this.updateEnemyScreen(camera, actors);
+		
+		// Updates FPS counter
+		if(PropertyHandler.currentGame.debug) {
+			sumRender += Gdx.graphics.getDeltaTime();
+			amountRender++;
+			if(System.nanoTime() - lastFpsCheck > 100000000) {
+				lastFpsCheck = System.nanoTime();
+				fpsLabel.setText("" + Math.round(amountRender/sumRender));
+				sumRender = 0;
+				amountRender = 0;
+			}
+		}
 	}
 	
 	/**
