@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="400" tilewidth="32" tileheight="32" nextobjectid="1128">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="400" tilewidth="32" tileheight="32" nextobjectid="1129">
  <tileset firstgid="1" name="desert_wo_spacing" tilewidth="32" tileheight="32">
   <image source="desert_wo_spacing.png" width="256" height="192"/>
  </tileset>
@@ -1102,6 +1102,7 @@
   <object id="1125" name="enterUndergroundMain" x="8258.5" y="7853.5" width="59" height="15"/>
   <object id="1126" name="enterUndergroundRight" x="8353.5" y="7727" width="30.5" height="11"/>
   <object id="1127" name="enterUndergroundTop" x="8257.5" y="7635" width="30.5" height="7.5"/>
+  <object id="1128" name="enterMansion" x="8862" y="4494" width="36" height="7.33333"/>
  </objectgroup>
  <objectgroup color="#d33769" name="markers">
   <object id="1" name="playerStart" x="6909" y="4688" width="22" height="22"/>
