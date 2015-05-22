@@ -1,0 +1,7 @@
+enterUndergroundRight
+action=changeMap
+target=player
+mapTarget=underground
+xcor=2305
+ycor=894
+direction=down
