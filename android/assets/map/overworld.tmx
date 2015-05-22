@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="400" tilewidth="32" tileheight="32" nextobjectid="1129">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="400" tilewidth="32" tileheight="32" nextobjectid="1150">
  <tileset firstgid="1" name="desert_wo_spacing" tilewidth="32" tileheight="32">
   <image source="desert_wo_spacing.png" width="256" height="192"/>
  </tileset>
@@ -1163,5 +1163,25 @@
   <object id="1121" name="BietEttan" type="bee" x="7697" y="4617"/>
   <object id="1122" name="BietTrean" type="bee" x="7813" y="4911"/>
   <object id="1123" name="BietTvoan" type="bee" x="7834" y="4707"/>
+  <object id="1130" name="Maskengjthwvnmuwe" type="worm" x="7717" y="7957"/>
+  <object id="1131" name="Maskengjklfdhsgkhdf" type="worm" x="7434" y="7955"/>
+  <object id="1132" name="Masken8vg5j73v2jv58" type="worm" x="8466" y="8021"/>
+  <object id="1133" name="MaskenWormen" type="worm" x="8629" y="7852"/>
+  <object id="1134" name="Masken3489nm8f2t" type="worm" x="7629" y="7700"/>
+  <object id="1135" name="BieetYoYoYo" type="bee" x="6520" y="7696"/>
+  <object id="1136" name="BietMammaMia" type="bee" x="6668" y="7788"/>
+  <object id="1137" name="BietRHCP" type="bee" x="6752" y="7924"/>
+  <object id="1138" name="BietMuse" type="bee" x="6588" y="8000"/>
+  <object id="1139" name="Bietvt9840" type="bee" x="6314" y="7894" width="16" height="14"/>
+  <object id="1140" name="BietMoneyForNothing" type="bee" x="6584" y="7884"/>
+  <object id="1141" name="BietHereIComeAgain" type="bee" x="6460" y="7808"/>
+  <object id="1142" name="BietACDC" type="bee" x="6452" y="7940"/>
+  <object id="1143" name="BietOffspring" type="bee" x="6320" y="8016"/>
+  <object id="1144" name="BietArgaBiet" type="bee" x="6340" y="7780"/>
+  <object id="1145" name="OgatAdam" type="eyeball" x="5296" y="6389.33"/>
+  <object id="1146" name="OgatFille" type="eyeball" x="5502.67" y="6492"/>
+  <object id="1147" name="OgatPappa" type="eyeball" x="5366.67" y="6740"/>
+  <object id="1148" name="OgatDawgh" type="eyeball" x="5157.33" y="6609.33"/>
+  <object id="1149" name="OgatMamma" type="eyeball" x="5332" y="6554.67"/>
  </objectgroup>
 </map>

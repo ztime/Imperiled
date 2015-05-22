@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="86">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="95">
  <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
   <image source="inside.png" width="320" height="320"/>
  </tileset>
@@ -122,5 +122,13 @@
  <objectgroup color="#d33769" name="markers">
   <object id="9" name="playerStart" x="1021" y="1236.67"/>
   <object id="39" name="indoors" type="music" x="444" y="105.333"/>
+  <object id="87" name="PrisessanHultfred" type="princess" x="625" y="444"/>
+  <object id="88" name="PrinsessanLink" type="princess" x="891" y="489"/>
+  <object id="89" name="SoldatenZelda" type="soldier_alt" x="917" y="618"/>
+  <object id="90" name="PrinsessanMario" type="princess" x="774" y="449"/>
+  <object id="91" name="PrinsessanLuigi" type="princess" x="523" y="762"/>
+  <object id="92" name="SoldatenWalgot" type="soldier" x="890" y="746"/>
+  <object id="93" name="PrinsessanMutter" type="princess" x="1116" y="660"/>
+  <object id="94" name="SoldatenZeldo" type="soldier" x="1027" y="983"/>
  </objectgroup>
 </map>

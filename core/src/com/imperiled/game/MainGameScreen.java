@@ -379,10 +379,18 @@ public class MainGameScreen implements Screen{
 			Bee newBee = new Bee(x,y);
 			newBee.name = name;
 			actors.add(newBee);
+		} else if(type.equals("bat")){
+			Bat newBat = new Bat(x,y);
+			newBat.name = name;
+			actors.add(newBat);
 		} else if(type.equals("ghost")){
 			Ghost newGhost = new Ghost(x,y);
 			newGhost.name = name;
 			actors.add(newGhost);
+		} else if(type.equals("eyeball")){
+			Eyeball newEyeball = new Eyeball(x,y);
+			newEyeball.name = name;
+			actors.add(newEyeball);
 		} else if (type.equals("worm")){
 			Worm newWorm = new Worm(x,y);
 			newWorm.name = name;
