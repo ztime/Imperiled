@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="75" tilewidth="32" tileheight="32" nextobjectid="118">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="75" tilewidth="32" tileheight="32" nextobjectid="120">
  <tileset firstgid="1" name="mountains" tilewidth="32" tileheight="32">
   <image source="mountains.png" width="384" height="288"/>
  </tileset>
@@ -141,5 +141,6 @@
  </objectgroup>
  <objectgroup color="#d33769" name="markers">
   <object id="97" name="playerStart" x="2239" y="1787"/>
+  <object id="119" name="moody" type="music" x="2102" y="1912"/>
  </objectgroup>
 </map>

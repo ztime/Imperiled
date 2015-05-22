@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="86">
+ <tileset firstgid="1" name="inside" tilewidth="32" tileheight="32">
+  <image source="inside.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="101" name="holek" tilewidth="32" tileheight="32">
+  <image source="holek.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="119" name="stairs" tilewidth="32" tileheight="32">
+  <image source="stairs.png" width="256" height="448"/>
+ </tileset>
+ <tileset firstgid="231" name="victoria" tilewidth="32" tileheight="32">
+  <image source="victoria.png" width="352" height="160"/>
+ </tileset>
+ <tileset firstgid="286" name="house" tilewidth="32" tileheight="32">
+  <image source="house.png" width="288" height="224"/>
+ </tileset>
+ <tileset firstgid="349" name="cabinets" tilewidth="32" tileheight="32">
+  <image source="cabinets.png" width="192" height="416"/>
+ </tileset>
+ <tileset firstgid="427" name="castlefloors" tilewidth="32" tileheight="32">
+  <image source="castlefloors.png" width="320" height="320"/>
+ </tileset>
+ <layer name="Void" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6HbOPv/OkdBwVVTVVVVVVVVVVXV5w8KNzw5
+  </data>
+ </layer>
+ <layer name="Floor" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0zEOQEAQRuHd47h/ghIlDoISJWIiU4iatbN5X/KXm8yLcA4AAAB/yAIuREfunSt0pbfbUcntta6h49og70fd5O12zPJ+0a2GOzZ5v+sOwx2p/B90vNfRJNJh/Xu0cnun6w13hFgM6KDjC3TQERodcaEjLnTEJZWOJ8u339EBAADuTqfyeQY=
+  </data>
+ </layer>
+ <layer name="Walls" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt17EOwjAMRVFDywQdoSszrEwM7f//FR4rRE0SJcYq90hvYShcRVSKCACI9Lqdbu+wTndo1HHTHXUnhw26Ox1/0dE7d/D/+N5x1l0cNjbu8ESHjY4ydNjoKEOHjY4ydNjoKNOq46G7Juwp6/f4LuP7WnWksu4pQ8ZzInSs3VPGjOdE6KiBjjq20jGJ/T5L9esOS85Z0dEeHbHQEcund/LS8vPZ6TfV8H4+kc/AspUOAAAieAGH6hiV
+  </data>
+ </layer>
+ <layer name="WallDecorations" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1z0KgDAMBtD2DD2DTor3v50OTqK0Q3+wvLd8QwNJl0BCAJjPGvtkS+nqsdx93jL3XlqXOvylZM4a2doR+yQAAEDOPnqAir7u0h73KjDWTLsM4I+ee3gbMgUAQH0nzlEJcw==
+  </data>
+ </layer>
+ <layer name="WallDecorations (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
+  </data>
+ </layer>
+ <layer name="Props (lower prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0zEKgDAMQNH2ok5OLiJFRES8ui106+QYfA8+ZEyGpAQA/MWUxyKa81hESx4Dvlnr35Rem7egf7TXvc9em4+gd1x176fX5jvoHQAAAAAAQFwv7bUM9A==
+  </data>
+ </layer>
+ <layer name="Tables" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1LEKgCAUhWGttbePsqno+aq1GrtDEkRCwQWt/g/O4iDnIGgMAAAAoGOQjLFLKJglS+wSCjR3+Lddle57QmvHJLHWmEySW4ULHwrtKANdqggd72BHWr6+o5O+zUX6RHf4P+aslrN2j7PHmUt0B4B/K/ibAAAAAADAy20yzSGa
+  </data>
+ </layer>
+ <layer name="Tables (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
+  </data>
+ </layer>
+ <layer name="Props" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztlrtuwjAARWNYKDvq33Vi6tDyUB+I118BIzAC/wESpUO7kAHEteqIKCIF5MQPuEc6ihVFia98kzgICCGEEHLPPIl8NE1V5KMptspnkY+mKIo/dSlb6FDEBr6o539r3qtiOYdEZtHNEVGykGcTG2eVQ2K6Y1n2ShKqo+mOnVuPOubTgK+wBpsW34H/OPd+fOD8J3yD77DleA5JMscD5tyFPdiGHdh3PMc136tHR7PcCmFw/M7oMMA6DeHI4/WS/4sxnMCpsLtH0aGSyGFzj6JLPIeLLOFKjaM9fhIfevUDf9U4bY/vQ692cK/Ga/iVcp3rvYojMMfCiXn60KtL8KFXl+JTr9Jgr9yDvXIH2aMZnMOF570ihBBCCLlFDsgaZE0=
+  </data>
+ </layer>
+ <layer name="Props (higher prio)" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzkENAAAIBKDzZ//EttDNQQISAAAAAAD4q+t6AAAAAGwZt1cACg==
+  </data>
+ </layer>
+ <objectgroup color="#ffffff" name="collision">
+  <object id="40" x="319" y="383" width="871" height="9"/>
+  <object id="41" x="1184" y="387.091" width="14" height="836"/>
+  <object id="43" x="1088.18" y="1216.91" width="106.364" height="8.54545"/>
+  <object id="44" x="1088.18" y="1220" width="8.90909" height="92.3636"/>
+  <object id="45" x="981.818" y="1305.27" width="120.364" height="7.81818"/>
+  <object id="46" x="982.909" y="1216.82" width="8.90909" height="97.0909"/>
+  <object id="47" x="853.864" y="1216.86" width="137" height="10"/>
+  <object id="48" x="852.955" y="992.909" width="11" height="229.5"/>
+  <object id="49" x="632.5" y="992" width="231.5" height="9.5"/>
+  <object id="51" x="312" y="800" width="551.5" height="8"/>
+  <object id="52" x="856" y="803.5" width="7.5" height="90.5"/>
+  <object id="53" x="637" y="884.5" width="223.5" height="9.5"/>
+  <object id="54" x="630.5" y="886.5" width="9" height="108.5"/>
+  <object id="55" x="312" y="386.5" width="7" height="415"/>
+  <object id="56" x="390" y="448.5" width="20" height="254.5"/>
+  <object id="57" x="485.5" y="450.5" width="19" height="251"/>
+  <object id="58" x="420" y="397" width="55" height="33.5"/>
+  <object id="59" x="424.5" y="432.5" width="47.5" height="304"/>
+  <object id="60" x="419.5" y="742.5" width="58" height="25"/>
+  <object id="61" x="640.5" y="518" width="159.5" height="30.5"/>
+  <object id="62" x="614" y="543.5" width="211" height="182"/>
+  <object id="63" x="1027" y="550" width="25" height="24.5"/>
+  <object id="64" x="997" y="512" width="23" height="33"/>
+  <object id="65" x="996" y="417" width="24" height="45"/>
+  <object id="66" x="1090.5" y="492.5" width="26.5" height="66"/>
+  <object id="67" x="1061.5" y="482" width="20.5" height="27.5"/>
+  <object id="68" x="1031.5" y="496.5" width="49" height="46.5"/>
+  <object id="69" x="771.5" y="892.5" width="23.5" height="18.5"/>
+  <object id="70" x="804.5" y="892" width="23" height="18.5"/>
+  <object id="72" x="776" y="944.5" width="48.5" height="46"/>
+  <object id="73" x="772.5" y="929.5" width="22" height="20"/>
+  <object id="74" x="672.5" y="892" width="62" height="66.5"/>
+  <object id="75" x="645" y="897.5" width="21" height="29.5"/>
+  <object id="76" x="962.5" y="771.5" width="25.5" height="43.5"/>
+  <object id="77" x="1091" y="770" width="25" height="45"/>
+  <object id="78" x="963.5" y="867.5" width="25" height="44"/>
+  <object id="79" x="1091.5" y="867.5" width="25.5" height="42.5"/>
+  <object id="80" x="963.5" y="962.5" width="24.5" height="42"/>
+  <object id="81" x="1091" y="963" width="25" height="42.5"/>
+  <object id="82" x="963.5" y="1060.5" width="25.5" height="41.5"/>
+  <object id="83" x="1091.5" y="1059.5" width="25" height="44.5"/>
+  <object id="84" x="964" y="1159" width="23.5" height="39.5"/>
+  <object id="85" x="1091.5" y="1155" width="25" height="43.5"/>
+ </objectgroup>
+ <objectgroup color="#00aa00" name="events">
+  <object id="8" name="leaveHouse" x="987.667" y="1289.33" width="104.667" height="20"/>
+ </objectgroup>
+ <objectgroup color="#d33769" name="markers">
+  <object id="9" name="playerStart" x="1021" y="1236.67"/>
+  <object id="39" name="indoors" type="music" x="444" y="105.333"/>
+ </objectgroup>
+</map>

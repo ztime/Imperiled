@@ -1,0 +1,7 @@
+enterMansion
+action=changeMap
+target=player
+mapTarget=mansion
+xcor=1009
+ycor=330
+direction=up
