@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="75" tilewidth="32" tileheight="32" nextobjectid="120">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="75" tilewidth="32" tileheight="32" nextobjectid="128">
  <tileset firstgid="1" name="mountains" tilewidth="32" tileheight="32">
   <image source="mountains.png" width="384" height="288"/>
  </tileset>
@@ -142,5 +142,13 @@
  <objectgroup color="#d33769" name="markers">
   <object id="97" name="playerStart" x="2239" y="1787"/>
   <object id="119" name="moody" type="music" x="2102" y="1912"/>
+  <object id="120" name="FladdermusenBruce" type="bat" x="1393" y="1904"/>
+  <object id="121" name="OgatOdin" type="eyeball" x="1656" y="1686"/>
+  <object id="122" name="OgatFreja" type="eyeball" x="2333" y="1353"/>
+  <object id="123" name="FladdermusenFlabbe" type="bat" x="2052" y="1408"/>
+  <object id="124" name="FladdermusenHurtig" type="bat" x="1909" y="1702"/>
+  <object id="125" name="OgatRagnar" type="eyeball" x="2038" y="1291"/>
+  <object id="126" name="OgatThor" type="eyeball" x="1975" y="1592"/>
+  <object id="127" name="OgatFloki" type="eyeball" x="2146" y="1706"/>
  </objectgroup>
 </map>
